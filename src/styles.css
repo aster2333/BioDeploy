@@ -418,27 +418,6 @@ h1>span{
   background-size:26px 26px;
   mask-image:radial-gradient(ellipse at center,#000 30%,transparent 73%)
 }
-.visual-label{
-  position:absolute;
-  top:10px;
-  left:22px;
-  right:12px;
-  display:flex;
-  gap:9px;
-  align-items:center;
-  font-size:8px;
-  letter-spacing:.7px;
-  color:#797982
-}
-.visual-label .mono{
-  margin-right:auto
-}
-.visual-label-dot{
-  height:4px;
-  width:4px;
-  background:#8f939c;
-  border-radius:50%
-}
 .pipeline-connectors{
   position:absolute;
   inset:0;
@@ -453,7 +432,7 @@ h1>span{
   position:absolute;
   top:71px;
   left:17px;
-  width:280px;
+  width:min(280px,62%);
   background:#ffffff;
   border:1px solid #dddfe5;
   border-radius:10px;
@@ -517,8 +496,8 @@ h1>span{
 }
 .assay-node{
   position:absolute;
-  top:194px;
-  right:55px;
+  top:calc(50% - 33px);
+  left:calc(86% - 33px);
   width:66px;
   height:66px;
   display:grid;
@@ -536,20 +515,11 @@ h1>span{
   fill:none;
   stroke-linecap:round
 }
-.assay-node>span{
-  position:absolute;
-  top:84px;
-  width:150px;
-  text-align:center;
-  font:7px var(--mono);
-  color:#7c8492;
-  letter-spacing:.5px
-}
 .output-card{
   position:absolute;
   bottom:44px;
-  left:62px;
-  width:286px;
+  left:min(62px,10%);
+  width:min(286px,62%);
   border:1px solid #dddfe5;
   border-radius:10px;
   background:white;
@@ -591,22 +561,6 @@ h1>span{
 .output-format>.mono{
   font-size:9px;
   color:#626875
-}
-.visual-bottom{
-  position:absolute;
-  bottom:5px;
-  left:21px;
-  right:15px;
-  display:flex;
-  justify-content:space-between;
-  font-size:8px;
-  letter-spacing:1px;
-  color:#8e929a
-}
-.cross-mark{
-  font-size:22px;
-  font-weight:400;
-  line-height:1
 }
 /* The full-width instrument panel is the visual anchor of the page. */
 .section-space{
@@ -1017,11 +971,6 @@ h1>span{
   justify-content:space-between;
   align-items:center;
   margin-bottom:25px
-}
-.package-top>.mono{
-  font-size:9px;
-  color:#878790;
-  letter-spacing:.5px
 }
 .package-icon{
   display:grid;
@@ -1640,18 +1589,8 @@ html:not([lang=en]) .package-card>p{
     height:350px;
     width:410px
   }
-  .visual-label{
-    font-size:6px;
-    left:8px;
-    right:3px;
-    top:13px;
-    letter-spacing:.1px
-  }
-  .visual-label .mono{
-    font-size:7px
-  }
   .sequence-card{
-    width:225px;
+    width:min(225px,66%);
     top:56px;
     left:5px
   }
@@ -1676,8 +1615,8 @@ html:not([lang=en]) .package-card>p{
   .assay-node{
     width:49px;
     height:49px;
-    top:154px;
-    right:15px;
+    top:calc(50% - 24.5px);
+    left:calc(86% - 24.5px);
     border-radius:12px;
     box-shadow:0 0 0 5px #eaf1fc,0 0 0 6px #c8dbfa
   }
@@ -1685,14 +1624,9 @@ html:not([lang=en]) .package-card>p{
     width:26px;
     height:26px
   }
-  .assay-node>span{
-    font-size:5px;
-    top:61px;
-    width:90px
-  }
   .output-card{
-    width:233px;
-    left:39px;
+    width:min(233px,64%);
+    left:10%;
     bottom:34px
   }
   .mini-chart{
@@ -1710,13 +1644,6 @@ html:not([lang=en]) .package-card>p{
   }
   .sample-badge{
     font-size:6px
-  }
-  .visual-bottom{
-    font-size:6px;
-    letter-spacing:.5px;
-    bottom:4px;
-    left:9px;
-    right:3px
   }
   .pipeline-connectors{
     top:0
