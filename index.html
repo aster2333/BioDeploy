@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafafa">
+  <meta name="description" content="Wet-lab validation for AI-designed proteins. Standardized assays, structured data, one global platform.">
+  <title>Biodeploy — Sequence in. Discovery out.</title>
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+  <link rel="preload" href="/public/fonts/geist-400.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="/public/fonts/geist-500.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="/src/styles.css">
+  <script type="module" src="/src/app.js"></script>
+</head>
+<body>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-northeast" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8l-5-5Z M14 3v6h5M8 13h8m-8 4h5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-brackets" viewBox="0 0 24 24"><path d="M8 4H4v16h4m8-16h4v16h-4m-5-3 2-10"/></symbol>
+    <symbol id="i-stack" viewBox="0 0 24 24"><path d="m3 7 9-4 9 4-9 4-9-4Zm0 5 9 4 9-4M3 17l9 4 9-4"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+    <symbol id="i-mark" viewBox="0 0 32 32"><path d="M8 5v22M8 6h10a5.5 5.5 0 0 1 0 11H8m0 0h12a5 5 0 0 1 0 10H8"/></symbol>
+  </svg>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <header class="site-header">
+    <div class="nav-wrap container">
+      <a class="brand" href="#" aria-label="Biodeploy"><svg class="brand-mark"><use href="#i-mark"/></svg><span>biodeploy<span class="brand-period">.</span></span></a>
+      <nav class="desktop-nav" data-i18n-aria="mainNav" aria-label="Main navigation">
+        <a href="#platform" data-i18n="navPlatform">Platform</a><a href="#packages" data-i18n="navPackages">Packages</a><a href="#network" data-i18n="navNetwork">Global network</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="locale-control">
+          <button class="locale-trigger" id="locale-trigger" aria-expanded="false" aria-controls="locale-menu" aria-haspopup="true"><svg class="icon"><use href="#i-globe"/></svg><span id="locale-label">English</span><svg class="icon chevron"><use href="#i-chevron"/></svg></button>
+          <div class="locale-menu" id="locale-menu" hidden>
+            <fieldset><legend data-i18n="chooseLanguage">Choose language</legend>
+              <label lang="en"><input type="radio" name="locale" value="en" checked><span>English</span><svg class="icon"><use href="#i-check"/></svg></label>
+              <label lang="zh-CN"><input type="radio" name="locale" value="zh-CN"><span>简体中文</span><svg class="icon"><use href="#i-check"/></svg></label>
+              <label lang="zh-TW"><input type="radio" name="locale" value="zh-TW"><span>繁體中文</span><svg class="icon"><use href="#i-check"/></svg></label>
+              <label lang="ja"><input type="radio" name="locale" value="ja"><span>日本語</span><svg class="icon"><use href="#i-check"/></svg></label>
+            </fieldset>
+            <p data-i18n="localeNote">Your language. Your workflow.</p>
+          </div>
+        </div>
+        <a class="button button-small header-cta" href="#platform"><span data-i18n="navCta">Explore platform</span><svg class="icon"><use href="#i-northeast"/></svg></a>
+        <button class="mobile-toggle icon-button" aria-controls="mobile-nav" aria-expanded="false" data-i18n-aria="menu" aria-label="Menu"><svg class="icon"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" data-i18n-aria="mobileNav" aria-label="Mobile navigation" hidden><a href="#platform" data-i18n="navPlatform">Platform</a><a href="#packages" data-i18n="navPackages">Packages</a><a href="#network" data-i18n="navNetwork">Global network</a></nav>
+  </header>
+  <main id="main">
+    <section class="hero container" aria-labelledby="hero-heading">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="heroEyebrow">THE NEXT LAYER OF BIOLOGY</span></div>
+        <h1 id="hero-heading"><span data-i18n="heroLine1">Sequence in.</span><span class="soft-heading" data-i18n="heroLine2">Discovery out.</span></h1>
+        <p class="hero-description" data-i18n="heroDescription">Wet-lab validation for AI-designed proteins. Standardized assays. Structured data. One global platform.</p>
+        <div class="hero-actions"><a class="button" href="#platform"><span data-i18n="heroCta">Explore the platform</span><svg class="icon"><use href="#i-arrow"/></svg></a><a class="text-button" href="#platform" data-show-results><span data-i18n="heroSecondary">View sample output</span><svg class="icon"><use href="#i-northeast"/></svg></a></div>
+        <div class="hero-footnote"><span class="tiny-squares" aria-hidden="true"><i></i><i></i><i></i></span><span data-i18n="heroFootnote">Built for researchers who build with AI.</span></div>
+      </div>
+      <div class="hero-visual" role="img" data-i18n-aria="heroVisual" aria-label="Example workflow from a protein sequence through a standardized assay to structured results">
+        <div class="visual-grid" aria-hidden="true"></div>
+        <div class="visual-label"><span class="mono">BIODEPLOY / 001</span><span class="visual-label-dot"></span><span data-i18n="exampleWorkflow">EXAMPLE WORKFLOW</span></div>
+        <svg class="pipeline-connectors" viewBox="0 0 560 450" fill="none" aria-hidden="true"><path class="connector" d="M231 147h149q20 0 20 20v31M400 252v41q0 20-20 20H280"/><circle cx="400" cy="147" r="4" fill="#146ef5"/><path d="m395 190 5 6 5-6M290 308l-6 5 6 5" stroke="#146ef5" stroke-width="1.5"/></svg>
+        <div class="sequence-card">
+          <div class="mini-card-header"><span><svg class="icon"><use href="#i-file"/></svg><span class="mono">binder_001.fasta</span></span><span class="file-pill">FASTA</span></div>
+          <div class="sequence-code mono"><span class="code-muted">&gt;binder_001</span><br>MKTAYIAKQRQISFVKSHFS<br><span class="sequence-highlight">RQDILDLWIYHTQGYFPQ</span><br>GQGQKVEVIKPAGVETLKE</div>
+          <div class="mini-card-footer"><span data-i18n="sequenceInput">01 / SEQUENCE INPUT</span><svg class="icon"><use href="#i-check"/></svg></div>
+        </div>
+        <div class="assay-node"><svg class="node-mark"><use href="#i-mark"/></svg><span data-i18n="standardAssay">STANDARDIZED ASSAY</span></div>
+        <div class="output-card">
+          <div class="mini-card-header"><span class="mono">binding_kinetics</span><span class="sample-badge" data-i18n="sample">SAMPLE</span></div>
+          <div class="mini-chart"><svg viewBox="0 0 300 95" fill="none" aria-hidden="true"><path d="M14 15H290M14 45H290M14 75H290" stroke="#eeeef1"/><path d="M14 80C45 80 45 20 100 18H182C205 18 221 54 290 63" stroke="#146ef5" stroke-width="2.4"/><path d="M14 80C45 80 48 39 104 36H182C210 36 230 65 290 70" stroke="#9bc4ff" stroke-width="1.8"/><path d="M14 80C45 80 50 57 106 55H182C210 55 230 73 290 76" stroke="#c4d9f7" stroke-width="1.8"/></svg></div>
+          <div class="output-format"><span><i class="blue-dot"></i><span data-i18n="structuredOutput">Structured output</span></span><span class="mono">.json&nbsp; .csv</span></div>
+        </div>
+        <div class="visual-bottom"><span class="mono" data-i18n="pipelineCaption">SEQUENCE → ASSAY → DATASET</span><span class="cross-mark" aria-hidden="true">+</span></div>
+      </div>
+    </section>
+    <div class="capabilities container"><span data-i18n="capabilityIntro">FROM COMPUTATION TO CONFIRMATION</span><div><svg class="icon"><use href="#i-stack"/></svg><span data-i18n="capability1">Standardized experiments</span></div><div><svg class="icon"><use href="#i-brackets"/></svg><span data-i18n="capability2">Machine-ready datasets</span></div><div><svg class="icon"><use href="#i-globe"/></svg><span data-i18n="capability3">Global delivery network</span></div></div>
+
+    <section class="platform-section section-space" id="platform" aria-labelledby="platform-heading">
+      <div class="container">
+        <div class="section-heading"><div><div class="eyebrow"><span class="section-index">01</span><span data-i18n="platformEyebrow">THE PLATFORM</span></div><h2 id="platform-heading" data-i18n="platformTitle">Your next experiment.<br>Already taking shape.</h2></div><p data-i18n="platformDescription">A familiar workflow for an entirely new kind of infrastructure. From your first sequence to your next model.</p></div>
+        <div class="workbench">
+          <div class="workbench-toolbar"><div class="workspace-title"><svg class="icon"><use href="#i-mark"/></svg><span data-i18n="workspace">workspace</span><span class="slash">/</span><span class="mono">binder-validation</span></div><span class="preview-label"><span class="blue-dot"></span><span data-i18n="productPreview">PRODUCT PREVIEW</span></span></div>
+          <div class="workbench-body">
+            <div class="workbench-sidebar" role="tablist" data-i18n-aria="previewSteps" aria-label="Preview stages" aria-orientation="vertical">
+              <div class="sidebar-label" data-i18n="experiment">EXPERIMENT</div>
+              <button id="tab-input" class="stage-tab" role="tab" aria-selected="true" aria-controls="panel-input" data-stage="input"><span class="stage-number">01</span><span data-i18n="stageInput">Sequence input</span><svg class="icon"><use href="#i-arrow"/></svg></button>
+              <button id="tab-assay" class="stage-tab" role="tab" aria-selected="false" aria-controls="panel-assay" data-stage="assay" tabindex="-1"><span class="stage-number">02</span><span data-i18n="stageAssay">Validation package</span><svg class="icon"><use href="#i-arrow"/></svg></button>
+              <button id="tab-results" class="stage-tab" role="tab" aria-selected="false" aria-controls="panel-results" data-stage="results" tabindex="-1"><span class="stage-number">03</span><span data-i18n="stageResults">Structured results</span><svg class="icon"><use href="#i-arrow"/></svg></button>
+              <div class="sidebar-bottom"><svg class="icon"><use href="#i-brackets"/></svg><p data-i18n="previewNote">An inside look.<br>All data shown is synthetic.</p></div>
+            </div>
+            <div class="workbench-content">
+              <section class="stage-panel" id="panel-input" role="tabpanel" aria-labelledby="tab-input" tabindex="0">
+                <div class="panel-heading"><div><span class="mono panel-eyebrow" data-i18n="inputLabel">INPUT / SEQUENCE FILE</span><h3 data-i18n="inputTitle">Great science starts with a sequence.</h3></div><span class="dark-badge" data-i18n="exampleFile">EXAMPLE FILE</span></div>
+                <div class="code-editor"><div class="editor-title"><svg class="icon"><use href="#i-file"/></svg><span>binder_001.fasta</span><span class="editor-language">FASTA</span></div><div class="editor-lines mono"><div><span>1</span><code class="code-blue">&gt;binder_001 | example sequence</code></div><div><span>2</span><code>MKTAYIAKQRQISFVKSHFSRQDILDLWIYHTQGYFPQ</code></div><div><span>3</span><code>GQGQKVEVIKPAGVETLKE</code></div><div><span>4</span><code class="code-comment" data-i18n="sequenceComment">; Your next discovery starts here.</code></div></div></div>
+                <div class="input-bottom"><div><span class="mono" data-i18n="acceptedFormats">DESIGNED FOR</span><span class="format-chip">.fasta</span><span class="format-chip">.pdb</span></div><button class="workbench-link" data-next-stage="assay"><span data-i18n="nextPackage">Explore a package</span><svg class="icon"><use href="#i-arrow"/></svg></button></div>
+                <p class="preview-disclaimer" data-i18n="inputDisclaimer">Example input. File upload and automated pre-checks are planned for the full demo.</p>
+              </section>
+              <section class="stage-panel" id="panel-assay" role="tabpanel" aria-labelledby="tab-assay" tabindex="0" hidden>
+                <div class="panel-heading"><div><span class="mono panel-eyebrow" data-i18n="assayLabel">CONFIGURE / VALIDATION</span><h3 data-i18n="assayTitle">Defined scope. Clear deliverables.</h3></div><span class="dark-badge" data-i18n="scopePreview">SCOPE PREVIEW</span></div>
+                <div class="assay-preview"><div class="assay-symbol"><svg class="icon"><use href="#i-stack"/></svg></div><div><span class="mono code-blue">BND-01</span><h4 data-i18n="binderName">Binder Assay Pack</h4><p data-i18n="binderShort">Characterize the interaction behind your prediction.</p></div></div>
+                <div class="scope-rows"><div><span data-i18n="scopeMethod">Assay method</span><strong>SPR / BLI</strong></div><div><span data-i18n="scopeOutput">Data output</span><strong>JSON + CSV</strong></div><div><span data-i18n="scopeContext">Included context</span><strong data-i18n="scopeMetadata">Assay metadata + QC</strong></div></div>
+                <div class="input-bottom"><span class="preview-disclaimer" data-i18n="scopeDisclaimer">Illustrative scope. Pricing follows in the full demo.</span><button class="workbench-link" data-next-stage="results"><span data-i18n="nextResults">See example results</span><svg class="icon"><use href="#i-arrow"/></svg></button></div>
+              </section>
+              <section class="stage-panel" id="panel-results" role="tabpanel" aria-labelledby="tab-results" tabindex="0" hidden>
+                <div class="panel-heading"><div><span class="mono panel-eyebrow" data-i18n="resultsLabel">OUTPUT / BINDING KINETICS</span><h3 data-i18n="resultsTitle">Data your next model can use.</h3></div><span class="dark-badge" data-i18n="synthetic">SYNTHETIC DATA</span></div>
+                <div class="results-layout"><div class="results-chart"><div class="chart-caption"><span class="mono">binder_001</span><span data-i18n="chartLegend">Response (RU)</span></div><svg viewBox="0 0 550 155" role="img" data-i18n-aria="chartAria" aria-label="Synthetic binding sensorgram with association and dissociation phases"><g stroke="#2b2e36" stroke-width="1"><path d="M35 15h500M35 50h500M35 85h500M35 120h500"/><path d="M35 15v105M180 15v105M325 15v105M470 15v105" stroke-dasharray="2 5"/></g><g fill="#a0a5b0" font-size="10" font-family="monospace"><text x="6" y="124">0</text><text x="2" y="54">60</text><text x="30" y="143">0</text><text x="173" y="143">60</text><text x="315" y="143">120</text><text x="460" y="143">180</text><text x="500" y="153">t (s)</text></g><path d="M35 120H64C85 120 85 29 185 25H325C367 25 384 75 535 91" fill="none" stroke="#78b3ff" stroke-width="2.5"/><path d="M35 120H64C85 120 90 56 187 53H325C367 53 399 90 535 102" fill="none" stroke="#708aaf" stroke-width="1.6" stroke-dasharray="5 3"/></svg></div><div class="result-metric"><span class="mono">K<sub>d</sub></span><strong class="mono">12.4 <small>nM</small></strong><span data-i18n="exampleEstimate">Illustrative estimate</span><div class="metric-divider"></div><span data-i18n="traceable">Context travels<br>with your data.</span></div></div>
+                <div class="result-footer"><span class="preview-disclaimer" data-i18n="resultDisclaimer">Synthetic curves. Not experimental measurements.</span><div><button class="export-button" data-export="json"><svg class="icon"><use href="#i-download"/></svg><span data-i18n="exportJson">Export JSON</span></button><button class="export-button" data-export="csv"><svg class="icon"><use href="#i-download"/></svg><span data-i18n="exportCsv">Export CSV</span></button></div></div>
+              </section>
+            </div>
+          </div>
+          <div class="workbench-status"><span class="mono">BIODEPLOY / PREVIEW</span><span data-i18n="previewFooter">One sequence. A clearer next step.</span><span class="mono">v0.1</span></div>
+        </div>
+        <div class="platform-caption"><span data-i18n="platformCaption">Less coordination. More iteration.</span><span class="mono">.fasta → wet lab → .json</span></div>
+      </div>
+    </section>
+
+    <section class="packages-section section-space container" id="packages" aria-labelledby="packages-heading">
+      <div class="section-heading"><div><div class="eyebrow"><span class="section-index">02</span><span data-i18n="packagesEyebrow">VALIDATION, DEFINED</span></div><h2 id="packages-heading" data-i18n="packagesTitle">Choose your next question.</h2></div><p data-i18n="packagesDescription">Standardized packages, built around the decisions researchers actually need to make.</p></div>
+      <div class="package-grid">
+        <article class="package-card"><div class="package-top"><span class="package-icon"><svg class="icon"><use href="#i-stack"/></svg></span><span class="mono">EXP-01</span></div><div class="package-question" data-i18n="expressionQuestion">WILL IT EXPRESS?</div><h3 data-i18n="expressionName">Starter Expression Pack</h3><p data-i18n="expressionDescription">Bridge the gap between a promising sequence and a protein you can work with.</p><div class="package-details"><div><span data-i18n="packageMethod">METHOD</span><strong data-i18n="expressionMethod">E. coli expression</strong></div><div><span data-i18n="packageDelivery">DELIVERABLES</span><strong data-i18n="expressionOutput">Expression & solubility readout</strong></div></div><button class="package-link" data-package="expression"><span data-i18n="viewPackage">View package scope</span><svg class="icon"><use href="#i-northeast"/></svg></button></article>
+        <article class="package-card"><div class="package-top"><span class="package-icon blue-icon"><svg class="icon"><use href="#i-brackets"/></svg></span><span class="mono">BND-01</span></div><div class="package-question" data-i18n="binderQuestion">DOES IT BIND?</div><h3 data-i18n="binderName">Binder Assay Pack</h3><p data-i18n="binderDescription">Move beyond predicted affinity. See the interaction, with data ready for your next iteration.</p><div class="package-details"><div><span data-i18n="packageMethod">METHOD</span><strong data-i18n="binderMethod">SPR / BLI binding assay</strong></div><div><span data-i18n="packageDelivery">DELIVERABLES</span><strong data-i18n="binderOutput">Binding curves & kinetic analysis</strong></div></div><button class="package-link" data-package="binder"><span data-i18n="viewPackage">View package scope</span><svg class="icon"><use href="#i-northeast"/></svg></button></article>
+      </div>
+      <p class="package-note"><svg class="icon"><use href="#i-brackets"/></svg><span data-i18n="packageNote">Structured outputs by design. Final scope, pricing, and turnaround will be shown before submission in the full demo.</span></p>
+    </section>
+
+    <section class="network-section section-space" id="network" aria-labelledby="network-heading"><div class="container network-layout">
+      <div class="network-copy"><div class="eyebrow"><span class="section-index">03</span><span data-i18n="networkEyebrow">SCIENCE WITHOUT BORDERS</span></div><h2 id="network-heading" data-i18n="networkTitle">A global network.<br>One standard.</h2><p data-i18n="networkDescription">Local laboratory expertise, connected through a shared workflow. Designed for consistent, traceable delivery across regions.</p><div class="region-tabs" role="tablist" data-i18n-aria="deliveryRegions" aria-label="Delivery regions"><button id="region-cn" role="tab" aria-selected="true" aria-controls="region-description" data-region="cn" data-i18n="countryCn">China</button><button id="region-us" role="tab" aria-selected="false" aria-controls="region-description" tabindex="-1" data-region="us" data-i18n="countryUs">United States</button><button id="region-au" role="tab" aria-selected="false" aria-controls="region-description" tabindex="-1" data-region="au" data-i18n="countryAu">Australia</button></div><div class="region-description" id="region-description" role="tabpanel" aria-labelledby="region-cn"><div><span class="mono region-code">CN / APAC</span><span class="outline-badge" data-i18n="networkConcept">NETWORK CONCEPT</span></div><p id="region-copy" data-i18n="regionCnCopy">A China-based delivery region within a shared experiment and data workflow.</p></div><p class="region-note" data-i18n="regionNote">Regions illustrate the delivery model. Laboratory partners and availability will be confirmed separately.</p></div>
+      <div class="globe-visual" role="img" data-i18n-aria="networkVisual" aria-label="Schematic globe connecting China, the United States, and Australia">
+        <div class="globe-coordinates mono" data-i18n="networkProtocol">GLOBAL DELIVERY / SHARED PROTOCOL</div>
+        <svg viewBox="0 0 520 430" fill="none" aria-hidden="true"><defs><radialGradient id="globe-fill" cx=".35" cy=".3"><stop stop-color="#fff"/><stop offset="1" stop-color="#e9edf2"/></radialGradient><clipPath id="globe-clip"><circle cx="260" cy="211" r="159"/></clipPath></defs><circle cx="260" cy="211" r="159" fill="url(#globe-fill)" stroke="#dce0e6"/><g clip-path="url(#globe-clip)" stroke="#d4dae2"><ellipse cx="260" cy="211" rx="55" ry="159"/><ellipse cx="260" cy="211" rx="111" ry="159"/><ellipse cx="260" cy="211" rx="159" ry="53"/><ellipse cx="260" cy="211" rx="159" ry="108"/><path d="M101 211h318M260 52v318"/><path d="M118 155c69 28 216 28 284 0M118 267c69-28 216-28 284 0"/></g><g stroke="#146ef5" stroke-width="1.3"><path d="M164 158Q261 92 348 179M348 179Q398 245 320 305M164 158Q178 299 320 305" stroke-dasharray="4 5" opacity=".5"/></g><g class="map-pin" data-map-region="us"><circle cx="164" cy="158" r="14" fill="#146ef5" opacity=".08"/><circle cx="164" cy="158" r="5" fill="#146ef5" stroke="#fff" stroke-width="2"/></g><g class="map-pin active" data-map-region="cn"><circle cx="348" cy="179" r="14" fill="#146ef5" opacity=".08"/><circle cx="348" cy="179" r="5" fill="#146ef5" stroke="#fff" stroke-width="2"/></g><g class="map-pin" data-map-region="au"><circle cx="320" cy="305" r="14" fill="#146ef5" opacity=".08"/><circle cx="320" cy="305" r="5" fill="#146ef5" stroke="#fff" stroke-width="2"/></g><g fill="#66666e" font-family="monospace" font-size="11"><text x="111" y="142">US</text><text x="369" y="166">CN</text><text x="340" y="324">AU</text></g><path d="M57 63h12M63 57v12M457 359h12M463 353v12" stroke="#c4cad3"/></svg>
+        <div class="globe-bottom"><span data-i18n="globeCaption">Different regions. A shared data language.</span><span class="mono">CN · US · AU</span></div>
+      </div>
+    </div></section>
+
+    <section class="closing container"><div><div class="eyebrow" data-i18n="closingEyebrow">LESS FRICTION. MORE DISCOVERY.</div><h2 data-i18n="closingTitle">Let your next idea<br>leave the screen.</h2></div><a class="button" href="#platform"><span data-i18n="closingCta">Explore Biodeploy</span><svg class="icon"><use href="#i-arrow"/></svg></a></section>
+  </main>
+  <footer class="site-footer container"><div class="footer-top"><a class="brand" href="#" aria-label="Biodeploy"><svg class="brand-mark"><use href="#i-mark"/></svg><span>biodeploy<span class="brand-period">.</span></span></a><span data-i18n="footerTagline">Infrastructure for the next era of biology.</span><a href="#main"><span data-i18n="backTop">Back to top</span> ↑</a></div><div class="footer-bottom"><span>© 2026 Biodeploy</span><span data-i18n="footerDisclosure">Brand & product preview. All experiment data is synthetic.</span><span class="mono">SEQUENCE IN. DATA OUT.</span></div></footer>
+  <dialog id="package-dialog" aria-labelledby="dialog-title"><div class="dialog-inner"><div class="dialog-top"><span class="eyebrow" data-i18n="dialogEyebrow">PACKAGE SCOPE</span><button class="icon-button" id="close-dialog" data-i18n-aria="close" aria-label="Close"><svg class="icon"><use href="#i-close"/></svg></button></div><span class="mono dialog-code" id="dialog-code">EXP-01</span><h2 id="dialog-title"></h2><p id="dialog-description"></p><dl class="dialog-details"><div><dt data-i18n="packageMethod">METHOD</dt><dd id="dialog-method"></dd></div><div><dt data-i18n="packageDelivery">DELIVERABLES</dt><dd id="dialog-output"></dd></div><div><dt data-i18n="dialogFormat">DATA FORMAT</dt><dd>JSON / CSV</dd></div></dl><div class="dialog-notice"><svg class="icon"><use href="#i-file"/></svg><p data-i18n="dialogNotice">This is a package preview. Final scope, pricing, regional availability, and turnaround will be confirmed in the full demo.</p></div><button class="button dialog-done" id="dialog-done"><span data-i18n="dialogDone">Got it</span><svg class="icon"><use href="#i-check"/></svg></button></div></dialog>
+  <div class="sr-only" id="announcement" role="status" aria-live="polite"></div>
+</body>
+</html>

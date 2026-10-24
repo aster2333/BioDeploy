@@ -1,0 +1,13 @@
+{
+  "name": "biodeploy",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Biodeploy multilingual brand website shell",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node --check src/app.js && node --check src/locales.js && node scripts/check.mjs",
+    "preview": "node scripts/serve.mjs dist"
+  }
+}
