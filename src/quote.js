@@ -1,8 +1,8 @@
 // Illustrative USD pricing only. This module never submits an experiment.
 export const demoCatalog = {
-  expression: { baseUnitCents: 4500, days: [14, 21], nameKey: 'expressionName', scopeKey: 'quoteExpressionScope' },
-  screening: { baseUnitCents: 8900, days: [14, 21], nameKey: 'screeningName', scopeKey: 'quoteScreeningScope' },
-  affinity: { baseUnitCents: 13900, days: [21, 28], nameKey: 'affinityName', scopeKey: 'quoteAffinityScope' },
+  expression: { baseUnitCents: 4500, days: [21, 21], nameKey: 'expressionName', scopeKey: 'quoteExpressionScope' },
+  screening: { baseUnitCents: 8900, days: [21, 21], nameKey: 'screeningName', scopeKey: 'quoteScreeningScope' },
+  affinity: { baseUnitCents: 13900, days: [21, 21], nameKey: 'affinityName', scopeKey: 'quoteAffinityScope' },
 };
 
 export function calculateDemoQuote({ mode, quantity, replicates, targets }) {

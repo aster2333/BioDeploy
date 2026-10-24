@@ -27,7 +27,7 @@ function renderDialog() {
   $('#dialog-method').textContent = t(`${prefix}Method`);
   $('#dialog-output').textContent = t(`${prefix}Output`);
   $('#dialog-depth').textContent = prefix === 'expression' ? t('expressionDepth') : `${t('screeningDepth')} / ${t('affinityDepth')}`;
-  $('#dialog-days').textContent = `${prefix === 'expression' ? '14–21' : '14–28'} ${t('days')}`;
+  $('#dialog-days').textContent = `21 ${t('days')}`;
 }
 
 function renderRegion() {
@@ -210,6 +210,7 @@ function renderResults() {
   $('#candidate-kd').textContent = candidate.illustrative_estimate.kd === null ? '—' : `${number(candidate.illustrative_estimate.kd)} nM`;
   $('#candidate-outcome').textContent = status;
   $('#candidate-reason').textContent = t(candidate.reason_key);
+  $('#candidate-reason').hidden = candidate.outcome === 'binder';
   $('#candidate-reason').dataset.outcome = candidate.outcome;
   $('#qc-status').textContent = status;
   $('#qc-mae').textContent = candidate.qc.mae_ru === null ? '—' : `${number(candidate.qc.mae_ru)} RU`;
@@ -275,8 +276,7 @@ function renderQuote() {
   $('#save-estimate').disabled = !quote.valid;
   $$('[data-quantity]').forEach((button) => button.setAttribute('aria-pressed', String(Number(button.dataset.quantity) === $('#quote-quantity').valueAsNumber)));
   for (const [selector, key] of [['#quote-unit','unit_cents'],['#quote-base','base_cents'],['#quote-extra','extra_replicate_cents'],['#quote-total','total_cents']]) $(selector).textContent = quote.valid ? money(quote[key]) : '—';
-  $('#quote-days').textContent = `${demoCatalog[mode].days.join('–')} ${t('days')}`;
-  $('#quote-formula').textContent = quote.valid ? `${number(quote.configuration.quantity)} × ${money(quote.unit_cents)} × ${number(quote.configuration.targets)} + ${money(quote.extra_replicate_cents)}` : '';
+  $('#quote-days').textContent = `${[...new Set(demoCatalog[mode].days)].join('-')} ${t('days')}`;
 }
 quoteForm.addEventListener('submit', (event) => event.preventDefault());
 quoteForm.addEventListener('input', renderQuote);
@@ -294,13 +294,13 @@ $('#dialog-configure').addEventListener('click', () => {
 });
 
 const milestoneNames = ['Scope', 'Materials', 'Expression', 'Measurement', 'Release'];
-const milestoneWindows = ['0', '1–5', '6–10', '11–15', '16–21'];
+const milestoneWindows = ['0', '1-5', '6-10', '11-15', '16-21'];
 function renderMilestone() {
   const index = state.milestone;
   $('#milestone-title').textContent = t(`milestone${milestoneNames[index]}`);
   $('#milestone-copy').textContent = t(`milestone${milestoneNames[index]}Copy`);
   $('#milestone-owner').textContent = t(index === 0 ? 'scopeOwner' : index === 4 ? 'releaseOwner' : 'labOwner');
-  $('#milestone-window').textContent = `${milestoneWindows[index]} ${t('days')}`;
+  $('#milestone-window').textContent = t('dayWindow').replace('{days}', milestoneWindows[index]);
   $('#milestone-detail').setAttribute('aria-labelledby', `milestone-${index}`);
   $$('[data-milestone]').forEach((button) => {
     const selected = Number(button.dataset.milestone) === index;

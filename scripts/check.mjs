@@ -64,6 +64,8 @@ for (const input of [{ mode: 'unknown' }, { replicates: 1 }, { targets: 4 }]) as
 assert.equal(quote().synthetic, true);
 assert.equal(quote().not_a_quote, true);
 assert.equal(quote().currency, 'USD');
+for (const entry of Object.values(demoCatalog)) assert.deepEqual(entry.days, [21, 21]);
+assert.deepEqual(quote().illustrative_days, [21, 21]);
 for (const entry of Object.values(demoCatalog)) for (const locale of Object.values(locales)) {
   assert.ok(locale[entry.nameKey]);
   assert.ok(locale[entry.scopeKey]);
