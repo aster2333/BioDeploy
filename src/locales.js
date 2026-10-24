@@ -1,4 +1,5 @@
 import { componentMessages } from './component-copy.js';
+import { notFoundMessages } from './not-found-copy.js';
 import { experienceMessages } from './experience-copy.js';
 export const languages = [
   { code: 'en', name: 'English' },
@@ -90,6 +91,7 @@ export const messages = {
   dialogDone: ['Got it', '了解了', '瞭解了', '確認しました'],
   ...experienceMessages,
   ...componentMessages,
+  ...notFoundMessages,
 };
 
 export const locales = Object.fromEntries(languages.map(({ code }, column) => [

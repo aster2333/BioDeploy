@@ -1,0 +1,103 @@
+.not-found-page{
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column
+}
+.not-found-header{
+  min-height:94px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  border-bottom:1px solid var(--border)
+}
+.not-found-main{
+  flex:1;
+  display:grid;
+  place-items:center;
+  padding-block:80px 100px
+}
+.not-found-main:focus{
+  outline:none
+}
+.not-found-content{
+  width:100%;
+  text-align:center
+}
+.not-found-code{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin:0 auto 36px;
+  font-family:var(--mono);
+  font-size:168px;
+  font-weight:400;
+  line-height:1;
+  letter-spacing:-12px
+}
+.not-found-code>span{
+  width:100px
+}
+.not-found-zero{
+  width:112px;
+  height:144px;
+  color:#a9abb3
+}
+.not-found-content h1{
+  font-size:clamp(32px,4vw,44px);
+  line-height:1.15;
+  letter-spacing:-1.6px
+}
+.not-found-description{
+  max-width:410px;
+  margin:16px auto 0;
+  color:var(--secondary);
+  font-size:16px;
+  line-height:1.65
+}
+.not-found-actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:32px
+}
+.not-found-back{
+  transform:rotate(180deg)
+}
+.not-found-secondary{
+  background:var(--surface);
+  color:var(--ink);
+  border-color:var(--border)
+}
+.not-found-secondary:hover{
+  background:#f0f0f2;
+  border-color:#c7c7ce
+}
+.not-found-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding-block:25px;
+  border-top:1px solid var(--border);
+  color:var(--secondary);
+  font-size:12px
+}
+@media(max-width:600px){
+  .not-found-page .container{width:calc(100% - 40px)}
+  .not-found-header{min-height:78px}
+  .not-found-main{padding-block:64px 80px}
+  .not-found-code{font-size:136px;gap:6px;letter-spacing:-10px;margin-bottom:32px}
+  .not-found-code>span{width:80px}
+  .not-found-zero{width:92px;height:120px}
+  .not-found-description{max-width:300px;font-size:15px}
+  .not-found-actions{flex-wrap:wrap;margin-top:28px}
+  .not-found-actions .button{gap:12px;padding-inline:17px;white-space:normal;min-width:0}
+  .not-found-footer{flex-direction:column;gap:6px;text-align:center;padding-block:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  .not-found-page .button{transition:none}
+  .not-found-page .button:hover{transform:none}
+}

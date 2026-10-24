@@ -7,6 +7,18 @@ import { createDemoInquiry, validateInquiryEmail } from '../src/inquiry.js';
 
 const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 const componentHtml = await readFile(new URL('../components.html', import.meta.url), 'utf8');
+const notFoundHtml = await readFile(new URL('../404.html', import.meta.url), 'utf8');
+const notFoundIds = [...notFoundHtml.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
+assert.equal(new Set(notFoundIds).size, notFoundIds.length, 'Duplicate 404 element IDs');
+for (const [, targets] of notFoundHtml.matchAll(/aria-(?:controls|labelledby|describedby)="([^"]+)"/g)) {
+  for (const id of targets.split(' ')) assert.ok(notFoundIds.includes(id), `Missing 404 ARIA target: ${id}`);
+}
+for (const [, anchor] of notFoundHtml.matchAll(/href="#([^"]+)"/g)) assert.ok(notFoundIds.includes(anchor), `Broken 404 anchor: ${anchor}`);
+for (const [, anchor] of notFoundHtml.matchAll(/href="\/#([^"]+)"/g)) assert.ok(html.includes(`id="${anchor}"`), `Broken 404 home link: ${anchor}`);
+for (const [, file] of notFoundHtml.matchAll(/(?:src|href)="(\/(?:src|public)\/[^"#]+)"/g)) await access(new URL(`..${file}`, import.meta.url));
+for (const [, key] of notFoundHtml.matchAll(/data-i18n="([^"]+)"/g)) {
+  for (const locale of Object.values(locales)) assert.ok(locale[key], `Missing 404 translation: ${key}`);
+}
 assert.equal(languages.length, 4);
 for (const [key, translations] of Object.entries(messages)) {
   assert.equal(translations.length, languages.length, `${key}: missing translation`);
