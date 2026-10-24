@@ -1,3 +1,4 @@
+import { experienceMessages } from './experience-copy.js';
 export const languages = [
   { code: 'en', name: 'English' },
   { code: 'zh-CN', name: '简体中文' },
@@ -121,6 +122,7 @@ export const messages = {
   dialogFormat: ['DATA FORMAT', '数据格式', '資料格式', 'データ形式'],
   dialogNotice: ['This is a package preview. Final scope, pricing, regional availability, and turnaround will be confirmed in the full demo.', '当前为套餐预览。最终范围、价格、地区可用性与交付周期将在完整演示中确认。', '目前為套組預覽。最終範圍、價格、地區可用性與交付時程將於完整示範中確認。', 'パッケージのプレビューです。最終的な範囲・価格・地域別の提供状況・納期は、完全版デモで確定予定です。'],
   dialogDone: ['Got it', '了解了', '瞭解了', '確認しました'],
+  ...experienceMessages,
 };
 
 export const locales = Object.fromEntries(languages.map(({ code }, column) => [

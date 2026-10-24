@@ -1,8 +1,9 @@
 import { languages, locales } from './locales.js';
-import { sampleData } from './sample-data.js';
+import { sampleData, sampleCsv } from './sample-data.js';
+import { calculateDemoQuote, demoCatalog } from './quote.js';
 
 const localeKey = 'biodeploy.locale';
-const state = { locale: 'en', stage: 'input', region: 'cn', package: 'expression' };
+const state = { locale: 'en', stage: 'input', region: 'cn', package: 'expression', candidate: 'binder_001', dataView: 'raw', milestone: 0, apiView: 'request' };
 try {
   const saved = localStorage.getItem(localeKey);
   if (Object.hasOwn(locales, saved)) state.locale = saved;
@@ -25,6 +26,8 @@ function renderDialog() {
   $('#dialog-description').textContent = t(`${prefix}Description`);
   $('#dialog-method').textContent = t(`${prefix}Method`);
   $('#dialog-output').textContent = t(`${prefix}Output`);
+  $('#dialog-depth').textContent = prefix === 'expression' ? t('expressionDepth') : `${t('screeningDepth')} / ${t('affinityDepth')}`;
+  $('#dialog-days').textContent = `${prefix === 'expression' ? '14–21' : '14–28'} ${t('days')}`;
 }
 
 function renderRegion() {
@@ -54,6 +57,7 @@ function renderLocale() {
   $$('input[name="locale"]').forEach((input) => { input.checked = input.value === state.locale; });
   renderRegion();
   renderDialog();
+  renderExperience();
 }
 
 function closeLocale(restoreFocus = false) {
@@ -108,7 +112,7 @@ $$('#mobile-nav a').forEach((link) => link.addEventListener('click', () => {
   const target = $(link.getAttribute('href'))?.querySelector('h2');
   if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); }
 }));
-matchMedia('(min-width: 901px)').addEventListener('change', ({ matches }) => {
+matchMedia('(min-width: 1101px)').addEventListener('change', ({ matches }) => {
   if (matches) { mobileNav.hidden = true; mobileTrigger.setAttribute('aria-expanded', 'false'); }
 });
 
@@ -172,32 +176,189 @@ dialog.addEventListener('close', () => {
   dialogOpener?.focus({ preventScroll: true });
 });
 
-// The graph and both file formats share one synthetic fixture.
-const chartPaths = $$('.results-chart svg > path');
-sampleData.traces.forEach((trace, index) => {
-  const path = trace.points.map(({ time_s, response_ru }, point) => `${point ? 'L' : 'M'}${(35 + time_s / 210 * 500).toFixed(2)},${(120 - response_ru * 7 / 6).toFixed(2)}`).join(' ');
-  chartPaths[index].setAttribute('d', path);
+// Local-only product previews. All state is independent of language and region.
+const number = (value) => new Intl.NumberFormat(state.locale, { maximumFractionDigits: 2 }).format(value);
+const money = (cents) => new Intl.NumberFormat(state.locale, { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(cents / 100);
+const outcomeKeys = { binder: 'outcomeBinder', negative: 'outcomeNegative', unexpressed: 'outcomeUnexpressed', flagged: 'outcomeFlagged' };
+const fitChart = $('.results-chart').cloneNode(true);
+fitChart.querySelector('#chart-candidate').removeAttribute('id');
+fitChart.querySelector('svg').removeAttribute('data-i18n-aria');
+$('#fit-chart-mount').append(fitChart);
+
+function drawTraces(container, traces) {
+  container.querySelectorAll('.data-trace').forEach((path, index) => {
+    const trace = traces[index];
+    path.setAttribute('d', trace ? trace.points.map(({ time_s, response_ru }, point) => `${point ? 'L' : 'M'}${(35 + time_s / 210 * 500).toFixed(2)},${(120 - response_ru * 7 / 6).toFixed(2)}`).join(' ') : '');
+  });
+}
+
+function renderResults() {
+  const candidate = sampleData.candidates.find(({ id }) => id === state.candidate);
+  const status = t(outcomeKeys[candidate.outcome]);
+  $('#candidate-select').value = state.candidate;
+  const rawContainer = $('#data-raw .results-chart');
+  rawContainer.querySelector('.chart-caption .mono').textContent = candidate.id;
+  fitChart.querySelector('.chart-caption .mono').textContent = candidate.id;
+  fitChart.querySelector('svg').setAttribute('aria-label', t('chartAria'));
+  drawTraces(rawContainer, candidate.raw_traces);
+  drawTraces(fitChart, candidate.fitted_traces);
+  $('#data-raw .results-layout').hidden = candidate.raw_traces.length === 0;
+  $('#measurement-empty').hidden = candidate.raw_traces.length !== 0;
+  $('#data-raw .trace-legend').hidden = candidate.raw_traces.length === 0;
+  fitChart.hidden = candidate.fitted_traces.length === 0;
+  $('#fit-unavailable').hidden = candidate.fitted_traces.length !== 0;
+  $('#candidate-kd').textContent = candidate.illustrative_estimate.kd === null ? '—' : `${number(candidate.illustrative_estimate.kd)} nM`;
+  $('#candidate-outcome').textContent = status;
+  $('#candidate-reason').textContent = t(candidate.reason_key);
+  $('#candidate-reason').dataset.outcome = candidate.outcome;
+  $('#qc-status').textContent = status;
+  $('#qc-mae').textContent = candidate.qc.mae_ru === null ? '—' : `${number(candidate.qc.mae_ru)} RU`;
+  $('#qc-protocol').textContent = `${candidate.provenance.protocol_id} / v${candidate.provenance.protocol_version}`;
+  $('#qc-batch').textContent = `${candidate.provenance.batch_id} / ${candidate.provenance.lab_id}`;
+  $$('[data-view]').forEach((button) => {
+    const selected = button.dataset.view === state.dataView;
+    button.setAttribute('aria-selected', String(selected));
+    button.tabIndex = selected ? 0 : -1;
+    $(`#data-${button.dataset.view}`).hidden = !selected;
+  });
+  const rows = sampleData.candidates.map((item) => {
+    const row = document.createElement('tr');
+    row.classList.toggle('selected', item.id === candidate.id);
+    const nameCell = document.createElement('th');
+    nameCell.scope = 'row';
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.candidate = item.id;
+    button.textContent = item.id;
+    button.setAttribute('aria-pressed', String(item.id === candidate.id));
+    nameCell.append(button);
+    row.append(nameCell);
+    for (const value of [t(item.expression === 'detected' ? 'detected' : 'notDetected'), t(outcomeKeys[item.outcome]), item.illustrative_estimate.kd === null ? '—' : number(item.illustrative_estimate.kd)]) {
+      const cell = document.createElement('td');
+      cell.textContent = value;
+      row.append(cell);
+    }
+    return row;
+  });
+  $('#candidate-rows').replaceChildren(...rows);
+}
+$('#candidate-select').addEventListener('change', (event) => { state.candidate = event.target.value; renderResults(); });
+$('#candidate-rows').addEventListener('click', (event) => {
+  const button = event.target.closest('[data-candidate]');
+  if (!button) return;
+  state.candidate = button.dataset.candidate;
+  renderResults();
+  $('#candidate-select').focus({ preventScroll: true });
+});
+const dataButtons = $$('[data-view]');
+dataButtons.forEach((button) => {
+  const activate = (target) => { state.dataView = target.dataset.view; renderResults(); };
+  button.addEventListener('click', () => activate(button));
+  button.addEventListener('keydown', (event) => activateTabWithKeys(event, dataButtons, activate));
 });
 
-$$('[data-export]').forEach((button) => button.addEventListener('click', () => {
-  const format = button.dataset.export;
-  const csvHeader = 'schema_version,synthetic,sequence_id,trace_id,method,qc_status,time_s,response_ru,kd_nM';
-  const csvRows = sampleData.traces.flatMap((trace) => trace.points.map((point) => [
-    sampleData.schema_version, true, sampleData.sequence_id, trace.id, sampleData.assay.method,
-    sampleData.assay.qc_status, point.time_s, point.response_ru, sampleData.illustrative_estimate.kd,
-  ].join(',')));
-  const content = format === 'json' ? JSON.stringify(sampleData, null, 2) : `${csvHeader}\r\n${csvRows.join('\r\n')}\r\n`;
-  const blob = new Blob([content], { type: format === 'json' ? 'application/json' : 'text/csv;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
+const quoteForm = $('#quote-form');
+function currentQuote() {
+  return calculateDemoQuote({ mode: $('#quote-mode').value, quantity: $('#quote-quantity').valueAsNumber, replicates: Number($('#quote-replicates').value), targets: Number($('#quote-targets').value) });
+}
+function renderQuote() {
+  const mode = $('#quote-mode').value;
+  const expression = mode === 'expression';
+  $('#quote-targets').disabled = expression;
+  if (expression) $('#quote-targets').value = '1';
+  $('#quote-scope').textContent = t(demoCatalog[mode].scopeKey);
+  const quote = currentQuote();
+  const error = $('#quantity-error');
+  error.hidden = quote.valid;
+  error.textContent = quote.valid ? '' : t(quote.errorKey);
+  $('#quote-quantity').setAttribute('aria-invalid', String(!quote.valid));
+  $('#save-estimate').disabled = !quote.valid;
+  $$('[data-quantity]').forEach((button) => button.setAttribute('aria-pressed', String(Number(button.dataset.quantity) === $('#quote-quantity').valueAsNumber)));
+  for (const [selector, key] of [['#quote-unit','unit_cents'],['#quote-base','base_cents'],['#quote-extra','extra_replicate_cents'],['#quote-total','total_cents']]) $(selector).textContent = quote.valid ? money(quote[key]) : '—';
+  $('#quote-days').textContent = `${demoCatalog[mode].days.join('–')} ${t('days')}`;
+  $('#quote-formula').textContent = quote.valid ? `${number(quote.configuration.quantity)} × ${money(quote.unit_cents)} × ${number(quote.configuration.targets)} + ${money(quote.extra_replicate_cents)}` : '';
+}
+quoteForm.addEventListener('submit', (event) => event.preventDefault());
+quoteForm.addEventListener('input', renderQuote);
+quoteForm.addEventListener('change', renderQuote);
+$$('[data-quantity]').forEach((button) => button.addEventListener('click', () => { $('#quote-quantity').value = button.dataset.quantity; renderQuote(); }));
+$('#dialog-configure').addEventListener('click', () => {
+  $('#quote-mode').value = state.package === 'expression' ? 'expression' : 'screening';
+  renderQuote();
+  dialog.close();
+  // Wait for the native close event's opener restoration before focusing the destination.
+  dialog.addEventListener('close', () => {
+    $('#pricing-heading').tabIndex = -1;
+    $('#pricing-heading').focus({ preventScroll: true });
+  }, { once: true });
+});
+
+const milestoneNames = ['Scope', 'Materials', 'Expression', 'Measurement', 'Release'];
+const milestoneWindows = ['0', '1–5', '6–10', '11–15', '16–21'];
+function renderMilestone() {
+  const index = state.milestone;
+  $('#milestone-title').textContent = t(`milestone${milestoneNames[index]}`);
+  $('#milestone-copy').textContent = t(`milestone${milestoneNames[index]}Copy`);
+  $('#milestone-owner').textContent = t(index === 0 ? 'scopeOwner' : index === 4 ? 'releaseOwner' : 'labOwner');
+  $('#milestone-window').textContent = `${milestoneWindows[index]} ${t('days')}`;
+  $('#milestone-detail').setAttribute('aria-labelledby', `milestone-${index}`);
+  $$('[data-milestone]').forEach((button) => {
+    const selected = Number(button.dataset.milestone) === index;
+    button.setAttribute('aria-selected', String(selected));
+    button.tabIndex = selected ? 0 : -1;
+  });
+}
+const milestoneButtons = $$('[data-milestone]');
+milestoneButtons.forEach((button) => {
+  const activate = (target) => { state.milestone = Number(target.dataset.milestone); renderMilestone(); };
+  button.addEventListener('click', () => activate(button));
+  button.addEventListener('keydown', (event) => activateTabWithKeys(event, milestoneButtons, activate));
+});
+
+const apiExamples = {
+  request: `POST https://api.biodeploy.example/v1/experiments\n\n{\n  "schema_version": "0.2",\n  "demo": true,\n  "package": "binding_screening",\n  "sequence_refs": ["binder_001", "binder_002"],\n  "budget": { "currency": "USD", "limit": 1500 },\n  "requires_confirmation": true\n}`,
+  event: JSON.stringify({ schema_version: '0.2', demo: true, event: 'results.example', data: { synthetic: true, candidate: 'binder_004', binding: 'unknown', kd_nM: null, reason: 'fit_qc_review', protocol_id: 'DEMO-SPR-01', qc: { synthetic: true, status: 'review_example' } } }, null, 2),
+};
+function renderApi() {
+  $('#api-code').textContent = apiExamples[state.apiView];
+  $('#api-code-panel').setAttribute('aria-labelledby', `api-${state.apiView}`);
+  $$('[data-api-view]').forEach((button) => {
+    const selected = button.dataset.apiView === state.apiView;
+    button.setAttribute('aria-selected', String(selected));
+    button.tabIndex = selected ? 0 : -1;
+  });
+}
+const apiButtons = $$('[data-api-view]');
+apiButtons.forEach((button) => {
+  const activate = (target) => { state.apiView = target.dataset.apiView; renderApi(); };
+  button.addEventListener('click', () => activate(button));
+  button.addEventListener('keydown', (event) => activateTabWithKeys(event, apiButtons, activate));
+});
+
+function downloadLocal(content, filename, type) {
+  const url = URL.createObjectURL(new Blob([content], { type }));
   const link = document.createElement('a');
   link.href = url;
-  link.download = `biodeploy-synthetic-example.${format}`;
+  link.download = filename;
   document.body.append(link);
   link.click();
   link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+function announce(key) {
   $('#announcement').textContent = '';
-  setTimeout(() => { $('#announcement').textContent = t('exportAnnouncement'); }, 50);
+  setTimeout(() => { $('#announcement').textContent = t(key); }, 50);
+}
+$('#save-estimate').addEventListener('click', () => {
+  const quote = currentQuote();
+  if (!quote.valid) return;
+  downloadLocal(JSON.stringify(quote, null, 2), 'biodeploy-demo-estimate.json', 'application/json');
+  announce('estimateSaved');
+});
+$$('[data-export]').forEach((button) => button.addEventListener('click', () => {
+  const json = button.dataset.export === 'json';
+  downloadLocal(json ? JSON.stringify(sampleData, null, 2) : sampleCsv(), `biodeploy-synthetic-example.${json ? 'json' : 'csv'}`, json ? 'application/json' : 'text/csv;charset=utf-8');
+  announce('exportAnnouncement');
 }));
-
+function renderExperience() { renderQuote(); renderResults(); renderMilestone(); renderApi(); }
 renderLocale();
