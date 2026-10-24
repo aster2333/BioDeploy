@@ -1,5 +1,7 @@
 // English, Simplified Chinese, Traditional Chinese, Japanese.
 export const experienceMessages = {
+  localDemo: ['USD / LOCAL DEMO', 'USD / 本地演示', 'USD / 本機示範', 'USD / ローカルデモ'],
+  binderOutput: ['Screening ranks or qualified kinetics', '初筛排序或经质控的动力学', '初篩排序或經品管的動力學', 'スクリーニング順位または QC 適合の速度論値'],
   navPricing: ['Demo pricing', '演示报价', '示範報價', '価格デモ'],
   navDevelopers: ['Developers', '开发者', '開發者', '開発者向け'],
   navFaq: ['Questions', '常见问题', '常見問題', 'よくある質問'],
