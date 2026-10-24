@@ -4,7 +4,7 @@
 .component-wordmark span { color: var(--blue); }
 .component-header > div { display: flex; align-items: center; gap: 24px; font-size: 12px; }
 .component-header a { display: inline-flex; align-items: center; min-height: 44px; }
-.component-gallery select, .component-gallery input:not([type=checkbox]) { min-height: 44px; border: 1px solid #cbd1da; border-radius: 6px; color: var(--ink); background: white; padding: 10px 12px; font: inherit; font-size: 13px; max-width: 100%; }
+.component-gallery select, .component-gallery input:not([type=checkbox]) { min-height: 44px; border: 1px solid #cbd1da; border-radius: 6px; color: var(--ink); background-color: white; padding: 10px 38px 10px 12px; font: inherit; font-size: 13px; max-width: 100%; }
 .component-layout { display: grid; grid-template-columns: 195px minmax(0,1fr); gap: 56px; width: min(1300px,calc(100% - 80px)); margin: 0 auto; align-items: start; }
 .component-nav { position: sticky; top: 115px; display: grid; gap: 8px; padding: 48px 0; font-size: 12px; }
 .component-nav a { display: flex; align-items: center; min-height: 44px; color: var(--secondary); }
@@ -64,3 +64,10 @@
 .component-table th[scope=row] { font: 12px var(--mono); color: var(--ink); }
 .component-table input[type=checkbox] { margin: 13px; }
 .component-header { background: var(--canvas); }
+
+.component-gallery input:not([type=checkbox]) { padding-inline-end: 12px; }
+.component-header > div, .component-header label { min-width: 0; }
+.component-header label { max-width: 160px; }
+.component-header select { display: block; width: 100%; }
+.component-dialog-actions { display: flex; justify-content: flex-end; gap: 12px; min-width: 0; }
+.component-dialog-actions .button { flex: 0 1 auto; max-width: 100%; white-space: normal; }
