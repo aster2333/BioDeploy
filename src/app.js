@@ -1,6 +1,6 @@
 import { languages, locales } from './locales.js';
 import { sampleData, sampleCsv } from './sample-data.js';
-import { calculateDemoQuote, demoCatalog } from './quote.js';
+import { initQuoteFlow } from './quote-flow.js';
 
 const localeKey = 'biodeploy.locale';
 const state = { locale: 'en', stage: 'input', region: 'cn', package: 'expression', candidate: 'binder_001', dataView: 'raw', milestone: 0, apiView: 'request' };
@@ -21,12 +21,13 @@ let dialogOpener;
 
 function renderDialog() {
   const prefix = state.package;
-  $('#dialog-code').textContent = prefix === 'expression' ? 'EXP-01' : 'BND-01';
+  $('#dialog-code').textContent = prefix === 'expression' ? 'EXP-01' : prefix === 'thermostability' ? 'THM-01' : 'BND-01';
   $('#dialog-title').textContent = t(`${prefix}Name`);
   $('#dialog-description').textContent = t(`${prefix}Description`);
   $('#dialog-method').textContent = t(`${prefix}Method`);
   $('#dialog-output').textContent = t(`${prefix}Output`);
-  $('#dialog-depth').textContent = prefix === 'expression' ? t('expressionDepth') : `${t('screeningDepth')} / ${t('affinityDepth')}`;
+  $('#dialog-depth').textContent = prefix === 'expression' ? t('expressionDepth') : prefix === 'thermostability' ? t('thermostabilityDepth') : `${t('screeningDepth')} / ${t('affinityDepth')}`;
+  $('#dialog-replicates').textContent = t(prefix === 'thermostability' ? 'thermalIncludedReplicates' : 'twoReplicates');
   $('#dialog-days').textContent = `21 ${t('days')}`;
 }
 
@@ -258,33 +259,9 @@ dataButtons.forEach((button) => {
   button.addEventListener('keydown', (event) => activateTabWithKeys(event, dataButtons, activate));
 });
 
-const quoteForm = $('#quote-form');
-function currentQuote() {
-  return calculateDemoQuote({ mode: $('#quote-mode').value, quantity: $('#quote-quantity').valueAsNumber, replicates: Number($('#quote-replicates').value), targets: Number($('#quote-targets').value) });
-}
-function renderQuote() {
-  const mode = $('#quote-mode').value;
-  const expression = mode === 'expression';
-  $('#quote-targets').disabled = expression;
-  if (expression) $('#quote-targets').value = '1';
-  $('#quote-scope').textContent = t(demoCatalog[mode].scopeKey);
-  const quote = currentQuote();
-  const error = $('#quantity-error');
-  error.hidden = quote.valid;
-  error.textContent = quote.valid ? '' : t(quote.errorKey);
-  $('#quote-quantity').setAttribute('aria-invalid', String(!quote.valid));
-  $('#save-estimate').disabled = !quote.valid;
-  $$('[data-quantity]').forEach((button) => button.setAttribute('aria-pressed', String(Number(button.dataset.quantity) === $('#quote-quantity').valueAsNumber)));
-  for (const [selector, key] of [['#quote-unit','unit_cents'],['#quote-base','base_cents'],['#quote-extra','extra_replicate_cents'],['#quote-total','total_cents']]) $(selector).textContent = quote.valid ? money(quote[key]) : '—';
-  $('#quote-days').textContent = `${[...new Set(demoCatalog[mode].days)].join('-')} ${t('days')}`;
-}
-quoteForm.addEventListener('submit', (event) => event.preventDefault());
-quoteForm.addEventListener('input', renderQuote);
-quoteForm.addEventListener('change', renderQuote);
-$$('[data-quantity]').forEach((button) => button.addEventListener('click', () => { $('#quote-quantity').value = button.dataset.quantity; renderQuote(); }));
+const quoteFlow = initQuoteFlow({ t, money, number, downloadLocal, announce });
 $('#dialog-configure').addEventListener('click', () => {
-  $('#quote-mode').value = state.package === 'expression' ? 'expression' : 'screening';
-  renderQuote();
+  quoteFlow.configure(state.package === 'binder' ? 'screening' : state.package);
   dialog.close();
   // Wait for the native close event's opener restoration before focusing the destination.
   dialog.addEventListener('close', () => {
@@ -349,16 +326,10 @@ function announce(key) {
   $('#announcement').textContent = '';
   setTimeout(() => { $('#announcement').textContent = t(key); }, 50);
 }
-$('#save-estimate').addEventListener('click', () => {
-  const quote = currentQuote();
-  if (!quote.valid) return;
-  downloadLocal(JSON.stringify(quote, null, 2), 'biodeploy-demo-estimate.json', 'application/json');
-  announce('estimateSaved');
-});
 $$('[data-export]').forEach((button) => button.addEventListener('click', () => {
   const json = button.dataset.export === 'json';
   downloadLocal(json ? JSON.stringify(sampleData, null, 2) : sampleCsv(), `biodeploy-synthetic-example.${json ? 'json' : 'csv'}`, json ? 'application/json' : 'text/csv;charset=utf-8');
   announce('exportAnnouncement');
 }));
-function renderExperience() { renderQuote(); renderResults(); renderMilestone(); renderApi(); }
+function renderExperience() { quoteFlow.render(); renderResults(); renderMilestone(); renderApi(); }
 renderLocale();

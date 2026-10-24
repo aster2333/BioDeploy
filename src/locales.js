@@ -58,7 +58,7 @@ export const messages = {
   exportJson: ['Export JSON', '导出 JSON', '匯出 JSON', 'JSON を出力'],
   exportCsv: ['Export CSV', '导出 CSV', '匯出 CSV', 'CSV を出力'],
   exportAnnouncement: ['Synthetic sample downloaded.', '合成示例已下载。', '合成範例已下載。', '合成サンプルをダウンロードしました。'],
-  packagesTitle: ["Expression and binding assays","表达与结合验证","表現與結合驗證","発現と結合を評価"],
+  packagesTitle: ["Expression, binding and thermostability", "表达、结合与热稳定性", "表現、結合與熱穩定性", "発現・結合・熱安定性"],
   expressionName: ["Expression screening","表达初筛","表現初篩","発現スクリーニング"],
   expressionDescription: ["Check which sequences express and compare expression readouts across a batch.","检查哪些序列能表达，并比较同一批候选的表达读数。","檢查哪些序列能表現，並比較同一批候選的表現讀值。","発現する配列を確認し、同じバッチ内で発現値を比較します。"],
   packageMethod: ['METHOD', '实验方法', '實驗方法', '実験方法'],

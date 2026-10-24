@@ -2128,3 +2128,93 @@ button:disabled { opacity: .5; transform: none; }
 
 #panel-assay .input-bottom, .result-footer { justify-content: flex-end; }
 .quote-form > label:first-child { margin-top: 0; }
+
+/* Quote flow: existing monochrome tokens, selection-only blue, persistent cost summary. */
+.quote-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.quote-heading > .outline-badge { flex-shrink: 0; color: #2e5f9b; background: #f0f6ff; border-color: #cbdcf4; }
+.quote-progress { margin: -12px 0 30px; }
+.quote-progress ol { display: flex; list-style: none; margin: 0; padding: 0; gap: 32px; }
+.quote-progress li { flex: 1; border-bottom: 1px solid #d5dbe5; }
+.quote-progress button { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 58px; padding: 0 0 14px; background: transparent; border: 0; text-align: start; color: var(--secondary); font-size: 13px; }
+.quote-progress button[aria-current=step] { color: var(--ink); box-shadow: 0 2px var(--ink); }
+.quote-progress button:disabled { opacity: .55; }
+.quote-step-number { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid #cdd1d9; border-radius: 50%; font: 11px var(--mono); flex-shrink: 0; }
+[aria-current=step] .quote-step-number { color: white; background: var(--ink); border-color: var(--ink); }
+.is-complete .quote-step-number { border-color: var(--ink); color: var(--ink); }
+.quote-grid { grid-template-columns: minmax(0,1.45fr) minmax(0,1fr); gap: 28px; }
+.quote-form { padding: 30px; }
+.quote-panel > h3, #inquiry-contact-fields > h3, .inquiry-ready h3 { font-size: 22px; line-height: 1.3; letter-spacing: -.6px; margin-bottom: 25px; }
+.assay-options { padding: 0; margin: 0; border: 0; min-width: 0; }
+.assay-options legend { font-size: 12px; font-weight: 500; margin-bottom: 10px; }
+.quote-form .assay-option { display: grid; grid-template-columns: 18px minmax(0,1fr) auto; align-items: center; gap: 13px; border: 1px solid var(--border); border-radius: 7px; padding: 17px 15px; margin: 0 0 9px; cursor: pointer; background: white; }
+.assay-option:has(input:checked) { border-color: var(--blue); background: #f5f9ff; }
+.quote-form .assay-option input { width: 17px; min-height: 17px; height: 17px; margin: 0; padding: 0; accent-color: var(--blue); }
+.assay-option strong { display: block; font-size: 13px; font-weight: 500; line-height: 1.4; }
+.assay-option small { display: block; color: var(--secondary); font-size: 11px; font-weight: 400; line-height: 1.65; margin-top: 4px; }
+.assay-price { align-self: start; font-size: 13px; padding-top: 1px; font-weight: 400; }
+.quote-form .quantity-line { grid-template-columns: 100px minmax(0,1fr); gap: 12px; }
+.quote-selects { gap: 18px; }
+.quote-form .form-help { font-size: 11px; margin-top: 10px; line-height: 1.7; }
+.quote-actions { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--border); }
+#quote-panel-0 .quote-actions { justify-content: flex-end; }
+.quote-actions .button { font-size: 12px; min-height: 46px; gap: 10px; }
+.quote-back { padding: 10px 0; border: 0; background: none; font-size: 12px; text-align: start; text-decoration: underline; text-underline-offset: 4px; }
+.quote-summary { position: sticky; top: 110px; padding: 30px; }
+.quote-summary-assay { margin-top: 22px; font-size: 14px; font-weight: 500; }
+.quote-currency { font-size: 11px; color: var(--secondary); }
+.quote-equation { font-size: 10px; color: var(--secondary); margin-top: 6px; overflow-wrap: anywhere; }
+.quote-summary dl { margin-top: 16px; }
+.quote-summary dd { white-space: normal; text-align: end; overflow-wrap: anywhere; }
+.quote-delivery { flex-wrap: wrap; }
+.quote-download { display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center; padding: 14px 0 0; margin-top: 22px; border: 0; border-top: 1px solid var(--border); background: none; font-size: 11px; }
+.quote-download:disabled { opacity: .5; }
+.quote-download .icon { width: 14px; height: 14px; }
+.scope-review { margin: 0; }
+.scope-review > div { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.3fr); gap: 20px; padding: 15px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+.scope-review dt { font-size: 12px; color: var(--secondary); }
+.scope-review dd { margin: 0; font-size: 13px; text-align: end; overflow-wrap: anywhere; }
+.scope-deliverables { margin: 25px 0 20px; padding: 20px; background: #f6f7f9; border-radius: 6px; }
+.scope-deliverables h4 { font-size: 13px; margin-bottom: 10px; }
+.scope-deliverables p, .inquiry-ready > p { font-size: 13px; color: var(--secondary); line-height: 1.8; }
+.scope-deliverables > span { display: block; font-size: 10px; margin-top: 14px; }
+.inquiry-mini-summary { display: flex; justify-content: space-between; gap: 18px; padding: 20px 0; margin-top: 30px; border-block: 1px solid var(--border); font-size: 12px; }
+.inquiry-mini-summary > span { color: var(--secondary); }
+.inquiry-mini-summary > strong { white-space: nowrap; font-weight: 500; }
+.inquiry-ready-icon { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 22px; }
+.inquiry-ready .outline-badge { font-size: 9px; color: var(--secondary); }
+.inquiry-ready h3 { margin-top: 15px; margin-bottom: 12px; }
+.inquiry-ready .scope-review { margin-top: 24px; }
+@media (max-width: 1000px) {
+  .quote-grid { grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 18px; }
+  .quote-form, .quote-summary { padding: 22px; }
+  .quote-form .quantity-line { grid-template-columns: minmax(0,1fr); }
+  .quote-form .quantity-line input { max-width: 130px; }
+  .quote-actions { gap: 14px; flex-wrap: wrap; }
+}
+@media (max-width: 760px) {
+  .quote-grid { grid-template-columns: minmax(0,1fr); }
+  .quote-summary { position: static; }
+  .quote-progress ol { gap: 12px; }
+  .quote-progress button { font-size: 11px; gap: 7px; align-items: flex-start; min-height: 64px; }
+  .quote-step-number { width: 22px; height: 22px; }
+  .quote-heading { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .quote-form .assay-option { gap: 10px; padding: 14px 12px; }
+  .assay-option strong { font-size: 12px; }
+  .assay-price { font-size: 11px; }
+  .quote-panel > h3, #inquiry-contact-fields > h3, .inquiry-ready h3 { font-size: 20px; }
+  .quote-actions .button { width: 100%; justify-content: center; }
+  .scope-review > div { gap: 14px; }
+  .scope-review dd { font-size: 12px; }
+  .inquiry-mini-summary { flex-direction: column; gap: 8px; }
+}
+
+/* Service-specific configuration and native, keyboard/touch accessible quantity range. */
+.package-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.binding-options { margin-top: 20px; }
+.service-options .assay-price { white-space: nowrap; }
+.quantity-slider-wrap { margin-top: 13px; }
+.quote-form input[type=range] { display: block; width: 100%; min-height: 44px; height: 44px; padding: 0; border: 0; border-radius: 0; background: transparent; accent-color: var(--blue); cursor: pointer; }
+.quantity-range-labels { display: flex; justify-content: space-between; color: var(--secondary); font: 10px var(--mono); margin-top: -4px; }
+@media (max-width: 1000px) {
+  .package-grid { grid-template-columns: minmax(0, 1fr); }
+}

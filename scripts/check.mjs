@@ -3,6 +3,7 @@ import { readFile, access } from 'node:fs/promises';
 import { languages, messages, locales } from '../src/locales.js';
 import { sampleData, sampleCsv } from '../src/sample-data.js';
 import { calculateDemoQuote, demoCatalog } from '../src/quote.js';
+import { createDemoInquiry, validateInquiryEmail } from '../src/inquiry.js';
 
 const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 assert.equal(languages.length, 4);
@@ -71,7 +72,23 @@ for (const entry of Object.values(demoCatalog)) for (const locale of Object.valu
   assert.ok(locale[entry.scopeKey]);
 }
 const app = await readFile(new URL('../src/app.js', import.meta.url), 'utf8');
-for (const [, key] of app.matchAll(/\bt\('([^']+)'\)/g)) assert.ok(locales.en[key], `Missing dynamic key ${key}`);
-assert.ok(!/\b(fetch|XMLHttpRequest|WebSocket)\s*\(/.test(app), 'The shell must not submit API requests');
+const quoteFlow = await readFile(new URL('../src/quote-flow.js', import.meta.url), 'utf8');
+const inquiry = await readFile(new URL('../src/inquiry.js', import.meta.url), 'utf8');
+for (const code of [app, quoteFlow, inquiry]) {
+  for (const [, key] of code.matchAll(/\bt\('([^']+)'\)/g)) {
+    for (const locale of Object.values(locales)) assert.ok(locale[key], `Missing dynamic key ${key}`);
+  }
+  assert.ok(!/\b(fetch|XMLHttpRequest|WebSocket)\s*\(/.test(code), 'The demo must not submit API requests');
+}
+for (const email of ['name@example.com', 'research+demo@lab.example.org', ' name@example.com ']) assert.equal(validateInquiryEmail(email), true);
+for (const email of ['', 'name', 'name@', 'name@example', '.name@example.org', 'name..x@example.org', 'name@-example.org', 'name@ex ample.org', 'x@example.org\r\nBcc:other@example.org', `${'a'.repeat(65)}@example.org`]) assert.equal(validateInquiryEmail(email), false);
+const draft = createDemoInquiry({ mode: 'affinity', quantity: 96, replicates: 3, targets: 2 }, ' researcher@example.com ');
+assert.equal(draft.contact.email, 'researcher@example.com');
+assert.equal(draft.estimate.total_cents, 3869760);
+assert.equal(draft.status, 'draft_not_sent');
+assert.equal(draft.synthetic, true);
+assert.equal(draft.not_a_quote, true);
+assert.equal(createDemoInquiry({ mode: 'expression', quantity: 7, replicates: 2, targets: 1 }, 'name@example.org').valid, false);
+assert.equal(createDemoInquiry({ mode: 'expression', quantity: 96, replicates: 2, targets: 1 }, 'invalid').valid, false);
 assert.ok(!/<form[^>]+action=/.test(html), 'No transaction form action');
-process.stdout.write(`Passed: ${languages.length} locales, ${Object.keys(messages).length} keys, quote boundaries and totals, four scientific outcomes, 569 CSV rows, anchors and assets.\n`);
+process.stdout.write(`Passed: ${languages.length} locales, ${Object.keys(messages).length} keys, quote and inquiry validation, four scientific outcomes, 569 CSV rows, anchors and assets.\n`);
