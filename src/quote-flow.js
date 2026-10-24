@@ -1,7 +1,7 @@
 import { calculateDemoQuote, demoCatalog } from './quote.js';
 import { createDemoInquiry, validateInquiryEmail } from './inquiry.js';
 
-export function initQuoteFlow({ t, money, number, downloadLocal, announce }) {
+export function initQuoteFlow({ t, money, number, downloads, announce }) {
   const $ = (selector) => document.querySelector(selector);
   const $$ = (selector) => [...document.querySelectorAll(selector)];
   const form = $('#quote-form');
@@ -60,15 +60,32 @@ export function initQuoteFlow({ t, money, number, downloadLocal, announce }) {
     $('#quote-price-basis').textContent = t(thermal ? 'thermalPriceBasis' : 'inquiryPriceBasis');
     $('#replicate-help').textContent = t(thermal ? 'thermalReplicateHelp' : 'inquiryReplicateHelp');
     $('#target-help').textContent = t('inquiryTargetHelp');
-    $('#quantity-error').hidden = quote.valid;
-    $('#quantity-error').textContent = quote.valid ? '' : t(quote.errorKey);
-    $('#quote-quantity').setAttribute('aria-invalid', String(!quote.valid));
+    const errorFields = { invalidQuantity: 'quote-quantity', invalidReplicates: 'quote-replicates', invalidThermalReplicates: 'quote-replicates', invalidTargets: 'quote-targets', invalidConditions: 'quote-conditions' };
+    const invalidField = quote.valid ? null : errorFields[quote.errorKey];
+    const error = $('#quantity-error');
+    error.hidden = quote.valid;
+    error.textContent = quote.valid ? '' : t(quote.errorKey);
+    for (const id of ['quote-quantity', 'quote-replicates', 'quote-targets', 'quote-conditions']) {
+      const field = $(`#${id}`);
+      field.setAttribute('aria-invalid', String(id === invalidField));
+      const descriptions = new Set((field.getAttribute('aria-describedby') || '').split(' ').filter(Boolean));
+      descriptions.add('quantity-error');
+      field.setAttribute('aria-describedby', [...descriptions].join(' '));
+    }
+    if (invalidField) {
+      const field = $(`#${invalidField}`);
+      (field.closest('.quantity-line') || field).insertAdjacentElement('afterend', error);
+    }
     // A range cannot represent an empty/fractional/out-of-range entry. Leave its
     // last valid position available to recover without rewriting typed input.
     if (Number.isInteger($('#quote-quantity').valueAsNumber) && $('#quote-quantity').valueAsNumber >= 8 && $('#quote-quantity').valueAsNumber <= 800) {
       $('#quote-quantity-slider').value = $('#quote-quantity').value;
     }
-    for (const id of ['save-estimate', 'quote-review', 'quote-contact', 'preview-inquiry']) $(`#${id}`).disabled = !quote.valid;
+    for (const id of ['save-estimate', 'quote-review', 'quote-contact', 'preview-inquiry']) {
+      const button = $(`#${id}`);
+      button.dataset.disabledByState = String(!quote.valid);
+      button.disabled = !quote.valid || button.dataset.downloadBusy === 'true';
+    }
     $$('[data-quantity]').forEach((button) => button.setAttribute('aria-pressed', String(Number(button.dataset.quantity) === $('#quote-quantity').valueAsNumber)));
     $$('[data-base-price]').forEach((element) => { element.textContent = money(demoCatalog[element.dataset.basePrice].baseUnitCents); });
     for (const [selector, key] of [['#quote-unit', 'unit_cents'], ['#quote-base', 'base_cents'], ['#quote-extra', 'extra_replicate_cents'], ['#quote-total', 'total_cents'], ['#contact-total', 'total_cents']]) {
@@ -152,14 +169,19 @@ export function initQuoteFlow({ t, money, number, downloadLocal, announce }) {
   $('#inquiry-edit').addEventListener('click', () => { draft = null; render(); $('#inquiry-email').focus(); });
   $('#download-inquiry').addEventListener('click', () => {
     if (!draft) return;
-    downloadLocal(JSON.stringify(draft, null, 2), 'biodeploy-demo-inquiry.json', 'application/json');
-    announce('inquiryDownloaded');
+    downloads.run({ content: () => {
+      if (!draft || !currentQuote().valid) throw new Error('Draft is no longer available');
+      return JSON.stringify(draft, null, 2);
+    }, filename: 'biodeploy-demo-inquiry.json', type: 'application/json', button: $('#download-inquiry'), successKey: 'stateDownloadStarted' });
   });
   $('#save-estimate').addEventListener('click', () => {
     const quote = currentQuote();
     if (!quote.valid) return;
-    downloadLocal(JSON.stringify(quote, null, 2), 'biodeploy-demo-estimate.json', 'application/json');
-    announce('estimateSaved');
+    downloads.run({ content: () => {
+      const latest = currentQuote();
+      if (!latest.valid) throw new Error('Invalid estimate');
+      return JSON.stringify(latest, null, 2);
+    }, filename: 'biodeploy-demo-estimate.json', type: 'application/json', button: $('#save-estimate'), successKey: 'stateDownloadStarted' });
   });
   return {
     render,

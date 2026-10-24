@@ -6,6 +6,7 @@ import { calculateDemoQuote, demoCatalog } from '../src/quote.js';
 import { createDemoInquiry, validateInquiryEmail } from '../src/inquiry.js';
 
 const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+const componentHtml = await readFile(new URL('../components.html', import.meta.url), 'utf8');
 assert.equal(languages.length, 4);
 for (const [key, translations] of Object.entries(messages)) {
   assert.equal(translations.length, languages.length, `${key}: missing translation`);
@@ -24,6 +25,16 @@ for (const [, attributes] of html.matchAll(/aria-(?:controls|labelledby)="([^"]+
 for (const [, anchor] of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.includes(anchor), `Broken anchor: ${anchor}`);
 for (const [, file] of html.matchAll(/(?:src|href)="(\/(?:src|public)\/[^"#]+)"/g)) {
   await access(new URL(`..${file}`, import.meta.url));
+}
+const componentIds = [...componentHtml.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
+assert.equal(new Set(componentIds).size, componentIds.length, 'Duplicate component-reference IDs');
+for (const [, attributes] of componentHtml.matchAll(/aria-(?:controls|labelledby|describedby)="([^"]+)"/g)) {
+  for (const id of attributes.split(' ')) assert.ok(componentIds.includes(id), `Missing component ARIA target: ${id}`);
+}
+for (const [, anchor] of componentHtml.matchAll(/href="#([^"]+)"/g)) assert.ok(componentIds.includes(anchor), `Broken component anchor: ${anchor}`);
+for (const [, file] of componentHtml.matchAll(/(?:src|href)="(\/(?:src|public)\/[^"#]+)"/g)) await access(new URL(`..${file}`, import.meta.url));
+for (const [, key] of componentHtml.matchAll(/data-i18n(?:-aria)?="([^"]+)"/g)) {
+  for (const locale of Object.values(locales)) assert.ok(locale[key], `Missing component translation: ${key}`);
 }
 const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
 for (const [, font] of css.matchAll(/url\('(\/public\/fonts\/[^']+)'\)/g)) await access(new URL(`..${font}`, import.meta.url));
@@ -87,7 +98,9 @@ for (const entry of Object.values(demoCatalog)) for (const locale of Object.valu
 const app = await readFile(new URL('../src/app.js', import.meta.url), 'utf8');
 const quoteFlow = await readFile(new URL('../src/quote-flow.js', import.meta.url), 'utf8');
 const inquiry = await readFile(new URL('../src/inquiry.js', import.meta.url), 'utf8');
-for (const code of [app, quoteFlow, inquiry]) {
+const feedback = await readFile(new URL('../src/ui-feedback.js', import.meta.url), 'utf8');
+const gallery = await readFile(new URL('../src/component-gallery.js', import.meta.url), 'utf8');
+for (const code of [app, quoteFlow, inquiry, feedback, gallery]) {
   for (const [, key] of code.matchAll(/\bt\('([^']+)'\)/g)) {
     for (const locale of Object.values(locales)) assert.ok(locale[key], `Missing dynamic key ${key}`);
   }

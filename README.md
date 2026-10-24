@@ -37,6 +37,8 @@ npm run preview
 
 - [产品需求文档](docs/PRD.md)
 - [设计规范与参考锁定](docs/DESIGN_SPEC.md)
+- [组件与异常状态规范](docs/COMPONENT_STATES.md)
+- [可交互组件示例](http://127.0.0.1:4173/components.html)（启动本地服务后访问 `/components.html`）
 - `index.html`：语义化页面与 SVG 图形。
 - `src/styles.css`：设计令牌、组件、响应式和 CJK 排版。
 - `src/locales.js`：四语言完整文案矩阵。
@@ -62,3 +64,10 @@ npm run preview
 ## 界面精简
 
 删除重复的补充说明条、区块副标题、解释卡片和收尾引导。语言菜单只保留语言选项；示例、价格和 API 使用就地短标签。保留套餐规格、费用明细、输入错误与异常结果原因，四语言同步。
+
+
+## 组件与异常状态
+
+`/components.html` 是独立组件参考页，包含四语言、输入校验、深浅色科学徽标、空状态、下载失败与重试演练、12 行合成数据表、筛选与批量选择导出、加载外观示例和原生对话框。它复用 `src/components.css` 与 `src/ui-feedback.js`，不会在首页新增开发入口。主页面已接入可见下载反馈、失败重试、语义化科学状态与空状态恢复操作。
+
+下载提示只确认浏览器发起下载，不声称文件已经保存。完整契约、参考来源和验收点见 `docs/COMPONENT_STATES.md`。

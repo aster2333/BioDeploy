@@ -1,6 +1,7 @@
 import { languages, locales } from './locales.js';
 import { sampleData, sampleCsv } from './sample-data.js';
 import { initQuoteFlow } from './quote-flow.js';
+import { createFeedback, createDownloadManager, createOutcomeBadge } from './ui-feedback.js';
 
 const localeKey = 'biodeploy.locale';
 const state = { locale: 'en', stage: 'input', region: 'cn', package: 'expression', candidate: 'binder_001', dataView: 'raw', milestone: 0, apiView: 'request' };
@@ -17,6 +18,8 @@ const localeMenu = $('#locale-menu');
 const mobileTrigger = $('.mobile-toggle');
 const mobileNav = $('#mobile-nav');
 const dialog = $('#package-dialog');
+const feedback = createFeedback({ root: $('#ui-feedback'), t });
+const downloads = createDownloadManager({ feedback });
 let dialogOpener;
 
 function renderDialog() {
@@ -59,6 +62,7 @@ function renderLocale() {
   renderRegion();
   renderDialog();
   renderExperience();
+  feedback.render();
 }
 
 function closeLocale(restoreFocus = false) {
@@ -195,7 +199,6 @@ function drawTraces(container, traces) {
 
 function renderResults() {
   const candidate = sampleData.candidates.find(({ id }) => id === state.candidate);
-  const status = t(outcomeKeys[candidate.outcome]);
   $('#candidate-select').value = state.candidate;
   const rawContainer = $('#data-raw .results-chart');
   rawContainer.querySelector('.chart-caption .mono').textContent = candidate.id;
@@ -209,11 +212,15 @@ function renderResults() {
   fitChart.hidden = candidate.fitted_traces.length === 0;
   $('#fit-unavailable').hidden = candidate.fitted_traces.length !== 0;
   $('#candidate-kd').textContent = candidate.illustrative_estimate.kd === null ? '—' : `${number(candidate.illustrative_estimate.kd)} nM`;
-  $('#candidate-outcome').textContent = status;
+  $('#candidate-outcome').replaceChildren(createOutcomeBadge(candidate.outcome, t));
   $('#candidate-reason').textContent = t(candidate.reason_key);
-  $('#candidate-reason').hidden = candidate.outcome === 'binder';
+  const emptyView = (state.dataView === 'raw' && candidate.raw_traces.length === 0) || (state.dataView === 'fit' && candidate.fitted_traces.length === 0);
+  $('#candidate-reason').hidden = candidate.outcome === 'binder' || emptyView;
   $('#candidate-reason').dataset.outcome = candidate.outcome;
-  $('#qc-status').textContent = status;
+  $('#qc-status').replaceChildren(createOutcomeBadge(candidate.outcome, t));
+  $('#measurement-empty-reason').textContent = t(candidate.reason_key);
+  $('#fit-empty-reason').textContent = t(candidate.reason_key);
+  $('#fit-show-raw').hidden = candidate.raw_traces.length === 0;
   $('#qc-mae').textContent = candidate.qc.mae_ru === null ? '—' : `${number(candidate.qc.mae_ru)} RU`;
   $('#qc-protocol').textContent = `${candidate.provenance.protocol_id} / v${candidate.provenance.protocol_version}`;
   $('#qc-batch').textContent = `${candidate.provenance.batch_id} / ${candidate.provenance.lab_id}`;
@@ -235,9 +242,10 @@ function renderResults() {
     button.setAttribute('aria-pressed', String(item.id === candidate.id));
     nameCell.append(button);
     row.append(nameCell);
-    for (const value of [t(item.expression === 'detected' ? 'detected' : 'notDetected'), t(outcomeKeys[item.outcome]), item.illustrative_estimate.kd === null ? '—' : number(item.illustrative_estimate.kd)]) {
+    for (const [index, value] of [t(item.expression === 'detected' ? 'detected' : 'notDetected'), t(outcomeKeys[item.outcome]), item.illustrative_estimate.kd === null ? '—' : number(item.illustrative_estimate.kd)].entries()) {
       const cell = document.createElement('td');
-      cell.textContent = value;
+      if (index === 1) cell.append(createOutcomeBadge(item.outcome, t));
+      else cell.textContent = value;
       row.append(cell);
     }
     return row;
@@ -259,7 +267,13 @@ dataButtons.forEach((button) => {
   button.addEventListener('keydown', (event) => activateTabWithKeys(event, dataButtons, activate));
 });
 
-const quoteFlow = initQuoteFlow({ t, money, number, downloadLocal, announce });
+$$('[data-result-recovery]').forEach((button) => button.addEventListener('click', () => {
+  state.dataView = button.dataset.resultRecovery;
+  renderResults();
+  $(`#view-${state.dataView}`).focus({ preventScroll: true });
+}));
+
+const quoteFlow = initQuoteFlow({ t, money, number, downloads, announce });
 $('#dialog-configure').addEventListener('click', () => {
   quoteFlow.configure(state.package === 'binder' ? 'screening' : state.package);
   dialog.close();
@@ -312,24 +326,16 @@ apiButtons.forEach((button) => {
   button.addEventListener('keydown', (event) => activateTabWithKeys(event, apiButtons, activate));
 });
 
-function downloadLocal(content, filename, type) {
-  const url = URL.createObjectURL(new Blob([content], { type }));
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-function announce(key) {
-  $('#announcement').textContent = '';
-  setTimeout(() => { $('#announcement').textContent = t(key); }, 50);
-}
+function announce(key) { feedback.show(key); }
 $$('[data-export]').forEach((button) => button.addEventListener('click', () => {
   const json = button.dataset.export === 'json';
-  downloadLocal(json ? JSON.stringify(sampleData, null, 2) : sampleCsv(), `biodeploy-synthetic-example.${json ? 'json' : 'csv'}`, json ? 'application/json' : 'text/csv;charset=utf-8');
-  announce('exportAnnouncement');
+  downloads.run({
+    content: () => json ? JSON.stringify(sampleData, null, 2) : sampleCsv(),
+    filename: `biodeploy-synthetic-example.${json ? 'json' : 'csv'}`,
+    type: json ? 'application/json' : 'text/csv;charset=utf-8',
+    button,
+    successKey: 'stateDownloadStarted',
+  });
 }));
 function renderExperience() { quoteFlow.render(); renderResults(); renderMilestone(); renderApi(); }
 renderLocale();

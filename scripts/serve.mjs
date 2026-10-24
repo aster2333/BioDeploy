@@ -10,7 +10,7 @@ const server = http.createServer(async (request, response) => {
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
     const file = resolve(root, `.${pathname === '/' ? '/index.html' : pathname}`);
     const relative = file.slice(root.length);
-    const allowed = file.startsWith(root + sep) && (relative === '/index.html' || relative.startsWith('/src/') || relative.startsWith('/public/'));
+    const allowed = file.startsWith(root + sep) && (relative === '/index.html' || relative === '/components.html' || relative.startsWith('/src/') || relative.startsWith('/public/'));
     if (!allowed || !(await stat(file)).isFile()) { response.writeHead(404); response.end('Not found'); return; }
     response.writeHead(200, {
       'Content-Type': types[extname(file)] || 'application/octet-stream',
