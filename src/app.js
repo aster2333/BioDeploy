@@ -67,6 +67,18 @@ function renderHero() {
 heroMotion.addEventListener('change', renderHero);
 document.addEventListener('visibilitychange', renderHero);
 
+const proteinScene = $('.protein-scene');
+let proteinSceneVisible = true;
+function syncProteinScene() {
+  proteinScene.classList.toggle('is-still', document.hidden || !proteinSceneVisible);
+}
+new IntersectionObserver(([entry]) => {
+  proteinSceneVisible = entry.isIntersecting;
+  syncProteinScene();
+}).observe(proteinScene);
+document.addEventListener('visibilitychange', syncProteinScene);
+
+
 function renderDialog() {
   const prefix = state.package;
   $('#dialog-code').textContent = prefix === 'expression' ? 'EXP-01' : prefix === 'thermostability' ? 'THM-01' : 'BND-01';
@@ -340,9 +352,14 @@ let workflowPaused = workflowMotion.matches;
 let workflowVisible = false;
 let milestoneTimer;
 let milestoneProgress;
+let renderedMilestone;
 
 function renderMilestone() {
   const index = state.milestone;
+  if (renderedMilestone !== undefined && renderedMilestone !== index && !workflowMotion.matches) {
+    $('#milestone-detail').animate([{ opacity: .3, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 240, easing: 'ease-out' });
+  }
+  renderedMilestone = index;
   $('#milestone-title').textContent = t(`milestone${milestoneNames[index]}`);
   $('#milestone-copy').textContent = t(`milestone${milestoneNames[index]}Copy`);
   $('#milestone-owner').textContent = t(index === 0 ? 'scopeOwner' : index === 4 ? 'releaseOwner' : 'labOwner');
@@ -378,7 +395,6 @@ milestoneButtons.forEach((button) => {
   const activate = (target) => {
     state.milestone = Number(target.dataset.milestone);
     renderMilestone();
-    if (!workflowMotion.matches) $('#milestone-detail').animate([{ opacity: .3, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 240, easing: 'ease-out' });
   };
   button.addEventListener('click', () => activate(button));
   button.addEventListener('keydown', (event) => activateTabWithKeys(event, milestoneButtons, activate));

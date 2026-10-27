@@ -34,7 +34,7 @@ export const messages = {
   heroCta: ["Estimate assay costs","估算实验费用","估算實驗費用","実験費用を試算"],
   heroSecondary: ["See example results","查看示例结果","查看範例結果","結果サンプルを見る"],
   heroVisual: ['Example workflow from a protein sequence through a standardized assay to structured results', '从蛋白质序列，经标准化实验，到结构化结果的示例流程', '從蛋白質序列，經標準化實驗，到結構化結果的範例流程', 'タンパク質配列から標準化アッセイを経て構造化データに至るサンプルフロー'],
-  sequenceInput: ['01 / SEQUENCE INPUT', '01 / 序列输入', '01 / 序列輸入', '01 / 配列入力'],
+  sequenceInput: ['SEQUENCE INPUT', '序列输入', '序列輸入', '配列入力'],
   sample: ['SAMPLE', '示例', '範例', 'サンプル'],
   structuredOutput: ['Structured output', '结构化输出', '結構化輸出', '構造化出力'],
   platformTitle: ["Inspect the result files","查看实验结果与数据文件","查看實驗結果與資料檔案","実験結果とデータを確認"],

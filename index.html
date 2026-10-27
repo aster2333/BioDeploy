@@ -60,15 +60,21 @@
         <p class="hero-description" data-i18n="heroDescription">Expression and binding assays for AI-designed proteins. Get raw measurements, fitted curves and QC in JSON or CSV.</p>
         <div class="hero-actions"><a class="button" href="#pricing"><span data-i18n="heroCta">Estimate assay costs</span><svg class="icon"><use href="#i-arrow"/></svg></a><a class="text-button" href="#platform" data-show-results><span data-i18n="heroSecondary">See example results</span><svg class="icon"><use href="#i-northeast"/></svg></a></div>
       </div>
-      <div class="hero-visual" role="img" data-i18n-aria="heroVisual" aria-label="Example workflow from a protein sequence through a standardized assay to structured results">
-        <div class="visual-grid" aria-hidden="true"></div>
-        <svg class="pipeline-connectors" viewBox="0 0 560 450" preserveAspectRatio="none" fill="none" aria-hidden="true"><path class="connector" d="M231 147h230.6q20 0 20 20v19M481.6 266v27q0 20-20 20H280"/><circle cx="481.6" cy="147" r="4" fill="#146ef5"/><path d="m476.6 180 5 6 5-6M290 308l-6 5 6 5" stroke="#146ef5" stroke-width="1.5"/></svg>
+      <div class="hero-visual protein-scene" role="img" data-i18n-aria="heroVisual" aria-label="Example workflow from a protein sequence through a standardized assay to structured results">
+        <div class="protein-halo" aria-hidden="true"></div>
+        <svg class="protein-orbits" viewBox="0 0 600 520" fill="none" aria-hidden="true">
+          <ellipse class="protein-orbit-outer" cx="240" cy="260" rx="202" ry="183" />
+          <ellipse class="protein-orbit-inner" cx="240" cy="260" rx="180" ry="158" />
+          <path class="protein-axis" d="M240 59v18m0 366v18M21 260h18m402 0h18" />
+          <path class="protein-route" d="M339 134h-32q-22 0-22 22v22M243 354v12q0 20 20 20h40" />
+        </svg>
+        <div class="hero-protein" aria-hidden="true"><img src="/public/images/workflow-protein.png" alt="" width="640" height="640" fetchpriority="high" /></div>
         <div class="sequence-card">
           <div class="mini-card-header"><span><svg class="icon"><use href="#i-file"/></svg><span class="mono">binder_001.fasta</span></span><span class="file-pill">FASTA</span></div>
           <div class="sequence-code mono"><span class="code-muted">&gt;binder_001</span><br>MKTAYIAKQRQISFVKSHFS<br><span class="sequence-highlight">RQDILDLWIYHTQGYFPQ</span><br>GQGQKVEVIKPAGVETLKE</div>
-          <div class="mini-card-footer"><span data-i18n="sequenceInput">01 / SEQUENCE INPUT</span><svg class="icon"><use href="#i-check"/></svg></div>
+          <div class="mini-card-footer"><span data-i18n="sequenceInput">SEQUENCE INPUT</span><svg class="icon"><use href="#i-check"/></svg></div>
         </div>
-        <div class="assay-node"><svg class="node-mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-mark"/></svg></div>
+
         <div class="output-card">
           <div class="mini-card-header"><span class="mono">binding_kinetics</span><span class="sample-badge" data-i18n="sample">SAMPLE</span></div>
           <div class="mini-chart"><svg viewBox="0 0 300 95" fill="none" aria-hidden="true"><path d="M14 15H290M14 45H290M14 75H290" stroke="#eeeef1"/><path d="M14 80C45 80 45 20 100 18H182C205 18 221 54 290 63" stroke="#146ef5" stroke-width="2.4"/><path d="M14 80C45 80 48 39 104 36H182C210 36 230 65 290 70" stroke="#9bc4ff" stroke-width="1.8"/><path d="M14 80C45 80 50 57 106 55H182C210 55 230 73 290 76" stroke="#c4d9f7" stroke-width="1.8"/></svg></div>
