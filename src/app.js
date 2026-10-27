@@ -22,6 +22,51 @@ const feedback = createFeedback({ root: $('#ui-feedback'), t });
 const downloads = createDownloadManager({ feedback });
 let dialogOpener;
 
+const heroLine = $('#hero-rotating-line');
+const heroMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let heroTimer;
+
+function renderHero() {
+  clearTimeout(heroTimer);
+  heroLine.classList.toggle('hero-static', heroMotion.matches);
+  if (heroMotion.matches) {
+    heroLine.textContent = t('heroStaticLine');
+    return;
+  }
+
+  const words = ['heroProtein', 'heroMolecule', 'heroSequence'].map(t);
+  const slot = document.createElement('span');
+  slot.className = 'hero-word';
+  const text = document.createElement('span');
+  text.id = 'hero-word-text';
+  slot.append(text);
+  const suffix = document.createElement('span');
+  suffix.textContent = t('heroSuffix');
+  heroLine.replaceChildren(slot, suffix);
+
+  let index = 0;
+  let length = 0;
+  let deleting = false;
+  function tick() {
+    const letters = Array.from(words[index]);
+    length += deleting ? -1 : 1;
+    text.textContent = letters.slice(0, length).join('');
+    let delay = deleting ? 65 : 130;
+    if (length === letters.length && !deleting) {
+      deleting = true;
+      delay = 1800;
+    } else if (length === 0 && deleting) {
+      deleting = false;
+      index = (index + 1) % words.length;
+      delay = 300;
+    }
+    heroTimer = setTimeout(tick, delay);
+  }
+  if (!document.hidden) heroTimer = setTimeout(tick, 250);
+}
+heroMotion.addEventListener('change', renderHero);
+document.addEventListener('visibilitychange', renderHero);
+
 function renderDialog() {
   const prefix = state.package;
   $('#dialog-code').textContent = prefix === 'expression' ? 'EXP-01' : prefix === 'thermostability' ? 'THM-01' : 'BND-01';
@@ -54,6 +99,7 @@ function renderLocale() {
   $('meta[name="description"]').content = t('pageDescription');
   $$('[data-i18n]').forEach((element) => { element.textContent = t(element.dataset.i18n); });
   $$('[data-i18n-aria]').forEach((element) => element.setAttribute('aria-label', t(element.dataset.i18nAria)));
+  renderHero();
   const language = languages.find(({ code }) => code === state.locale);
   $('#locale-label').textContent = language.name;
   $('#locale-label').lang = state.locale;
@@ -286,25 +332,72 @@ $('#dialog-configure').addEventListener('click', () => {
 
 const milestoneNames = ['Scope', 'Materials', 'Expression', 'Measurement', 'Release'];
 const milestoneWindows = ['0', '1-5', '6-10', '11-15', '16-21'];
+const workflow = $('#workflow');
+const milestoneButtons = $$('[data-milestone]');
+const workflowMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const milestoneDuration = 4200;
+let workflowPaused = workflowMotion.matches;
+let workflowVisible = false;
+let milestoneTimer;
+let milestoneProgress;
+
 function renderMilestone() {
   const index = state.milestone;
   $('#milestone-title').textContent = t(`milestone${milestoneNames[index]}`);
   $('#milestone-copy').textContent = t(`milestone${milestoneNames[index]}Copy`);
   $('#milestone-owner').textContent = t(index === 0 ? 'scopeOwner' : index === 4 ? 'releaseOwner' : 'labOwner');
   $('#milestone-window').textContent = t('dayWindow').replace('{days}', milestoneWindows[index]);
+  $('#milestone-number').textContent = String(index + 1).padStart(2, '0');
   $('#milestone-detail').setAttribute('aria-labelledby', `milestone-${index}`);
-  $$('[data-milestone]').forEach((button) => {
+  milestoneButtons.forEach((button) => {
     const selected = Number(button.dataset.milestone) === index;
     button.setAttribute('aria-selected', String(selected));
     button.tabIndex = selected ? 0 : -1;
   });
+  $$('[data-orbit-step]').forEach((arc) => arc.classList.toggle('active', Number(arc.dataset.orbitStep) === index));
+  $('#workflow-play').setAttribute('aria-pressed', String(workflowPaused));
+  $('#workflow-play-label').textContent = t(workflowPaused ? 'workflowPlay' : 'workflowPause');
+  $('.workflow-play-icon').textContent = workflowPaused ? '▷' : 'Ⅱ';
+  scheduleMilestone();
 }
-const milestoneButtons = $$('[data-milestone]');
+
+function scheduleMilestone() {
+  clearTimeout(milestoneTimer);
+  milestoneProgress?.cancel();
+  const running = workflowVisible && !document.hidden && !workflowPaused && !$('.milestones').contains(document.activeElement);
+  $('.workflow-orbit').classList.toggle('is-paused', !running);
+  if (!running) return;
+  milestoneProgress = $('.workflow-dwell span').animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: milestoneDuration, fill: 'forwards' });
+  milestoneTimer = setTimeout(() => {
+    state.milestone = (state.milestone + 1) % milestoneNames.length;
+    renderMilestone();
+  }, milestoneDuration);
+}
+
 milestoneButtons.forEach((button) => {
-  const activate = (target) => { state.milestone = Number(target.dataset.milestone); renderMilestone(); };
+  const activate = (target) => {
+    state.milestone = Number(target.dataset.milestone);
+    renderMilestone();
+    if (!workflowMotion.matches) $('#milestone-detail').animate([{ opacity: .3, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 240, easing: 'ease-out' });
+  };
   button.addEventListener('click', () => activate(button));
   button.addEventListener('keydown', (event) => activateTabWithKeys(event, milestoneButtons, activate));
 });
+$('.milestones').addEventListener('focusin', scheduleMilestone);
+$('.milestones').addEventListener('focusout', () => requestAnimationFrame(scheduleMilestone));
+$('#workflow-play').addEventListener('click', () => {
+  workflowPaused = !workflowPaused;
+  renderMilestone();
+});
+workflowMotion.addEventListener('change', () => {
+  workflowPaused = workflowMotion.matches;
+  renderMilestone();
+});
+document.addEventListener('visibilitychange', scheduleMilestone);
+new IntersectionObserver(([entry]) => {
+  workflowVisible = entry.isIntersecting;
+  scheduleMilestone();
+}, { threshold: .25 }).observe(workflow);
 
 const apiExamples = {
   request: `POST https://api.biodeploy.example/v1/experiments\n\n{\n  "schema_version": "0.2",\n  "demo": true,\n  "package": "binding_screening",\n  "sequence_refs": ["binder_001", "binder_002"],\n  "budget": { "currency": "USD", "limit": 1500 },\n  "requires_confirmation": true\n}`,

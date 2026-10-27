@@ -132,6 +132,8 @@ export const experienceMessages = {
   traceLegend: ['Two example traces · dashed line distinguishes trace 2', '两条示例曲线 · 虚线表示第 2 条', '兩條範例曲線 · 虛線表示第 2 條', '2 本のサンプル曲線・破線は 2 本目'],
   sampleTable: ['Synthetic candidate comparison', '合成候选对比', '合成候選比較', '合成候補の比較'],
   timelineTitle: ["From sequence to results in 21 days","从序列到结果，预计 21 天","從序列到結果，預計 21 天","配列から結果まで、目安は 21 日"],
+  workflowPause: ['Pause', '暂停', '暫停', '一時停止'],
+  workflowPlay: ['Play', '播放', '播放', '再生'],
   milestones: ['Experiment milestones', '实验里程碑', '實驗里程碑', '実験マイルストーン'],
   milestoneScope: ["Project confirmation","项目确认","專案確認","案件の確認"],
   milestoneMaterials: ['Materials', '材料准备', '材料準備', '材料準備'],
