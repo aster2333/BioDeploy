@@ -31,10 +31,16 @@ overflow. Desktop (1440px) and mobile (390px) layouts were visually inspected.
 
 ## Homepage reuse
 
-The same image anchors the hero, framed by the FASTA input at the upper left and
+The same image anchors the hero, centered, framed by the FASTA input at the upper left and
 the example sensorgram at the lower right. The old B node and floating dot were
 removed. Fine orbital geometry, a restrained blue halo, floating layers and a
 repeated curve reveal establish the sequence-to-data narrative. This is a 3D
 rendered image with animation, not an interactive scientific structure viewer.
 No additional image generation or external runtime was needed. Offscreen and
 background states pause the animation; reduced motion presents a static scene.
+
+The cards form an upper-left / lower-right diagonal with opposite subtle tilts.
+Mobile uses a taller scene, independent card sizes and wider vertical spacing
+to reveal the central protein fold rather than shrinking the desktop overlap.
+The molecular orbit and halo follow the centered protein. The redundant protein subtitle and input
+number prefix are removed in all four locales. Verified at 320–1440px.

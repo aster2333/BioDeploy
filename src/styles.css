@@ -2210,33 +2210,33 @@ button:disabled { opacity: .5; transform: none; }
 
 /* Hero reference lock: the molecule is the subject; sequence and data frame it. */
 .hero-visual.protein-scene { height: 520px; perspective: 1000px; }
-.protein-halo { position: absolute; width: 90%; height: 92%; top: 0; left: -3%; z-index: -2; background: radial-gradient(ellipse, #e5efff 0%, #eff5fc80 35%, transparent 68%); }
+.protein-halo { position: absolute; width: 90%; height: 92%; top: 0; left: 5%; z-index: -2; background: radial-gradient(ellipse, #e5efff 0%, #eff5fc80 35%, transparent 68%); }
 .protein-orbits { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; overflow: visible; }
 .protein-orbit-outer { stroke: #dbe4f0; stroke-width: .8; }
-.protein-orbit-inner { stroke: #d9e4f2; stroke-width: .8; stroke-dasharray: 2 7; transform-origin: 240px 260px; animation: molecular-orbit 90s linear infinite; }
+.protein-orbit-inner { stroke: #d9e4f2; stroke-width: .8; stroke-dasharray: 2 7; transform-origin: 300px 260px; animation: molecular-orbit 90s linear infinite; }
 .protein-axis { stroke: #b7c9e0; stroke-width: 1; }
 .protein-route { stroke: #91b8ed; stroke-width: 1.2; stroke-dasharray: 4 5; animation: molecular-flow 4s linear infinite; }
-.hero-protein { position: absolute; width: 72%; aspect-ratio: 1; top: 10%; left: 4%; z-index: 1; pointer-events: none; }
+.hero-protein { position: absolute; width: 66%; aspect-ratio: 1; top: 14%; left: 17%; z-index: 1; pointer-events: none; }
 .hero-protein img { display: block; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 24px 18px #285b9918); animation: molecular-float 12s ease-in-out infinite; }
-.protein-scene .sequence-card { z-index: 2; top: 8%; left: auto; right: 0; width: 45%; transform: rotate(4deg); border-radius: 12px; background: #fff; box-shadow: 0 20px 55px -20px #183c682b; animation: sequence-float 12s ease-in-out infinite; }
+.protein-scene .sequence-card { z-index: 2; top: 3%; left: 1%; right: auto; width: 43%; transform: rotate(-5deg); border-radius: 12px; background: #fff; box-shadow: 0 20px 55px -20px #183c682b; animation: sequence-float 12s ease-in-out infinite; }
 .protein-scene .sequence-code { font-size: clamp(8px,.77vw,11px); padding: 13px 14px; letter-spacing: 0; line-height: 1.95; }
 .protein-scene .mini-card-header { padding-inline: 13px; height: 38px; font-size: 9px; }
 .protein-scene .mini-card-footer { padding: 10px 13px; font-size: 7px; }
-.protein-scene .output-card { z-index: 3; left: auto; right: 1%; bottom: 3%; width: 58%; transform: rotate(-3deg); border-radius: 12px; background: #fff; box-shadow: 0 20px 55px -20px #183c682b; animation: result-float 12s ease-in-out infinite; }
+.protein-scene .output-card { z-index: 3; left: auto; right: 1%; bottom: 2%; width: 54%; transform: rotate(3deg); border-radius: 12px; background: #fff; box-shadow: 0 20px 55px -20px #183c682b; animation: result-float 12s ease-in-out infinite; }
 .protein-scene .mini-chart { padding: 10px 12px 8px; }
 .protein-scene .mini-chart svg { height: 82px; overflow: visible; }
 .protein-scene .mini-chart path:nth-child(2) { stroke-dasharray: 340; animation: sensorgram-reveal 8s ease-in-out infinite; }
 .protein-scene .output-format { padding: 12px 13px; }
 .protein-scene.is-still *, .protein-scene.is-still .mini-chart path:nth-child(2) { animation-play-state: paused; }
 @keyframes molecular-float { 0%,100% { transform: translate3d(0,3px,0) rotate(-8deg) rotateY(-8deg); } 50% { transform: translate3d(-5px,-10px,15px) rotate(5deg) rotateY(8deg); } }
-@keyframes sequence-float { 0%,100% { transform: translateY(0) rotate(4deg); } 50% { transform: translateY(-5px) rotate(2deg); } }
-@keyframes result-float { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(5px) rotate(-1deg); } }
+@keyframes sequence-float { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-5px) rotate(-3deg); } }
+@keyframes result-float { 0%,100% { transform: translateY(0) rotate(3deg); } 50% { transform: translateY(5px) rotate(1deg); } }
 @keyframes molecular-orbit { to { transform: rotate(360deg); } }
 @keyframes molecular-flow { to { stroke-dashoffset: -36; } }
 @keyframes sensorgram-reveal { 0% { stroke-dashoffset: 340; opacity: .4; } 35%,85% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: .4; } }
 @media (min-width: 901px) and (max-width: 1150px) {
   .hero-visual.protein-scene { margin-left: -10px; height: 470px; }
-  .protein-scene .sequence-card { width: 48%; right: 0; }
+  .protein-scene .sequence-card { width: 46%; left: 1%; right: auto; }
   .protein-scene .sequence-code { font-size: 8px; }
   .protein-scene .mini-card-header { font-size: 8px; padding-inline: 10px; }
   .protein-scene .mini-card-header .icon { display: none; }
@@ -2246,15 +2246,15 @@ button:disabled { opacity: .5; transform: none; }
   .protein-scene .sequence-code { font-size: 11px; }
 }
 @media (max-width: 600px) {
-  .hero-visual.protein-scene { margin-top: 18px; width: 100%; height: auto; aspect-ratio: 1; }
-  .protein-scene .sequence-card { top: 6%; left: auto; right: 1%; width: 48%; border-radius: 9px; }
-  .protein-scene .sequence-code { font-size: clamp(6.5px,1.9vw,10px); padding: 10px; line-height: 1.85; }
+  .hero-visual.protein-scene { margin-top: 28px; width: 100%; height: clamp(420px,120vw,540px); aspect-ratio: auto; }
+  .protein-scene .sequence-card { top: 1%; left: 2%; right: auto; width: 56%; border-radius: 9px; }
+  .protein-scene .sequence-code { font-size: clamp(7px,2vw,10px); padding: 10px; line-height: 1.85; }
   .protein-scene .mini-card-header { font-size: 7px; height: 30px; padding-inline: 9px; }
   .protein-scene .mini-card-header .icon { display: none; }
   .protein-scene .file-pill { font-size: 6px; padding: 1px 3px; }
   .protein-scene .mini-card-footer { font-size: 6px; padding: 8px 9px; letter-spacing: 0; }
-  .hero-protein { width: 74%; top: 13%; left: 1%; }
-  .protein-scene .output-card { right: 1%; bottom: 0; width: 61%; border-radius: 9px; }
+  .hero-protein { width: 80%; top: 22%; left: 10%; }
+  .protein-scene .output-card { right: 2%; bottom: 2%; width: 64%; border-radius: 9px; }
   .protein-scene .mini-chart { padding: 5px 8px 2px; }
   .protein-scene .mini-chart svg { height: 61px; }
   .protein-scene .output-format { font-size: 7px; padding: 9px; }
