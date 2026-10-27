@@ -1,10 +1,11 @@
+import { createNetworkGlobe } from './network-globe.js';
 import { languages, locales } from './locales.js';
 import { sampleData, sampleCsv } from './sample-data.js';
 import { initQuoteFlow } from './quote-flow.js';
 import { createFeedback, createDownloadManager, createOutcomeBadge } from './ui-feedback.js';
 
 const localeKey = 'biodeploy.locale';
-const state = { locale: 'en', stage: 'input', region: 'cn', package: 'expression', candidate: 'binder_001', dataView: 'raw', milestone: 0, apiView: 'request' };
+const state = { locale: 'en', stage: 'input', region: 'ch', package: 'expression', candidate: 'binder_001', dataView: 'raw', milestone: 0, apiView: 'request' };
 try {
   const saved = localStorage.getItem(localeKey);
   if (Object.hasOwn(locales, saved)) state.locale = saved;
@@ -91,18 +92,30 @@ function renderDialog() {
   $('#dialog-days').textContent = `21 ${t('days')}`;
 }
 
+const networkGlobe = createNetworkGlobe(document.querySelector('#network-globe'));
+
 function renderRegion() {
-  const regions = { cn: ['CN / APAC', 'regionCnCopy'], us: ['US / AMERICAS', 'regionUsCopy'], au: ['AU / APAC', 'regionAuCopy'] };
-  const [code, key] = regions[state.region];
+  const regions = {
+    ch: ['CH / EUROPE', 'regionChCopy', 'Adaptyv Bio'],
+    sg: ['SG / APAC', 'regionSgCopy', 'GenScript'],
+    us: ['US / AMERICAS', 'regionUsCopy', 'Twist Bioscience'],
+    cn: ['CN / APAC', 'regionCnCopy', t('supplierPending')],
+  };
+  const [code, key, supplier] = regions[state.region];
   $('.region-code').textContent = code;
   $('#region-copy').textContent = t(key);
+  $('#region-copy').dataset.i18n = key;
+  $('#region-supplier').textContent = supplier;
+  const badge = $('#region-status');
+  badge.dataset.i18n = state.region === 'cn' ? 'supplierUpcoming' : 'supplierLabel';
+  badge.textContent = t(badge.dataset.i18n);
+  networkGlobe?.select(state.region);
   $('#region-description').setAttribute('aria-labelledby', `region-${state.region}`);
   $$('[data-region]').forEach((button) => {
     const selected = button.dataset.region === state.region;
     button.setAttribute('aria-selected', String(selected));
     button.tabIndex = selected ? 0 : -1;
   });
-  $$('[data-map-region]').forEach((pin) => pin.classList.toggle('active', pin.dataset.mapRegion === state.region));
 }
 
 function renderLocale() {

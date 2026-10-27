@@ -241,12 +241,15 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 }
 .brand-mark{
   width:25px;
-  height:29px;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:2.8;
-  stroke-linecap:round;
-  stroke-linejoin:round
+  height:auto;
+  display:block;
+  flex-shrink:0
+}
+.workspace-brand-mark{
+  width:14px;
+  height:auto;
+  display:block;
+  flex-shrink:0
 }
 .brand-period{
   color:var(--blue)
@@ -1048,6 +1051,7 @@ html[lang=ja] #hero-rotating-line:not(.hero-static){
 }
 .region-tabs{
   display:flex;
+  flex-wrap:wrap;
   gap:3px;
   margin-top:29px;
   border-bottom:1px solid #dcdee3
@@ -1099,6 +1103,12 @@ html[lang=ja] #hero-rotating-line:not(.hero-static){
   padding:3px 5px;
   letter-spacing:.5px
 }
+.supplier-name{
+  margin:14px 0 0;
+  font-size:20px;
+  font-weight:500;
+  letter-spacing:-.5px
+}
 .region-description p{
   font-size:11px;
   line-height:1.8;
@@ -1108,30 +1118,34 @@ html[lang=ja] #hero-rotating-line:not(.hero-static){
 }
 .globe-visual{
   position:relative;
-  min-width:0
+  min-width:0;
+  aspect-ratio:520 / 450;
+  isolation:isolate
 }
 .globe-coordinates{
   position:absolute;
-  top:4px;
+  top:12px;
   left:12px;
-  font-size:7px;
+  font-size:8px;
   letter-spacing:1px;
-  color:#8a909a
+  color:#747d8b
 }
-.globe-visual>svg{
+.globe-visual>canvas{
+  display:block;
   width:100%;
-  height:auto
+  height:100%
 }
-.map-pin{
-  opacity:.45;
-  transition:opacity .2s
-}
-.map-pin.active{
-  opacity:1
-}
-.map-pin.active circle:first-child{
-  r:21px;
-  opacity:.14
+.globe-caption{
+  position:absolute;
+  bottom:14px;
+  left:12px;
+  right:12px;
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  font-size:7px;
+  letter-spacing:.8px;
+  color:#747d8b
 }
 .site-footer{
   border-top:1px solid var(--border)
@@ -1147,7 +1161,7 @@ html[lang=ja] #hero-rotating-line:not(.hero-static){
 }
 .footer-top .brand-mark{
   width:21px;
-  height:23px
+  height:auto
 }
 .footer-top>span{
   font-size:10px;
@@ -1819,7 +1833,7 @@ html:not([lang=en]) .package-card>p{
   }
   .region-tabs{
     margin-top:23px;
-    gap:12px
+    gap:2px
   }
   .region-tabs button{
     font-size:11px;

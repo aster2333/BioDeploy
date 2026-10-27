@@ -1,7 +1,5 @@
 .component-gallery { background: var(--canvas); }
 .component-header { position: sticky; top: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 20px 40px; border-bottom: 1px solid var(--border); background: #fafafaf5; }
-.component-wordmark { font-weight: 600; font-size: 23px; letter-spacing: -1px; }
-.component-wordmark span { color: var(--blue); }
 .component-header > div { display: flex; align-items: center; gap: 24px; font-size: 12px; }
 .component-header a { display: inline-flex; align-items: center; min-height: 44px; }
 .component-gallery select, .component-gallery input:not([type=checkbox]) { min-height: 44px; border: 1px solid #cbd1da; border-radius: 6px; color: var(--ink); background-color: white; padding: 10px 38px 10px 12px; font: inherit; font-size: 13px; max-width: 100%; }
