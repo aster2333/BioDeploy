@@ -10,8 +10,12 @@ export const languages = [
 
 // Columns follow languages above. Technical identifiers and units are not translated.
 export const messages = {
-  pageTitle: ["Biodeploy | Protein expression and binding assays","Biodeploy | 蛋白质表达与结合验证","Biodeploy | 蛋白質表現與結合驗證","Biodeploy | タンパク質の発現・結合評価"],
-  pageDescription: ["Expression screening and binding assays for AI-designed proteins. Review sample results and estimate assay costs.","为 AI 设计的蛋白质提供表达初筛与结合验证。查看示例结果，估算实验费用。","為 AI 設計的蛋白質提供表現初篩與結合驗證。查看範例結果，估算實驗費用。","AI 設計タンパク質の発現スクリーニングと結合評価。結果サンプルの確認と費用の試算ができます。"],
+  pageTitle: ["Biodeploy | Wet-lab validation for molecular designs", "Biodeploy | 分子设计的湿实验验证", "Biodeploy | 分子設計的濕實驗驗證", "Biodeploy | 分子設計のウェットラボ検証"],
+  pageDescription: ["Wet-lab validation for molecular designs. Explore assay services, inspect sample results and estimate experimental costs.", "为分子设计提供湿实验验证服务。探索实验服务、查看示例结果，估算实验费用。", "為分子設計提供濕實驗驗證服務。探索實驗服務、查看範例結果，估算實驗費用。", "分子設計のためのウェットラボ検証サービス。実験サービス、結果サンプル、費用の試算をご覧いただけます。"],
+  dataDelivery: ["Raw measurements, fitted curves and quality-control results, delivered in JSON and CSV.", "交付原始读数、拟合曲线与质控结果，支持 JSON 和 CSV 格式。", "交付原始讀值、擬合曲線與品管結果，支援 JSON 和 CSV 格式。", "測定値、フィット曲線、品質管理の結果を JSON・CSV 形式で提供します。"],
+  missionLabel: ["Why we do this", "我们为何而做", "我們為何而做", "私たちの想い"],
+  missionTitle: ["Every untested molecular design could hold the possibility of saving a life.", "每一个尚未验证的分子设计，都可能藏着一种挽救生命的可能。", "每一個尚未驗證的分子設計，都可能藏著一種挽救生命的可能。", "まだ検証されていない分子設計には、命を救う可能性が秘められているかもしれません。"],
+  missionBody: ["We want promising designs to move forward, without being held back by barriers to validation.", "我们希望，有潜力的设计，不因验证的门槛而止步。", "我們希望，有潛力的設計，不因驗證的門檻而止步。", "有望な設計が、検証のハードルによって足止めされない未来を目指しています。"],
   workspace: ['workspace', '工作空间', '工作空間', 'ワークスペース'],
   networkProtocol: ['GLOBAL DELIVERY / SHARED PROTOCOL', '全球交付 / 统一协议', '全球交付 / 統一協定', 'グローバルな提供 / 共通プロトコル'],
   skip: ['Skip to content', '跳到正文', '跳至主要內容', '本文へスキップ'],
@@ -30,7 +34,7 @@ export const messages = {
   heroSuffix: [" designs.","设计。","設計。","設計。"],
   heroStaticLine: ["protein, molecule & sequence designs.","蛋白质、分子与序列设计。","蛋白質、分子與序列設計。","タンパク質・分子・配列設計。"],
   heroSummary: ["Test your protein, molecule and sequence designs.","验证你的蛋白质、分子与序列设计。","驗證你的蛋白質、分子與序列設計。","タンパク質・分子・配列の設計を検証。"],
-  heroDescription: ["Expression and binding assays for AI-designed proteins. Get raw measurements, fitted curves and QC in JSON or CSV.","检测 AI 设计的蛋白质能否表达、是否结合靶点。交付原始读数、拟合曲线和质控结果，支持 JSON 与 CSV。","檢測 AI 設計的蛋白質能否表現、是否結合標的。交付原始讀值、擬合曲線與品管結果，支援 JSON 與 CSV。","AI 設計タンパク質の発現と標的への結合を評価。測定値、フィット曲線、QC を JSON・CSV で受け取れます。"],
+  heroDescription: ["Our mission: make every molecular design easier to validate.", "我们的使命：让天下没有难验证的分子设计。", "我們的使命：讓天下沒有難驗證的分子設計。", "私たちの使命は、あらゆる分子設計の検証をもっと身近にすること。"],
   heroCta: ["Estimate assay costs","估算实验费用","估算實驗費用","実験費用を試算"],
   heroSecondary: ["See example results","查看示例结果","查看範例結果","結果サンプルを見る"],
   heroVisual: ['Example workflow from a protein sequence through a standardized assay to structured results', '从蛋白质序列，经标准化实验，到结构化结果的示例流程', '從蛋白質序列，經標準化實驗，到結構化結果的範例流程', 'タンパク質配列から標準化アッセイを経て構造化データに至るサンプルフロー'],
@@ -91,7 +95,7 @@ export const messages = {
   supplierPending: ["To be announced", "待补充", "待補充", "順次追加予定"],
   supplierUpcoming: ["COMING SOON", "待补充", "待補充", "追加予定"],
   regionCnCopy: ["Suppliers in China will be added.", "中国的供应商将陆续补充。", "中國的供應商將陸續補充。", "中国のサプライヤーは順次追加予定です。"],
-  footerTagline: ["Protein expression and binding assays.","蛋白质表达与结合验证。","蛋白質表現與結合驗證。","タンパク質の発現・結合評価。"],
+  footerTagline: ["Wet-lab validation for molecular designs.", "为分子设计提供湿实验验证。", "為分子設計提供濕實驗驗證。", "分子設計のためのウェットラボ検証。"],
   backTop: ['Back to top', '回到顶部', '返回頂端', 'トップへ'],
   dialogEyebrow: ['PACKAGE SCOPE', '套餐范围', '套組範圍', 'パッケージの検証範囲'],
   close: ['Close', '关闭', '關閉', '閉じる'],

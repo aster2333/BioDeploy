@@ -2278,3 +2278,45 @@ button:disabled { opacity: .5; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .protein-scene *, .protein-scene .mini-chart path:nth-child(2) { animation: none; }
 }
+
+/* Mission copy follows the existing monochrome brand and section rhythm. */
+.data-delivery {
+  max-width: 680px;
+  margin: -20px 0 32px;
+  color: var(--secondary);
+  font-size: 15px;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+.mission-section { border-top: 1px solid var(--border); }
+.mission-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  align-items: start;
+}
+.mission-label { margin: 6px 0 0; color: var(--secondary); }
+.mission-copy h2 {
+  max-width: 800px;
+  margin: 0;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.4;
+  letter-spacing: -.03em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.mission-copy p {
+  max-width: 640px;
+  margin: 24px 0 0;
+  color: var(--secondary);
+  font-size: 16px;
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+@media (max-width: 900px) {
+  .mission-layout { grid-template-columns: 1fr; gap: 24px; }
+}
+@media (max-width: 600px) {
+  .data-delivery { margin-top: -12px; font-size: 13px; }
+  .mission-copy p { font-size: 14px; }
+}
