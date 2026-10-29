@@ -84,7 +84,7 @@ export function createDownloadManager({ feedback }) {
 }
 
 export const outcomeStates = {
-  binder: { tone: 'success', icon: '✓', key: 'outcomeBinder' },
+  active: { tone: 'success', icon: '✓', key: 'outcomeActive' },
   negative: { tone: 'neutral', icon: '−', key: 'outcomeNegative' },
   unexpressed: { tone: 'neutral', icon: '○', key: 'outcomeUnexpressed' },
   flagged: { tone: 'warning', icon: '!', key: 'outcomeFlagged' },

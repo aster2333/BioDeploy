@@ -1,6 +1,6 @@
 # Biodeploy 组件与异常状态规范
 
-更新：2026-10-29。新产品定位见 [PRD.md](PRD.md) 与 [New-intro.md](New-intro.md)；binder 状态仍描述当前数据演示；旧计价章节仅供历史追溯，新报价规则以 PRD 第 7 节为准。适用：静态多语言演示及后续产品界面。以本文件为状态规范，视觉基础沿用 DESIGN_SPEC；不改变报价、科学数据或演示边界。
+更新：2026-10-29。新产品定位见 [PRD.md](PRD.md) 与 [New-intro.md](New-intro.md)；旧 binder 章节仅供追溯，当前科学状态见 ENZYME_DATA.md；旧计价章节仅供历史追溯，新报价规则以 PRD 第 7 节为准。适用：静态多语言演示及后续产品界面。以本文件为状态规范，视觉基础沿用 DESIGN_SPEC；不改变报价、科学数据或演示边界。
 
 ## 1. 参考与设计锁定
 
@@ -111,3 +111,7 @@ Sequence & Substrates 校验序列和底物关联；Continuous Kinetic Traces �
 ## 11. 审核版套餐详情
 
 `kinetics`、`matrix`、`expressionQc` 是独立范围键，文案在 `src/package-copy.js`。详情分别渲染输入、实验深度、技术重复 / 单培养、待确认排期、方法和输出。新套餐显示配置入口，按对应 mode 带入新报价器；不使用旧 binding / expression 价格。语言切换重渲染已打开详情；关闭返回原卡片按钮。
+
+## 12. 酶动力学科学状态
+
+当前成功状态键为 active，配套 negative / unexpressed / flagged；徽标、表格、组件参考页与导出共用。低于检测限不等于零活性。未表达不生成测量曲线；未测量、阴性与 QC 异常的拟合参数全部为 null，视图提供原因和检查原始 / QC 的恢复入口。详情、轴标签、元数据与读屏说明四语言同步。科学单位与导出细节见 ENZYME_DATA.md。

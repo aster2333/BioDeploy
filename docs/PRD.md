@@ -20,9 +20,9 @@ Biodeploy 是轻资产湿实验编排平台，连接 AI 原生酶 / 蛋白质设
 
 ## 3. 文档要求与实现状态
 
-本文定义新目标产品。当前仍是无交易后端的四语言静态演示：工作台使用 binder 合成数据，报价器已切换为酶动力学、催化矩阵与表达质控，支持 24–384 个变体和 Standard / Rush 演示档位。
+本文定义新目标产品。当前仍是无交易后端的四语言静态演示：工作台使用酶动力学合成数据，报价器已切换为酶动力学、催化矩阵与表达质控，支持 24–384 个变体和 Standard / Rush 演示档位。
 
-本轮同步新定位文档、首页愿景、页面元信息与网络叙事；酶动力学工作台和 Parquet 下载是后续实现要求；新套餐本地报价引擎、24–384 数量范围与 Rush 档已实现，不以修改文档视为已经上线。现有技术状态以源码和 [QA.md](QA.md) 的历史记录为准。
+本轮同步新定位文档、首页愿景、页面元信息与网络叙事；酶动力学工作台与 JSON / CSV 已实现，Parquet 下载仍为后续要求；新套餐本地报价引擎、24–384 数量范围与 Rush 档已实现，不以修改文档视为已经上线。现有技术状态以源码和 [QA.md](QA.md) 的历史记录为准。
 
 所有科学示例、价格与周期仍须标注演示；真实上传、下单、支付、实验路由、API 和履约尚未实现。询价预览不发送邮件；邮箱仅存在当前页面及用户主动下载的草稿中。
 
@@ -42,22 +42,17 @@ Biodeploy 是轻资产湿实验编排平台，连接 AI 原生酶 / 蛋白质设
 
 首屏愿景采用本文件第 1 节原文。独立 `Why we do this` 区块标题为 `Intelligence needs physics.`，正文为 `We make complex enzyme kinetics as frictionless as cloud computing. By unlocking accessible wet-lab validation for computational teams, we convert real-world catalytic reality into continuous training fuel for generative biology.`。四语言同步，英文保持用户原句。
 
-## 5. 产品工作台目标
+## 5. 产品工作台（已实现酶动力学示例）
 
-路径由 `workspace/binder-validation` 转为 `workspace/enzyme-kinetics`（当前仅为目标工作台标识，不表示已建立真实路由）。
+工作台标识 `workspace/enzyme-kinetics`。沿用现有导航层级：序列与底物 → 动力学实验范围 → 动力学结果。结果内可切换连续反应曲线、拟合参数、质控与来源。输入展示合成占位序列与虚构底物，明确不代表已验证的酶–底物组合；SMILES 缺失为 null。
 
-| 标签 | 内容 |
-| --- | --- |
-| Sequence & Substrates | FASTA 与底物 SMILES / 名称；保持候选和底物关联 |
-| Continuous Kinetic Traces | 不同底物浓度下的连续吸光度 / 荧光时间序列 |
-| Fitted Parameters | kcat、KM、kcat/KM、R²、QC 标记与不可拟合原因 |
-| ML Data Export | JSON / Parquet，完整条件、原始数据、拟合与来源 |
+数据与图形契约见 [ENZYME_DATA.md](ENZYME_DATA.md)：8 个底物浓度 × 3 次技术重复，连续轨迹、直接非线性 Michaelis–Menten 拟合、kcat / KM / Vmax / 效率 / R² / 标准误与 QC；JSON / CSV 保留条件、原始信号、校准、对照和全部异常候选。
 
-连续轨迹图的横轴为时间；Michaelis–Menten 图的横轴为底物浓度、纵轴为初始反应速度。二者不能混用。kcat 的有效计算需要活性酶浓度依据；没有有效数据时保留 null 与原因，不伪造拟合。
+连续轨迹图横轴为时间，纵轴为扣空白产物；拟合图横轴为底物浓度，纵轴为初速。kcat 以已知模拟活性酶浓度计算，不能推断真实酶活性浓度已测定。阴性、未表达与 QC 失败不编造参数。Parquet 尚未实现。
 
 ## 6. 三类核心套餐（2026-10-29 审核修订）
 
-采用 [PACKAGES_REVIEW.md](PACKAGES_REVIEW.md) 的范围和价格口径，覆盖 New-intro 第 3.3 节初稿。首页已实现三卡与详情弹窗，四语言同步；工作台仍待实施；新报价引擎已接入。
+采用 [PACKAGES_REVIEW.md](PACKAGES_REVIEW.md) 的范围和价格口径，覆盖 New-intro 第 3.3 节初稿。首页已实现三卡与详情弹窗，四语言同步；工作台已采用酶动力学合成示例；新报价引擎已接入。
 
 | 套餐 | 基础范围 | USD 目标起价 |
 | --- | --- | --- |
@@ -86,7 +81,7 @@ Biodeploy 是轻资产湿实验编排平台，连接 AI 原生酶 / 蛋白质设
 
 目标数据应包含序列 / 底物关联、浓度及单位、时间及读数单位、初始反应速度、拟合参数及单位、R²、QC 和不可用原因，以及 pH、温度、buffer、batch ID、control blanks、方法版本与实验来源。
 
-保留阴性、未表达、未测量和 QC 失败记录；未知量使用 null，不以 0 代替。原始数据、拟合和 QC 共同交付，图形与导出读取相同来源。JSON / Parquet 为新目标；现有 JSON / CSV binder 示例仍标为合成结合数据。
+保留阴性、未表达、未测量和 QC 失败记录；未知量使用 null，不以 0 代替。原始数据、拟合和 QC 共同交付，图形与导出读取相同来源。JSON / Parquet 为新目标；当前 JSON / CSV 已为酶动力学合成数据，详细字段与 CSV 记录类型见 ENZYME_DATA。
 
 API 仅为设计预览，使用保留 `.example` 域名；不发起实验请求，不声称已有可调用服务。
 
@@ -110,4 +105,4 @@ API 仅为设计预览，使用保留 `.example` 域名；不发起实验请求�
 
 本轮验收：首页静态英文与运行时四语言愿景一致，旧愿景被替换；没有 Adaptyv 供应商身份；文档明确新方向和实现差距；静态检查与构建通过。
 
-后续产品验收：四个工作台标签与正确单位、三套餐范围、24 / 384 边界与非法输入、Standard / Rush、费用和数据点数来源、JSON / Parquet 负结果保留、四语言状态保持与 360 / 768 / 1440px 浏览器验证。旧 binder 检查通过不能替代酶动力学验收。
+当前验收已覆盖酶动力学三视图与正确单位、四种科学结果、三套餐报价边界、Standard / Rush、JSON / CSV 负结果与对照保留、四语言状态和 360 / 768 / 1440px。具体证据见 QA.md。Parquet 与真实实验能力仍待实现和验证。

@@ -2241,7 +2241,7 @@ button:disabled { opacity: .5; transform: none; }
 .protein-scene .output-card { z-index: 3; left: auto; right: 1%; bottom: 2%; width: 54%; transform: rotate(3deg); border-radius: 12px; background: #fff; box-shadow: 0 20px 55px -20px #183c682b; animation: result-float 12s ease-in-out infinite; }
 .protein-scene .mini-chart { padding: 10px 12px 8px; }
 .protein-scene .mini-chart svg { height: 82px; overflow: visible; }
-.protein-scene .mini-chart path:nth-child(2) { stroke-dasharray: 340; animation: sensorgram-reveal 8s ease-in-out infinite; }
+.protein-scene .kinetics-fit-line { stroke-dasharray: 340; animation: kinetics-curve-reveal 8s ease-in-out infinite; }
 .protein-scene .output-format { padding: 12px 13px; }
 .protein-scene.is-still *, .protein-scene.is-still .mini-chart path:nth-child(2) { animation-play-state: paused; }
 @keyframes molecular-float { 0%,100% { transform: translate3d(0,3px,0) rotate(-8deg) rotateY(-8deg); } 50% { transform: translate3d(-5px,-10px,15px) rotate(5deg) rotateY(8deg); } }
@@ -2249,7 +2249,7 @@ button:disabled { opacity: .5; transform: none; }
 @keyframes result-float { 0%,100% { transform: translateY(0) rotate(3deg); } 50% { transform: translateY(5px) rotate(1deg); } }
 @keyframes molecular-orbit { to { transform: rotate(360deg); } }
 @keyframes molecular-flow { to { stroke-dashoffset: -36; } }
-@keyframes sensorgram-reveal { 0% { stroke-dashoffset: 340; opacity: .4; } 35%,85% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: .4; } }
+@keyframes kinetics-curve-reveal { 0% { stroke-dashoffset: 340; opacity: .4; } 35%,85% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: .4; } }
 @media (min-width: 901px) and (max-width: 1150px) {
   .hero-visual.protein-scene { margin-left: -10px; height: 470px; }
   .protein-scene .sequence-card { width: 46%; left: 1%; right: auto; }
@@ -2278,7 +2278,7 @@ button:disabled { opacity: .5; transform: none; }
   .protein-scene .sample-badge { font-size: 6px; padding: 2px 3px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .protein-scene *, .protein-scene .mini-chart path:nth-child(2) { animation: none; }
+  .protein-scene *, .protein-scene .kinetics-fit-line { animation: none; }
 }
 
 /* Mission copy follows the existing monochrome brand and section rhythm. */
@@ -2334,3 +2334,23 @@ button:disabled { opacity: .5; transform: none; }
 .packages-section .package-pricing { margin-top: auto; }
 .packages-section .package-pricing > strong { flex-basis: 100%; margin-left: 0; font-size: clamp(17px, 1.5vw, 21px); overflow-wrap: anywhere; }
 .packages-section .package-pricing > span:last-child { font-size: 12px; line-height: 1.7; }
+
+/* Enzyme kinetics example: separate progress curves from substrate-rate fitting. */
+.kinetic-input-context { color: #aab7c9; font-size: 12px; line-height: 1.8; margin: 16px 0; overflow-wrap: anywhere; }
+.concentration-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 12px; color: #b8c4d7; font: 11px var(--mono); }
+.concentration-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.concentration-legend i { width: 12px; height: 3px; border-radius: 2px; }
+.kinetic-parameters { margin-top: 18px; }
+#fit-chart-mount svg, #raw-kinetics-chart { min-height: 170px; }
+#panel-results .result-controls { flex-wrap: wrap; gap: 16px; }
+#panel-results .data-tabs { flex-wrap: wrap; max-width: 100%; }
+#panel-results .result-metric > strong { font-size: 23px; white-space: normal; overflow-wrap: anywhere; }
+#panel-results .trace-legend { line-height: 1.8; }
+@media (max-width: 600px) {
+  #panel-results .data-tabs { width: 100%; }
+  #panel-results .data-tabs button { flex: 1 1 100px; white-space: normal; }
+  #fit-chart-mount svg, #raw-kinetics-chart { min-height: 125px; }
+}
+@media (max-width: 600px) {
+  #panel-results .results-chart svg text { font-size: 20px; }
+}

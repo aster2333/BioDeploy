@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
-    "check": "node --check src/app.js && node --check src/network-globe.js && node --check src/globe-land.js && node --check src/locales.js && node --check src/experience-copy.js && node --check src/quote.js && node --check src/inquiry.js && node --check src/quote-flow.js && node --check src/ui-feedback.js && node --check src/component-gallery.js && node --check src/component-copy.js && node --check src/not-found.js && node --check src/not-found-copy.js && node --check scripts/serve.mjs && node scripts/check.mjs",
+    "check": "node --check src/app.js && node --check src/kinetics-chart.js && node --check src/kinetics-copy.js && node --check src/sample-data.js && node --check src/network-globe.js && node --check src/globe-land.js && node --check src/locales.js && node --check src/experience-copy.js && node --check src/quote.js && node --check src/inquiry.js && node --check src/quote-flow.js && node --check src/ui-feedback.js && node --check src/component-gallery.js && node --check src/component-copy.js && node --check src/not-found.js && node --check src/not-found-copy.js && node --check scripts/serve.mjs && node scripts/check.mjs",
     "preview": "node scripts/serve.mjs dist"
   }
 }

@@ -12,7 +12,7 @@ const feedback = createFeedback({ root: $('#ui-feedback'), t });
 const downloads = createDownloadManager({ feedback });
 const selected = new Set();
 // Reuse the scientific examples without modifying the production dataset.
-const rows = Array.from({ length: 12 }, (_, i) => ({ ...sampleData.candidates[i % 4], id: `binder_${String(i + 1).padStart(3, '0')}` }));
+const rows = Array.from({ length: 12 }, (_, i) => ({ ...sampleData.candidates[i % 4], id: `enzyme_${String(i + 1).padStart(3, '0')}`, sequence_id: `enzyme_${String(i + 1).padStart(3, '0')}` }));
 let emailTouched = false;
 
 function renderEmail() {
@@ -26,7 +26,7 @@ function renderEmail() {
 function visibleRows() {
   const query = $('#sample-search').value.trim().toLowerCase();
   const filter = $('#sample-outcome').value;
-  return rows.filter((row) => row.id.includes(query) && (filter === 'all' || row.outcome === filter)).sort((a, b) => $('#sample-sort').value === 'kd' ? (a.illustrative_estimate.kd ?? Infinity) - (b.illustrative_estimate.kd ?? Infinity) || a.id.localeCompare(b.id) : a.id.localeCompare(b.id));
+  return rows.filter((row) => row.id.includes(query) && (filter === 'all' || row.outcome === filter)).sort((a, b) => $('#sample-sort').value === 'kcat' ? (a.fitted_parameters.kcat_s_1 ?? Infinity) - (b.fitted_parameters.kcat_s_1 ?? Infinity) || a.id.localeCompare(b.id) : a.id.localeCompare(b.id));
 }
 function renderTable() {
   const visible = visibleRows();
@@ -59,7 +59,7 @@ function renderTable() {
     selection.append(input); tr.append(selection);
     const id = document.createElement('th'); id.scope = 'row'; id.textContent = row.id; tr.append(id);
     const outcome = document.createElement('td'); outcome.append(createOutcomeBadge(row.outcome, t)); tr.append(outcome);
-    for (const value of [row.illustrative_estimate.kd === null ? '—' : new Intl.NumberFormat(locale).format(row.illustrative_estimate.kd), `${row.provenance.batch_id} / ${row.provenance.lab_id}`]) {
+    for (const value of [row.fitted_parameters.kcat_s_1 === null ? '—' : new Intl.NumberFormat(locale).format(row.fitted_parameters.kcat_s_1), `${row.provenance.batch_id} / ${row.provenance.lab_id}`]) {
       const td = document.createElement('td'); td.textContent = value; tr.append(td);
     }
     return tr;
@@ -73,7 +73,7 @@ function renderLocale() {
   $$('[data-i18n-aria]').forEach((element) => element.setAttribute('aria-label', t(element.dataset.i18nAria)));
   $('#gallery-language').value = locale;
   $('#gallery-language').setAttribute('aria-label', t('chooseLanguage'));
-  for (const id of ['light-badges', 'dark-badges']) $(`#${id}`).replaceChildren(...['binder', 'negative', 'unexpressed', 'flagged'].map((outcome) => createOutcomeBadge(outcome, t)));
+  for (const id of ['light-badges', 'dark-badges']) $(`#${id}`).replaceChildren(...['active', 'negative', 'unexpressed', 'flagged'].map((outcome) => createOutcomeBadge(outcome, t)));
   feedback.render(); renderEmail(); renderTable();
 }
 $('#gallery-language').addEventListener('change', (event) => { if (languages.some((item) => item.code === event.target.value)) locale = event.target.value; renderLocale(); });

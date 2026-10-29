@@ -1,3 +1,4 @@
+import { renderKineticsChart, renderConcentrationLegend } from './kinetics-chart.js';
 import { createNetworkGlobe } from './network-globe.js';
 import { languages, locales } from './locales.js';
 import { sampleData, sampleCsv } from './sample-data.js';
@@ -5,7 +6,7 @@ import { initQuoteFlow } from './quote-flow.js';
 import { createFeedback, createDownloadManager, createOutcomeBadge } from './ui-feedback.js';
 
 const localeKey = 'biodeploy.locale';
-const state = { locale: 'en', stage: 'input', region: 'ch', package: 'expression', candidate: 'binder_001', dataView: 'raw', milestone: 0, apiView: 'request' };
+const state = { locale: 'en', stage: 'input', region: 'ch', package: 'kinetics', candidate: 'enzyme_001', dataView: 'raw', milestone: 0, apiView: 'request' };
 try {
   const saved = localStorage.getItem(localeKey);
   if (Object.hasOwn(locales, saved)) state.locale = saved;
@@ -82,26 +83,13 @@ document.addEventListener('visibilitychange', syncProteinScene);
 
 function renderDialog() {
   const prefix = state.package;
-  const reviewed = ['kinetics', 'matrix', 'expressionQc'].includes(prefix);
-  $('#dialog-inputs').textContent = t(reviewed ? `${prefix}Inputs` : 'inputsCopy');
-  $('#dialog-configure').hidden = !reviewed;
-  if (reviewed) {
-    $('#dialog-code').textContent = { kinetics: 'KIN-01', matrix: 'MTX-01', expressionQc: 'EXP-QC' }[prefix];
-    for (const [id, suffix] of [['title', 'Name'], ['description', 'Description'], ['method', 'Method'], ['output', 'Output'], ['depth', 'Depth']]) {
-      $(`#dialog-${id}`).textContent = t(`${prefix}${suffix}`);
-    }
-    $('#dialog-replicates').textContent = t(prefix === 'expressionQc' ? 'packageSingleCulture' : 'packageTechnicalTriplicates');
-    $('#dialog-days').textContent = t('packageSchedule');
-    return;
+  $('#dialog-inputs').textContent = t(`${prefix}Inputs`);
+  $('#dialog-code').textContent = { kinetics: 'KIN-01', matrix: 'MTX-01', expressionQc: 'EXP-QC' }[prefix];
+  for (const [id, suffix] of [['title', 'Name'], ['description', 'Description'], ['method', 'Method'], ['output', 'Output'], ['depth', 'Depth']]) {
+    $(`#dialog-${id}`).textContent = t(`${prefix}${suffix}`);
   }
-  $('#dialog-code').textContent = prefix === 'expression' ? 'EXP-01' : prefix === 'thermostability' ? 'THM-01' : 'BND-01';
-  $('#dialog-title').textContent = t(`${prefix}Name`);
-  $('#dialog-description').textContent = t(`${prefix}Description`);
-  $('#dialog-method').textContent = t(`${prefix}Method`);
-  $('#dialog-output').textContent = t(`${prefix}Output`);
-  $('#dialog-depth').textContent = prefix === 'expression' ? t('expressionDepth') : prefix === 'thermostability' ? t('thermostabilityDepth') : `${t('screeningDepth')} / ${t('affinityDepth')}`;
-  $('#dialog-replicates').textContent = t(prefix === 'thermostability' ? 'thermalIncludedReplicates' : 'twoReplicates');
-  $('#dialog-days').textContent = `21 ${t('days')}`;
+  $('#dialog-replicates').textContent = t(prefix === 'expressionQc' ? 'packageSingleCulture' : 'packageTechnicalTriplicates');
+  $('#dialog-days').textContent = t('packageSchedule');
 }
 
 const networkGlobe = createNetworkGlobe(document.querySelector('#network-globe'));
@@ -267,46 +255,51 @@ dialog.addEventListener('close', () => {
 // Local-only product previews. All state is independent of language and region.
 const number = (value) => new Intl.NumberFormat(state.locale, { maximumFractionDigits: 2 }).format(value);
 const money = (cents) => new Intl.NumberFormat(state.locale, { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(cents / 100);
-const outcomeKeys = { binder: 'outcomeBinder', negative: 'outcomeNegative', unexpressed: 'outcomeUnexpressed', flagged: 'outcomeFlagged' };
-const fitChart = $('.results-chart').cloneNode(true);
-fitChart.querySelector('#chart-candidate').removeAttribute('id');
-fitChart.querySelector('svg').removeAttribute('data-i18n-aria');
-$('#fit-chart-mount').append(fitChart);
-
-function drawTraces(container, traces) {
-  container.querySelectorAll('.data-trace').forEach((path, index) => {
-    const trace = traces[index];
-    path.setAttribute('d', trace ? trace.points.map(({ time_s, response_ru }, point) => `${point ? 'L' : 'M'}${(35 + time_s / 210 * 500).toFixed(2)},${(120 - response_ru * 7 / 6).toFixed(2)}`).join(' ') : '');
-  });
-}
+const outcomeKeys = { active: 'outcomeActive', negative: 'outcomeNegative', unexpressed: 'outcomeUnexpressed', flagged: 'outcomeFlagged' };
+const scientificNumber = (value) => new Intl.NumberFormat(state.locale, { maximumSignificantDigits: 4 }).format(value);
+const parameterText = (value, unit = '') => value === null ? '—' : `${scientificNumber(value)}${unit ? ` ${unit}` : ''}`;
 
 function renderResults() {
   const candidate = sampleData.candidates.find(({ id }) => id === state.candidate);
   $('#candidate-select').value = state.candidate;
-  const rawContainer = $('#data-raw .results-chart');
-  rawContainer.querySelector('.chart-caption .mono').textContent = candidate.id;
-  fitChart.querySelector('.chart-caption .mono').textContent = candidate.id;
-  fitChart.querySelector('svg').setAttribute('aria-label', t('chartAria'));
-  drawTraces(rawContainer, candidate.raw_traces);
-  drawTraces(fitChart, candidate.fitted_traces);
-  $('#data-raw .results-layout').hidden = candidate.raw_traces.length === 0;
-  $('#measurement-empty').hidden = candidate.raw_traces.length !== 0;
-  $('#data-raw .trace-legend').hidden = candidate.raw_traces.length === 0;
-  fitChart.hidden = candidate.fitted_traces.length === 0;
-  $('#fit-unavailable').hidden = candidate.fitted_traces.length !== 0;
-  $('#candidate-kd').textContent = candidate.illustrative_estimate.kd === null ? '—' : `${number(candidate.illustrative_estimate.kd)} nM`;
+  $('#chart-candidate').textContent = candidate.id;
+  $('#fit-candidate').textContent = candidate.id;
+  renderKineticsChart($('#raw-kinetics-chart'), candidate, 'raw', t, scientificNumber);
+  renderKineticsChart($('#fit-kinetics-chart'), candidate, 'fit', t, scientificNumber);
+  renderKineticsChart($('#hero-kinetics-chart'), sampleData.candidates[0], 'fit', t, scientificNumber);
+  renderConcentrationLegend($('#concentration-legend'), sampleData.assay.substrate_concentrations_uM, scientificNumber);
+  const measured = candidate.raw_traces.length > 0;
+  const fitted = candidate.fitted_curve.length > 0;
+  $('#data-raw .results-layout').hidden = !measured;
+  $('#measurement-empty').hidden = measured;
+  $('#data-raw .trace-legend').hidden = !measured;
+  $('#concentration-legend').hidden = !measured;
+  $('#fit-chart-mount').hidden = !fitted;
+  $('#fit-unavailable').hidden = fitted;
+  $('#candidate-kcat').textContent = parameterText(candidate.fitted_parameters.kcat_s_1, 's⁻¹');
+  for (const [id, key, unit] of [['parameter-km', 'km_uM', 'µM'], ['parameter-vmax', 'vmax_uM_s', 'µM/s'], ['parameter-kcat', 'kcat_s_1', 's⁻¹'], ['parameter-efficiency', 'catalytic_efficiency_M_1_s_1', 'M⁻¹ s⁻¹'], ['parameter-r2', 'r_squared', ''], ['parameter-km-se', 'km_se_uM', 'µM']]) {
+    $(`#${id}`).textContent = parameterText(candidate.fitted_parameters[key], unit);
+  }
   $('#candidate-outcome').replaceChildren(createOutcomeBadge(candidate.outcome, t));
   $('#candidate-reason').textContent = t(candidate.reason_key);
-  const emptyView = (state.dataView === 'raw' && candidate.raw_traces.length === 0) || (state.dataView === 'fit' && candidate.fitted_traces.length === 0);
-  $('#candidate-reason').hidden = candidate.outcome === 'binder' || emptyView;
+  const emptyView = (state.dataView === 'raw' && !measured) || (state.dataView === 'fit' && !fitted);
+  $('#candidate-reason').hidden = candidate.outcome === 'active' || emptyView;
   $('#candidate-reason').dataset.outcome = candidate.outcome;
   $('#qc-status').replaceChildren(createOutcomeBadge(candidate.outcome, t));
   $('#measurement-empty-reason').textContent = t(candidate.reason_key);
   $('#fit-empty-reason').textContent = t(candidate.reason_key);
-  $('#fit-show-raw').hidden = candidate.raw_traces.length === 0;
-  $('#qc-mae').textContent = candidate.qc.mae_ru === null ? '—' : `${number(candidate.qc.mae_ru)} RU`;
+  $('#fit-show-raw').hidden = !measured;
+  $('#qc-rmse').textContent = parameterText(candidate.qc.fit_rmse_uM_s, 'µM/s');
   $('#qc-protocol').textContent = `${candidate.provenance.protocol_id} / v${candidate.provenance.protocol_version}`;
   $('#qc-batch').textContent = `${candidate.provenance.batch_id} / ${candidate.provenance.lab_id}`;
+  $('#qc-conditions').textContent = `pH ${scientificNumber(sampleData.assay.pH)} · ${scientificNumber(sampleData.assay.temperature_C)} °C`;
+  $('#qc-buffer').textContent = t('kinBufferValue');
+  $('#qc-enzyme').textContent = parameterText(candidate.active_enzyme_concentration_uM, 'µM');
+  $('#qc-depletion').textContent = parameterText(candidate.qc.max_substrate_depletion_percent, '%');
+  $('#qc-limit').textContent = parameterText(candidate.qc.rate_detection_limit_uM_s, 'µM/s');
+  $('#qc-cv').textContent = parameterText(candidate.qc.max_replicate_cv_percent, '%');
+  $('#qc-controls').textContent = t('kinControls');
+  $('#qc-flags').textContent = candidate.outcome === 'active' ? t('kinQcPass') : t(candidate.reason_key);
   $$('[data-view]').forEach((button) => {
     const selected = button.dataset.view === state.dataView;
     button.setAttribute('aria-selected', String(selected));
@@ -325,7 +318,7 @@ function renderResults() {
     button.setAttribute('aria-pressed', String(item.id === candidate.id));
     nameCell.append(button);
     row.append(nameCell);
-    for (const [index, value] of [t(item.expression === 'detected' ? 'detected' : 'notDetected'), t(outcomeKeys[item.outcome]), item.illustrative_estimate.kd === null ? '—' : number(item.illustrative_estimate.kd)].entries()) {
+    for (const [index, value] of [t(item.expression === 'detected' ? 'detected' : 'notDetected'), t(outcomeKeys[item.outcome]), parameterText(item.fitted_parameters.kcat_s_1), parameterText(item.fitted_parameters.km_uM), parameterText(item.fitted_parameters.r_squared)].entries()) {
       const cell = document.createElement('td');
       if (index === 1) cell.append(createOutcomeBadge(item.outcome, t));
       else cell.textContent = value;
@@ -441,8 +434,8 @@ new IntersectionObserver(([entry]) => {
 }, { threshold: .25 }).observe(workflow);
 
 const apiExamples = {
-  request: `POST https://api.biodeploy.example/v1/experiments\n\n{\n  "schema_version": "0.2",\n  "demo": true,\n  "package": "binding_screening",\n  "sequence_refs": ["binder_001", "binder_002"],\n  "budget": { "currency": "USD", "limit": 1500 },\n  "requires_confirmation": true\n}`,
-  event: JSON.stringify({ schema_version: '0.2', demo: true, event: 'results.example', data: { synthetic: true, candidate: 'binder_004', binding: 'unknown', kd_nM: null, reason: 'fit_qc_review', protocol_id: 'DEMO-SPR-01', qc: { synthetic: true, status: 'review_example' } } }, null, 2),
+  request: `POST https://api.biodeploy.example/v1/experiments\n\n${JSON.stringify({ schema_version: '1.0', demo: true, package: 'enzyme_kinetics', sequence_refs: ['enzyme_001', 'enzyme_002'], substrate_id: sampleData.input.substrate_id, substrate_concentrations_uM: sampleData.assay.substrate_concentrations_uM, technical_replicates: 3, pH: sampleData.assay.pH, temperature_C: sampleData.assay.temperature_C, requires_confirmation: true }, null, 2)}`,
+  event: JSON.stringify({ schema_version: sampleData.schema_version, demo: true, event: 'enzyme_kinetics.results.example', data: { synthetic: true, candidate: sampleData.candidates[3].id, activity: sampleData.candidates[3].activity, fitted_parameters: sampleData.candidates[3].fitted_parameters, reason: 'nonlinear_initial_rate_window', protocol_id: sampleData.candidates[3].provenance.protocol_id, qc: sampleData.candidates[3].qc } }, null, 2),
 };
 function renderApi() {
   $('#api-code').textContent = apiExamples[state.apiView];
@@ -465,7 +458,7 @@ $$('[data-export]').forEach((button) => button.addEventListener('click', () => {
   const json = button.dataset.export === 'json';
   downloads.run({
     content: () => json ? JSON.stringify(sampleData, null, 2) : sampleCsv(),
-    filename: `biodeploy-synthetic-example.${json ? 'json' : 'csv'}`,
+    filename: `biodeploy-synthetic-enzyme-kinetics.${json ? 'json' : 'csv'}`,
     type: json ? 'application/json' : 'text/csv;charset=utf-8',
     button,
     successKey: 'stateDownloadStarted',

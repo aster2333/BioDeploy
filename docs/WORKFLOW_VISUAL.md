@@ -52,3 +52,7 @@ number prefix are removed in all four locales. Verified at 320–1440px.
 ## Kinetics visual target
 
 Replace the hero output sensorgram with a Michaelis–Menten plot (substrate concentration vs initial velocity), paired with FASTA / substrate SMILES and an ML schema preview. Continuous absorbance / fluorescence traces use time on the x-axis in a separate workspace view. Current binder curves remain binding examples until real synthetic enzyme data and consistent exports are implemented. No new image asset is required by this documentation update.
+
+## Enzyme example implemented (2026-10-29)
+
+The hero output now renders the shared synthetic Michaelis–Menten curve with initial-rate points. The workspace separates continuous product-versus-time traces from substrate-versus-initial-rate fitting; it no longer shows a binding sensorgram. Input cards use enzyme_001 and explicitly identify the sequence and substrate as synthetic placeholders. Data contract: [ENZYME_DATA.md](ENZYME_DATA.md). Earlier sensorgram descriptions are historical visual records.

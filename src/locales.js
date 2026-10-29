@@ -1,3 +1,4 @@
+import { kineticsMessages } from './kinetics-copy.js';
 import { quoteMessages } from './quote-copy.js';
 import { packageMessages } from './package-copy.js';
 import { componentMessages } from './component-copy.js';
@@ -107,6 +108,7 @@ export const messages = {
   ...quoteMessages,
   ...componentMessages,
   ...notFoundMessages,
+  ...kineticsMessages,
 };
 
 export const locales = Object.fromEntries(languages.map(({ code }, column) => [

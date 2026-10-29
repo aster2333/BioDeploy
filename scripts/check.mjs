@@ -51,32 +51,77 @@ for (const [, key] of componentHtml.matchAll(/data-i18n(?:-aria)?="([^"]+)"/g)) 
 const css = await readFile(new URL('../src/styles.css', import.meta.url), 'utf8');
 for (const [, font] of css.matchAll(/url\('(\/public\/fonts\/[^']+)'\)/g)) await access(new URL(`..${font}`, import.meta.url));
 assert.equal(sampleData.synthetic, true);
+assert.equal(sampleData.dataset_type, 'enzyme_kinetics');
 assert.equal(sampleData.assay.time_unit, 's');
-assert.equal(sampleData.assay.response_unit, 'RU');
+assert.equal(sampleData.assay.signal_unit, 'RFU');
+assert.equal(sampleData.assay.product_unit, 'uM');
+assert.equal(sampleData.assay.velocity_unit, 'uM/s');
+assert.equal(sampleData.assay.technical_replicates, 3);
+assert.deepEqual(sampleData.assay.substrate_concentrations_uM, [5,10,20,40,80,160,320,640]);
+assert.equal(sampleData.controls.blanks.length, 8);
 assert.equal(sampleData.candidates.length, 4);
+const active = sampleData.candidates[0];
+const parameters = active.fitted_parameters;
+assert.ok(Math.abs(parameters.km_uM - 60) < 1);
+assert.ok(Math.abs(parameters.vmax_uM_s - 0.01) < 0.0001);
+assert.ok(Math.abs(parameters.kcat_s_1 - 5) < 0.05);
+assert.ok(Math.abs(parameters.kcat_s_1 * active.active_enzyme_concentration_uM - parameters.vmax_uM_s) < 1e-10);
+assert.ok(Math.abs(parameters.kcat_s_1 / (parameters.km_uM * 1e-6) - parameters.catalytic_efficiency_M_1_s_1) < 0.001);
+assert.ok(parameters.r_squared > 0.99 && parameters.r_squared <= 1);
+assert.ok(parameters.km_se_uM > 0);
+assert.ok(active.qc.max_replicate_cv_percent < 2);
+assert.ok(active.qc.max_substrate_depletion_percent < 10);
 for (const candidate of sampleData.candidates) {
   assert.equal(candidate.qc.synthetic, true);
   assert.equal(candidate.provenance.synthetic, true);
   for (const locale of Object.values(locales)) assert.ok(locale[candidate.reason_key]);
-  if (candidate.outcome !== 'binder') {
-    assert.equal(candidate.illustrative_estimate.kd, null);
-    assert.equal(candidate.fitted_traces.length, 0);
+  assert.ok(!Object.hasOwn(candidate, 'binding'));
+  if (candidate.outcome !== 'active') {
+    assert.ok(Object.values(candidate.fitted_parameters).every((value) => value === null));
+    assert.equal(candidate.fitted_curve.length, 0);
   }
-  if (candidate.outcome === 'unexpressed') assert.equal(candidate.raw_traces.length, 0);
-  for (const trace of [...candidate.raw_traces, ...candidate.fitted_traces]) {
-    assert.equal(trace.points.length, 71);
+  if (candidate.outcome === 'unexpressed') {
+    assert.equal(candidate.raw_traces.length, 0);
+    assert.equal(candidate.initial_rates.length, 0);
+  } else {
+    assert.equal(candidate.raw_traces.length, 24);
+    assert.equal(candidate.initial_rates.length, 24);
+  }
+  for (const trace of candidate.raw_traces) {
+    assert.equal(trace.points.length, 25);
+    const blank = sampleData.controls.blanks.find((item) => item.id === trace.blank_id);
+    assert.equal(blank.substrate_uM, trace.substrate_uM);
     trace.points.forEach((point, index) => {
-      assert.ok(Number.isFinite(point.response_ru));
+      assert.ok(Number.isFinite(point.signal_rfu));
+      assert.ok(Math.abs((point.signal_rfu - blank.points[index].signal_rfu) / sampleData.assay.calibration.slope_rfu_per_uM - point.blank_corrected_product_uM) < 1e-9);
       if (index) assert.ok(point.time_s > trace.points[index - 1].time_s);
     });
   }
 }
+// An independent two-point check verifies the velocity scale without calling the fitter.
+const representative = active.raw_traces.find((trace) => trace.substrate_uM === 80 && trace.replicate === 2);
+const twoPointRate = (representative.points[12].blank_corrected_product_uM - representative.points[0].blank_corrected_product_uM) / 60;
+assert.ok(Math.abs(twoPointRate - 0.01 * 80 / 140) < 0.00001);
+for (const rate of sampleData.candidates[1].initial_rates) assert.ok(Math.abs(rate.velocity_uM_s) < sampleData.candidates[1].qc.rate_detection_limit_uM_s);
+for (const point of active.fitted_curve) assert.ok(Math.abs(point.velocity_uM_s - parameters.vmax_uM_s * point.substrate_uM / (parameters.km_uM + point.substrate_uM)) < 1e-10);
 const csv = sampleCsv().trim().split(/\r?\n/);
-assert.equal(csv.length, 570);
-assert.ok(csv.every((row) => row.split(',').length === 14));
-const absent = csv.find((row) => row.includes('binder_003'));
-assert.ok(absent.includes('not_measured'));
-assert.equal(absent.split(',')[11], '', 'Unknown Kd must not become zero');
+assert.equal(csv.length, 2164);
+const columns = csv[0].split(',');
+// Buffers contain commas, so parse quoted cells rather than splitting each row.
+const csvCells = (row) => [...row.matchAll(/(?:^|,)("(?:[^"]|"")*"|[^,]*)/g)].map((match) => match[1].replace(/^"|"$/g, '').replaceAll('""', '"'));
+for (const row of csv.slice(1)) assert.equal(csvCells(row).length, columns.length);
+const records = csv.slice(1).map((row) => Object.fromEntries(csvCells(row).map((value, i) => [columns[i], value])));
+const absent = records.find((row) => row.sequence_id === 'enzyme_003');
+assert.equal(absent.record_type, 'not_measured');
+assert.equal(absent.kcat_s_1, '');
+assert.ok(records.some((row) => row.record_type === 'control_blank'));
+assert.ok(records.some((row) => row.record_type === 'control_positive'));
+assert.ok(records.some((row) => row.record_type === 'fitted_MM' && Number(row.substrate_uM) === 0 && Number(row.velocity_uM_s) === 0));
+assert.ok(records.some((row) => row.sequence_id === 'enzyme_002' && Number(row.blank_corrected_product_uM) < 0));
+assert.ok(records.filter((row) => row.sequence_id === 'enzyme_004').every((row) => row.kcat_s_1 === ''));
+assert.ok(!csv[0].includes('kd_'));
+assert.ok(!html.includes('binder-validation'));
+assert.ok(!html.includes('K<sub>d</sub>'));
 const quote = (overrides = {}) => calculateDemoQuote({ mode: 'kinetics', quantity: 96, panels: 1, tier: 'standard', ...overrides });
 assert.equal(quote().total_cents, 1056000);
 assert.equal(quote().sample_measurement_count, 2304);
@@ -140,4 +185,4 @@ assert.ok(!html.includes('id="binding-resolution"'));
 assert.ok(!html.includes('data-base-price="affinity"'));
 assert.ok(html.includes('id="quote-quantity" name="quantity" value="96" min="24" max="384"'));
 assert.ok(!/<form[^>]+action=/.test(html), 'No transaction form action');
-process.stdout.write(`Passed: ${languages.length} locales, ${Object.keys(messages).length} keys, quote and inquiry validation, four scientific outcomes, 569 CSV rows, anchors and assets.\n`);
+process.stdout.write(`Passed: ${languages.length} locales, ${Object.keys(messages).length} keys, quote and inquiry validation, four enzyme outcomes, 2163 CSV records, anchors and assets.\n`);
