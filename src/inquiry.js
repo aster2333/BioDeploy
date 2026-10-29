@@ -20,7 +20,7 @@ export function createDemoInquiry(configuration, email) {
   if (!validateInquiryEmail(email)) return { valid: false, errorKey: 'inquiryEmailError' };
   return {
     valid: true,
-    schema_version: '1.0',
+    schema_version: '2.0',
     synthetic: true,
     not_a_quote: true,
     status: 'draft_not_sent',

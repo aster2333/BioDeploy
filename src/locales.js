@@ -1,3 +1,4 @@
+import { quoteMessages } from './quote-copy.js';
 import { packageMessages } from './package-copy.js';
 import { componentMessages } from './component-copy.js';
 import { notFoundMessages } from './not-found-copy.js';
@@ -103,6 +104,7 @@ export const messages = {
   dialogDone: ['Got it', '了解了', '瞭解了', '確認しました'],
   ...experienceMessages,
   ...packageMessages,
+  ...quoteMessages,
   ...componentMessages,
   ...notFoundMessages,
 };

@@ -84,7 +84,7 @@ function renderDialog() {
   const prefix = state.package;
   const reviewed = ['kinetics', 'matrix', 'expressionQc'].includes(prefix);
   $('#dialog-inputs').textContent = t(reviewed ? `${prefix}Inputs` : 'inputsCopy');
-  $('#dialog-configure').hidden = reviewed;
+  $('#dialog-configure').hidden = !reviewed;
   if (reviewed) {
     $('#dialog-code').textContent = { kinetics: 'KIN-01', matrix: 'MTX-01', expressionQc: 'EXP-QC' }[prefix];
     for (const [id, suffix] of [['title', 'Name'], ['description', 'Description'], ['method', 'Method'], ['output', 'Output'], ['depth', 'Depth']]) {
@@ -358,7 +358,7 @@ $$('[data-result-recovery]').forEach((button) => button.addEventListener('click'
 
 const quoteFlow = initQuoteFlow({ t, money, number, downloads, announce });
 $('#dialog-configure').addEventListener('click', () => {
-  quoteFlow.configure(state.package === 'binder' ? 'screening' : state.package);
+  quoteFlow.configure(state.package);
   dialog.close();
   // Wait for the native close event's opener restoration before focusing the destination.
   dialog.addEventListener('close', () => {

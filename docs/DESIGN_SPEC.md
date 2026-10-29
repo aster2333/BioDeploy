@@ -274,3 +274,12 @@ API 采用轻量代码面板，Request / Event 标签可切换；使用保留 `.
 本节覆盖旧套餐卡要求。采用 [PACKAGES_REVIEW.md](PACKAGES_REVIEW.md)：Enzyme Kinetics Profiling / Catalytic Matrix Screening / High-Throughput Expression QC，起价分别为 USD 110 / variant、85 / variant / panel、35 / sequence，标注目标价及 96 变体前提。方法与交付物纵向排列以容纳范围说明；卡片操作打开四语言范围弹窗。新套餐不接旧计价器，弹窗隐藏配置入口；输入、重复和周期按新范围显示。旧报价器前保留明确适用范围提示。
 
 标题不写 sequence synthesis，副标题不用绝对 zero capital expenditure。核心功能矩阵不包含独立纯结合卡或旧结合深度行。价格、范围和排期的具体前提不能只放文档而在页面隐藏。
+
+
+## 19. 新套餐费用估算（2026-10-29）
+
+本节覆盖此前旧报价器的适用说明。费用区仅保留 Enzyme Kinetics Profiling / Catalytic Matrix Screening / High-Throughput Expression QC，按审核目标价计算；24–384 数量，矩阵显示 1–4 六条件面板，其他服务隐藏面板控件。重复数按服务固定，不提供与套餐脱节的靶点数、结合深度或旧热稳定性条件。
+
+保留配置 → 范围确认 → 邮箱 / 未发送草稿的三步流程。右侧显示基本金额、Rush 附加费、总额、样品反应孔数或培养份数、规划周期。Standard 21 天 / Rush 14 天 +25% 为明确标注的演示假设，费用规则可展开查看。套餐详情配置入口已启用并带入对应新服务。四语言切换保留金额与配置。
+
+文案位于 `src/quote-copy.js`；其覆盖旧演示文案。下载文件采用 schema 2.0，单位、面板、固定重复、档位、未核实价格与排期假设随估算保留。价格卡仍显示目标起价；不得声称真实下单、已发送或已确认排期。

@@ -11,26 +11,17 @@ export function initQuoteFlow({ t, money, number, downloads, announce }) {
   let draft = null;
   let activeService = form.elements.service.value;
   const service = () => form.elements.service.value;
-  const mode = () => service() === 'binding' ? form.elements.resolution.value : service();
-  const settings = {
-    expression: { quantity: '96', replicates: '2', targets: '1', conditions: '1' },
-    binding: { quantity: '96', replicates: '2', targets: '1', conditions: '1', resolution: 'affinity' },
-    thermostability: { quantity: '96', replicates: '1', targets: '1', conditions: '1' },
-  };
-  const configuration = () => ({ mode: mode(), quantity: $('#quote-quantity').valueAsNumber, replicates: Number($('#quote-replicates').value), targets: Number($('#quote-targets').value), conditions: Number($('#quote-conditions').value) });
+  const mode = service;
+  const settings = Object.fromEntries(Object.keys(demoCatalog).map((key) => [key, { quantity: '96', panels: '1', tier: 'standard' }]));
+  const configuration = () => ({ mode: mode(), quantity: $('#quote-quantity').valueAsNumber, panels: Number($('#quote-panels').value), tier: $('#quote-tier').value });
   const currentQuote = () => calculateDemoQuote(configuration());
-  const batch = () => t('inquiryProteinCount').replace('{count}', number($('#quote-quantity').valueAsNumber));
+  const batch = () => t('newBatchCount').replace('{count}', number($('#quote-quantity').valueAsNumber));
 
   function rememberService() {
-    const saved = settings[activeService];
-    for (const key of ['quantity', 'replicates', 'targets', 'conditions']) saved[key] = $(`#quote-${key}`).value;
-    if (activeService === 'binding') saved.resolution = form.elements.resolution.value;
+    for (const key of ['quantity', 'panels', 'tier']) settings[activeService][key] = $(`#quote-${key}`).value;
   }
-
   function restoreService() {
-    const saved = settings[service()];
-    for (const key of ['quantity', 'replicates', 'targets', 'conditions']) $(`#quote-${key}`).value = saved[key];
-    if (service() === 'binding') form.elements.resolution.value = saved.resolution;
+    for (const key of ['quantity', 'panels', 'tier']) $(`#quote-${key}`).value = settings[service()][key];
     activeService = service();
   }
 
@@ -43,44 +34,31 @@ export function initQuoteFlow({ t, money, number, downloads, announce }) {
   }
 
   function render() {
-    const binding = service() === 'binding';
-    const thermal = service() === 'thermostability';
-    $('#binding-resolution').hidden = !binding;
-    $('#binding-resolution').disabled = !binding;
-    $('#quote-target-field').hidden = !binding;
-    $('#quote-targets').disabled = !binding;
-    $('#quote-condition-field').hidden = !thermal;
-    $('#quote-conditions').disabled = !thermal;
-    const singleReplicate = $('#quote-replicates option[value="1"]');
-    singleReplicate.disabled = !thermal;
-    singleReplicate.hidden = !thermal;
+    const matrix = service() === 'matrix';
+    const expression = service() === 'expressionQc';
     const quote = currentQuote();
     const entry = demoCatalog[mode()];
-    $('#quote-scope').textContent = t(entry.scopeKey);
-    $('#quote-price-basis').textContent = t(thermal ? 'thermalPriceBasis' : 'inquiryPriceBasis');
-    $('#replicate-help').textContent = t(thermal ? 'thermalReplicateHelp' : 'inquiryReplicateHelp');
-    $('#target-help').textContent = t('inquiryTargetHelp');
-    const errorFields = { invalidQuantity: 'quote-quantity', invalidReplicates: 'quote-replicates', invalidThermalReplicates: 'quote-replicates', invalidTargets: 'quote-targets', invalidConditions: 'quote-conditions' };
+    $('#quote-panel-field').hidden = !matrix;
+    $('#quote-panels').disabled = !matrix;
+    $('#quote-replicates').textContent = t(expression ? 'packageSingleCulture' : 'packageTechnicalTriplicates');
+    $('#quote-price-basis').textContent = t(`${mode()}Basis`);
+    $('#quote-scope').textContent = `${t(`${mode()}Inputs`)} ${t(entry.scopeKey)} ${t(`${mode()}Output`)}`;
+    const errorFields = { newInvalidQuantity: 'quote-quantity', newInvalidPanels: 'quote-panels', newInvalidTier: 'quote-tier' };
     const invalidField = quote.valid ? null : errorFields[quote.errorKey];
     const error = $('#quantity-error');
     error.hidden = quote.valid;
     error.textContent = quote.valid ? '' : t(quote.errorKey);
-    for (const id of ['quote-quantity', 'quote-replicates', 'quote-targets', 'quote-conditions']) {
+    for (const id of ['quote-quantity', 'quote-panels', 'quote-tier']) {
       const field = $(`#${id}`);
       field.setAttribute('aria-invalid', String(id === invalidField));
-      const descriptions = new Set((field.getAttribute('aria-describedby') || '').split(' ').filter(Boolean));
-      descriptions.add('quantity-error');
-      field.setAttribute('aria-describedby', [...descriptions].join(' '));
     }
     if (invalidField) {
       const field = $(`#${invalidField}`);
       (field.closest('.quantity-line') || field).insertAdjacentElement('afterend', error);
     }
-    // A range cannot represent an empty/fractional/out-of-range entry. Leave its
-    // last valid position available to recover without rewriting typed input.
-    if (Number.isInteger($('#quote-quantity').valueAsNumber) && $('#quote-quantity').valueAsNumber >= 8 && $('#quote-quantity').valueAsNumber <= 800) {
-      $('#quote-quantity-slider').value = $('#quote-quantity').value;
-    }
+    const validQuantity = Number.isInteger($('#quote-quantity').valueAsNumber) && $('#quote-quantity').valueAsNumber >= 24 && $('#quote-quantity').valueAsNumber <= 384;
+    if (validQuantity) $('#quote-quantity-slider').value = $('#quote-quantity').value;
+    $('#quote-quantity-slider').setAttribute('aria-invalid', String(invalidField === 'quote-quantity'));
     for (const id of ['save-estimate', 'quote-review', 'quote-contact', 'preview-inquiry']) {
       const button = $(`#${id}`);
       button.dataset.disabledByState = String(!quote.valid);
@@ -88,22 +66,22 @@ export function initQuoteFlow({ t, money, number, downloads, announce }) {
     }
     $$('[data-quantity]').forEach((button) => button.setAttribute('aria-pressed', String(Number(button.dataset.quantity) === $('#quote-quantity').valueAsNumber)));
     $$('[data-base-price]').forEach((element) => { element.textContent = money(demoCatalog[element.dataset.basePrice].baseUnitCents); });
-    for (const [selector, key] of [['#quote-unit', 'unit_cents'], ['#quote-base', 'base_cents'], ['#quote-extra', 'extra_replicate_cents'], ['#quote-total', 'total_cents'], ['#contact-total', 'total_cents']]) {
+    for (const [selector, key] of [['#quote-unit', 'unit_cents'], ['#quote-base', 'base_cents'], ['#quote-extra', 'rush_cents'], ['#quote-total', 'total_cents'], ['#contact-total', 'total_cents']]) {
       $(selector).textContent = quote.valid ? money(quote[key]) : '—';
     }
-    $('#quote-unit-label').textContent = t(binding ? 'quoteUnit' : thermal ? 'thermalUnit' : 'inquiryUnitExpression');
-    $('#quote-base-label').textContent = t(thermal ? 'thermalBase' : 'quoteBase');
+    $('#quote-unit-label').textContent = t(matrix ? 'newUnitPanel' : expression ? 'newUnitSequence' : 'newUnitVariant');
+    $('#quote-base-label').textContent = t('newBase');
     $('#quote-summary-assay').textContent = t(entry.nameKey);
-    const multiplier = binding ? t('inquiryTargetCount').replace('{count}', number(quote.configuration?.targets)) : thermal ? t('thermalConditionCount').replace('{count}', number(quote.configuration?.conditions)) : '';
-    $('#quote-equation').textContent = quote.valid ? `${batch()} × ${money(quote.unit_cents)}${multiplier ? ` × ${multiplier}` : ''}` : '—';
-    $('#quote-days').textContent = `${entry.days[0]} ${t('days')}`;
+    $('#quote-equation').textContent = quote.valid ? `${batch()} × ${money(quote.unit_cents)}${matrix ? ` × ${t('newPanelCount').replace('{count}', number(quote.configuration.panels))}` : ''}` : '—';
+    $('#quote-days').textContent = quote.valid ? `${quote.illustrative_days[0]} ${t('days')}` : '—';
+    $('#quote-measurement-label').textContent = t(expression ? 'newCultures' : 'newReactionWells');
+    $('#quote-measurements').textContent = quote.valid ? number(quote.sample_measurement_count) : '—';
     $('#review-assay').textContent = t(entry.nameKey);
     $('#review-batch').textContent = quote.valid ? batch() : '—';
-    $('#review-replicates').textContent = $('#quote-replicates').value;
-    $('#review-target-row').hidden = !binding;
-    $('#review-targets').textContent = $('#quote-targets').value;
-    $('#review-condition-row').hidden = !thermal;
-    $('#review-conditions').textContent = $('#quote-conditions').value;
+    $('#review-replicates').textContent = t(expression ? 'packageSingleCulture' : 'packageTechnicalTriplicates');
+    $('#review-panel-row').hidden = !matrix;
+    $('#review-panels').textContent = $('#quote-panels').value;
+    $('#review-tier').textContent = quote.valid ? t(quote.configuration.tier === 'rush' ? 'newRush' : 'newStandard') : '—';
     $('#review-method').textContent = t(entry.methodKey);
     $('#contact-assay').textContent = `${t(entry.nameKey)} · ${quote.valid ? batch() : '—'}`;
     if (draft) {
@@ -189,7 +167,6 @@ export function initQuoteFlow({ t, money, number, downloads, announce }) {
       rememberService();
       form.elements.service.value = demoCatalog[packageMode].service;
       restoreService();
-      if (service() === 'binding') form.elements.resolution.value = packageMode;
       draft = null;
       step = 0;
       reached = 0;
