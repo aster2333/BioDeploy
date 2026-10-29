@@ -1,14 +1,21 @@
 # Biodeploy
 
-专业产品演示外壳 v0.3：蛋白质表达与结合验证。
+轻资产湿实验编排平台，为生成式生物学提供酶动力学与功能性实验真值数据。
+
+**The physical bedrock for bio-intelligence: Converting wet-lab reality into fuel for generative biology.**
+
+新定位来源：[New-intro.md](docs/New-intro.md)。目标包括动态酶动力学、底物特异性与多条件矩阵、高通量表达与溶解性，以及 ML-ready JSON / Parquet 数据。详细范围见 [PRD](docs/PRD.md)。
+
+本轮同步文档、首页愿景、元信息和网络叙事。以下功能清单描述现有 v0.3 演示；三张核心服务卡与范围弹窗已按审核版实现；新工作台、24–384 数量范围及新报价计算器尚待实现。
 
 ## 当前交付
 
 - 硅谷开发者平台风格的响应式首页：首屏、产品工作台预览、验证套餐、全球交付网络。
 - 右上角完整语言切换：English、简体中文、繁體中文、日本語。默认英文，刷新保留手动偏好。
-- 语言与交付地区独立；瑞士（Adaptyv Bio）、新加坡（GenScript）、美国（Twist Bioscience）分别展示供应商名称；中国保留地区占位，不附官网链接。地球使用本地点阵地理数据并随地区切换转向。
+- 语言与交付地区独立；瑞士（设施待确认）、新加坡（GenScript）、美国（Twist Bioscience）分别展示供应商名称；中国保留地区占位，不附官网链接。地球使用本地点阵地理数据并随地区切换转向。
 - 可切换的输入 / 实验 / 结果预览，四个合成候选及 Raw / Fit / QC 视图。
-- 表达、结合与热稳定性三类服务，结合支持初筛 / 亲和力表征；8–800 个蛋白质可手输或拖动滑轨配置，USD 演示报价与询价草稿可下载。
+- 核心套餐为酶动力学、催化矩阵与表达质控；目标起价与前提见 [套餐审核](docs/PACKAGES_REVIEW.md)。
+- 独立旧报价演示保留表达、结合与热稳定性三类服务，结合支持初筛 / 亲和力表征；8–800 个蛋白质可手输或拖动滑轨配置，USD 演示报价与询价草稿可下载。
 - 五阶段可检查里程碑、地区网络、API 示例与七组 FAQ。
 - 合成示例 JSON / CSV 下载，保留阴性、未表达与 QC 异常。
 - 字体本地提供，运行时无第三方请求和生产依赖。
@@ -39,6 +46,7 @@ npm run preview
 ## 文档与源码
 
 - [产品需求文档](docs/PRD.md)
+- [核心服务与价格审核](docs/PACKAGES_REVIEW.md)
 - [设计规范与参考锁定](docs/DESIGN_SPEC.md)
 - [组件与异常状态规范](docs/COMPONENT_STATES.md)
 - [可交互组件示例](http://127.0.0.1:4173/components.html)（启动本地服务后访问 `/components.html`）
@@ -58,7 +66,7 @@ npm run preview
 
 ## 设计来源
 
-前期通过 Refero 检索并分析 Vercel、SST、Axiom、Mapbox、Steel、Clay、Mercury 和 Weights & Biases。具体采用范围及链接见设计规范。v0.2 根据 Adaptyv 研究补充套餐深度、报价、数据质量和交付责任；商业价格与服务承诺仍需另行确认。
+前期通过 Refero 检索并分析 Vercel、SST、Axiom、Mapbox、Steel、Clay、Mercury 和 Weights & Biases。具体采用范围及链接见设计规范。v0.2 根据 Adaptyv 竞品研究补充套餐深度、报价、数据质量和交付责任；商业价格与服务承诺仍需另行确认。
 
 ## v0.3 文案
 

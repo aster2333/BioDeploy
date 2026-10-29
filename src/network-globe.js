@@ -1,10 +1,10 @@
 import { landPoints } from './globe-land.js';
 
-// Orthographic projection with true geographic coordinates. China is a regional
-// placeholder, so it is never given a supplier location or a delivery route.
+// Orthographic projection with geographic coordinates. Pending regions have
+// no confirmed supplier location or delivery route.
 const radians = Math.PI / 180;
 const sites = {
-  ch: { lat: 46.52, lon: 6.63, label: 'CH', focus: 30 },
+  ch: { lat: 46.82, lon: 8.23, label: 'CH', focus: 30, pending: true },
   sg: { lat: 1.35, lon: 103.82, label: 'SG', focus: 95 },
   us: { lat: 37.66, lon: -122.4, label: 'US', focus: -100 },
   cn: { lat: 35.86, lon: 104.2, label: 'CN', focus: 110, pending: true },
@@ -14,7 +14,7 @@ const vector = (lat, lon) => {
   return [Math.cos(a) * Math.sin(b), Math.sin(a), Math.cos(a) * Math.cos(b)];
 };
 const land = landPoints.map(([lat, lon]) => vector(lat, lon));
-const routes = [['ch', 'sg'], ['ch', 'us'], ['sg', 'us']].map(([from, to]) => {
+const routes = [['sg', 'us']].map(([from, to]) => {
   const a = vector(sites[from].lat, sites[from].lon);
   const b = vector(sites[to].lat, sites[to].lon);
   const angle = Math.acos(Math.max(-1, Math.min(1, a.reduce((sum, n, i) => sum + n * b[i], 0))));

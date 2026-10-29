@@ -82,6 +82,18 @@ document.addEventListener('visibilitychange', syncProteinScene);
 
 function renderDialog() {
   const prefix = state.package;
+  const reviewed = ['kinetics', 'matrix', 'expressionQc'].includes(prefix);
+  $('#dialog-inputs').textContent = t(reviewed ? `${prefix}Inputs` : 'inputsCopy');
+  $('#dialog-configure').hidden = reviewed;
+  if (reviewed) {
+    $('#dialog-code').textContent = { kinetics: 'KIN-01', matrix: 'MTX-01', expressionQc: 'EXP-QC' }[prefix];
+    for (const [id, suffix] of [['title', 'Name'], ['description', 'Description'], ['method', 'Method'], ['output', 'Output'], ['depth', 'Depth']]) {
+      $(`#dialog-${id}`).textContent = t(`${prefix}${suffix}`);
+    }
+    $('#dialog-replicates').textContent = t(prefix === 'expressionQc' ? 'packageSingleCulture' : 'packageTechnicalTriplicates');
+    $('#dialog-days').textContent = t('packageSchedule');
+    return;
+  }
   $('#dialog-code').textContent = prefix === 'expression' ? 'EXP-01' : prefix === 'thermostability' ? 'THM-01' : 'BND-01';
   $('#dialog-title').textContent = t(`${prefix}Name`);
   $('#dialog-description').textContent = t(`${prefix}Description`);
@@ -96,7 +108,7 @@ const networkGlobe = createNetworkGlobe(document.querySelector('#network-globe')
 
 function renderRegion() {
   const regions = {
-    ch: ['CH / EUROPE', 'regionChCopy', 'Adaptyv Bio'],
+    ch: ['CH / EUROPE', 'regionChCopy', t('supplierPending')],
     sg: ['SG / APAC', 'regionSgCopy', 'GenScript'],
     us: ['US / AMERICAS', 'regionUsCopy', 'Twist Bioscience'],
     cn: ['CN / APAC', 'regionCnCopy', t('supplierPending')],
@@ -107,7 +119,7 @@ function renderRegion() {
   $('#region-copy').dataset.i18n = key;
   $('#region-supplier').textContent = supplier;
   const badge = $('#region-status');
-  badge.dataset.i18n = state.region === 'cn' ? 'supplierUpcoming' : 'supplierLabel';
+  badge.dataset.i18n = ['cn', 'ch'].includes(state.region) ? 'supplierUpcoming' : 'supplierLabel';
   badge.textContent = t(badge.dataset.i18n);
   networkGlobe?.select(state.region);
   $('#region-description').setAttribute('aria-labelledby', `region-${state.region}`);

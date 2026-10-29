@@ -1,5 +1,9 @@
 # Circular workflow visual
 
+Updated positioning: 2026-10-29. Product direction follows [New-intro.md](New-intro.md) and [PRD.md](PRD.md). Vision: **The physical bedrock for bio-intelligence: Converting wet-lab reality into fuel for generative biology.**
+
+The workflow now targets functional enzyme ground-truth: scope and substrate confirmation → materials → expression → continuous catalytic measurements → QC and ML data release. Calibration plates, blinded positive/negative controls, method versions and pseudonymized dispatch are network design requirements, pending operational verification. The existing five-stage animation and protein asset remain reusable. Historical browser checks below describe the existing visual, not a validated enzyme assay workflow.
+
 The existing site design system remains the primary visual reference: Geist type,
 white canvas, fine neutral borders and blue for the selected stage. The user's
 reference supplies the circular composition, central protein and automatic step
@@ -44,3 +48,7 @@ Mobile uses a taller scene, independent card sizes and wider vertical spacing
 to reveal the central protein fold rather than shrinking the desktop overlap.
 The molecular orbit and halo follow the centered protein. The redundant protein subtitle and input
 number prefix are removed in all four locales. Verified at 320–1440px.
+
+## Kinetics visual target
+
+Replace the hero output sensorgram with a Michaelis–Menten plot (substrate concentration vs initial velocity), paired with FASTA / substrate SMILES and an ML schema preview. Continuous absorbance / fluorescence traces use time on the x-axis in a separate workspace view. Current binder curves remain binding examples until real synthetic enzyme data and consistent exports are implemented. No new image asset is required by this documentation update.

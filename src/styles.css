@@ -2320,3 +2320,15 @@ button:disabled { opacity: .5; transform: none; }
   .data-delivery { margin-top: -12px; font-size: 13px; }
   .mission-copy p { font-size: 14px; }
 }
+
+/* Reviewed functional assay packages: allow complete scope and price units to wrap. */
+.packages-section > .section-copy { margin: -12px 0 28px; color: var(--secondary); line-height: 1.7; }
+.packages-section > .form-help, .pricing-section .quote-heading + .form-help { margin: 20px 0 28px; line-height: 1.7; }
+.packages-section .package-card { display: flex; flex-direction: column; }
+.packages-section .package-top { gap: 12px; }
+.packages-section .package-top .eyebrow { text-align: right; overflow-wrap: anywhere; }
+.packages-section .package-details { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.packages-section .package-details strong { font-size: 12px; line-height: 1.7; }
+.packages-section .package-pricing { margin-top: auto; }
+.packages-section .package-pricing > strong { flex-basis: 100%; margin-left: 0; font-size: clamp(17px, 1.5vw, 21px); overflow-wrap: anywhere; }
+.packages-section .package-pricing > span:last-child { font-size: 12px; line-height: 1.7; }

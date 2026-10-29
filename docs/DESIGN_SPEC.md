@@ -1,10 +1,12 @@
 # Biodeploy 设计规范
 
-版本：0.3 · 更新：2026-10-24 · 适用：专业产品演示外壳
+版本：0.4 · 更新：2026-10-29 · 适用：多语言静态演示与新定位设计目标
+
+产品方向以 [New-intro.md](New-intro.md) 与 [PRD.md](PRD.md) 为准。下文旧工作台、旧套餐与报价章节记录现有实现；新目标见第 17 节。
 
 ## 1. 设计概念
 
-**Programmable discovery / 可编排的发现。** 将实验能力呈现成研究者可以理解、配置、追踪的数据基础设施。
+**The physical bedrock for bio-intelligence: Converting wet-lab reality into fuel for generative biology.** 以轻资产湿实验编排，将动态酶动力学与功能性实验真值呈现为模型可用的数据基础设施。
 
 以 Vercel 的布局、黑白层级与开发者清晰度为主要参考。以代码、序列和实验曲线解释产品。浅色品牌页面与深色产品工作台形成对比。品牌必须有自己的序列图形和输入输出叙事，不直接复制参考产品。首页右侧以蓝银蛋白质 ribbon 图为主体，蛋白质居中，序列卡位于左上、曲线卡位于右下，以轻微相反倾角自然错落。手机端使用独立的纵向展开构图，增加图形高度与上下留白，让卡片只少量叠住分子边缘，保留中央折叠结构，采用本地透明图片、细圆轨道和淡蓝光晕；替换原 B 图标和孤立节点。移除 PROTEIN VALIDATION 副标题及序列输入标签的编号前缀。分子轻微旋转悬浮、轨道缓慢转动、曲线循环描绘，离开视口或后台暂停，减少动效偏好下静态呈现。此处使用立体图片动画，不宣称为可交互三维结构模型。
 
@@ -93,7 +95,7 @@
 
 ### 地区选择
 
-展示瑞士 Adaptyv Bio、新加坡 GenScript、美国 Twist Bioscience 的国家名称与供应商名称，不附官网链接；中国采用同样的地区标签和待补充面板，默认选择瑞士。地区与语言单独存储，切换地区同步更新供应商并转动地球。地球参考 COBE 的浅色点阵表达，使用 Natural Earth 公共领域地理数据生成大陆点阵，球面投影确保大陆、节点与连线前后遮挡正确。蓝色弧线只连接已有供应商，中国用灰色区域占位且不连线；动画仅在可见区域和前台运行，减少动效偏好下静态显示。
+展示瑞士待确认设施、新加坡 GenScript、美国 Twist Bioscience 的国家名称与供应商名称，不附官网链接；中国采用同样的地区标签和待补充面板，默认选择瑞士。地区与语言单独存储，切换地区同步更新供应商并转动地球。地球参考 COBE 的浅色点阵表达，使用 Natural Earth 公共领域地理数据生成大陆点阵，球面投影确保大陆、节点与连线前后遮挡正确。蓝色弧线只连接已有供应商，瑞士与中国用灰色区域占位且不连线；动画仅在可见区域和前台运行，减少动效偏好下静态显示。
 
 ### 结果图形与导出
 
@@ -249,12 +251,26 @@ API 采用轻量代码面板，Request / Event 标签可切换；使用保留 `.
 地球视觉资料：COBE（https://cobe.vercel.app/）作为点阵球体与蓝色节点参考，沿用现有 Biodeploy 浅色画布和 Geist 字体。Natural Earth（https://www.naturalearthdata.com/about/terms-of-use/）提供公共领域大陆数据；`src/globe-land.js` 为离线采样坐标，不需要第三方运行时服务。
 
 
-## 17. 首页使命文案（2026-10-28）
+## 17. 新定位与首页愿景（2026-10-29）
 
-按用户确认的使命方向更新首页，沿用已有 Refero / Vercel 视觉锁定。首屏轮播标题、对象词、动效与按钮保持原样；标题下方改为“我们的使命：让天下没有难验证的分子设计。”，四语言同步。
+愿景英文原文：**The physical bedrock for bio-intelligence: Converting wet-lab reality into fuel for generative biology.**
 
-原始读数、拟合曲线、质控与 JSON / CSV 说明放在结果预览区。蛋白质表达、结合及热稳定性仍按具体套餐呈现，不把整体湿实验服务限定为蛋白质。页面标题、搜索描述及页脚同步采用更广的分子设计验证定位。
+四语言同步替换首屏旧使命和独立愿景区块。独立区块标签为 `Why we do this`，标题为 `Intelligence needs physics.`，正文为 `We make complex enzyme kinetics as frictionless as cloud computing. By unlocking accessible wet-lab validation for computational teams, we convert real-world catalytic reality into continuous training fuel for generative biology.`。本区块四语言同步；品牌愿景与首屏愿景沿用用户此前确认的原文。沿用原有字体、留白与响应式布局；页面标题、搜索描述和页脚转向生成式生物学的功能性实验真值。
 
-套餐之后、报价之前加入独立使命区块：“每一个尚未验证的分子设计，都可能藏着一种挽救生命的可能。”，配以“我们希望，有潜力的设计，不因验证的门槛而止步。”。桌面为左侧短标签、右侧正文，移动端单列；沿用现有画布、字体、边框与留白，不新增装饰图形。
+目标首屏标题为 `Ground-Truth Enzyme Kinetics for Generative Biology.`，主 CTA 为 `Estimate Kinetics Assay`，次 CTA 为 `Explore Sample Kinetics Dataset (.parquet / .json)`。这组标题、CTA 与下述产品界面属于待实施目标；本轮只更新愿景、元信息和网络叙事。
 
-参考说明：本轮 Refero 检索因订阅未激活而不可用，不声称获取了新参考。内容层次参考此前已查看的 Benchling 关于页面与 Recursion 使命页面；视觉采用项目原有参考锁定。
+目标视觉保留浅色品牌页、深色工作台、Geist、蓝色选择态和本地蛋白图。双卡输入加入 FASTA / 底物 SMILES，输出改为 Michaelis–Menten 曲线与 ML schema；不将 SPR / BLI sensorgram 直接重标为酶催化曲线。
+
+工作台目标为 `workspace/enzyme-kinetics`，四标签是 Sequence & Substrates、Continuous Kinetic Traces、Fitted Parameters、ML Data Export。时间轨迹与底物浓度 / 初始速度曲线分别标轴和单位。参数显示 kcat、KM、kcat/KM、R² 与 QC；无效拟合提供原因。JSON / Parquet 输出附 pH、温度、buffer、批次与对照。
+
+三套餐改为动态酶动力学、底物特异性与多条件矩阵、高通量表达与溶解性；范围和目标价格见 PRD。目标计算器为 24–384 variants、四类 assay 与 Standard 21 天 / Rush 14 天；数据点数必须由配置推导。未实现前保留旧演示的准确标签。
+
+网络标题为 The Federated Wet-Lab Mesh，围绕 APAC / 全球设施、标准 SOP、校准与盲化对照及 IP 保护说明。移除 Adaptyv Bio 的供应商身份；地区占位不代表认证或容量已确认。GLP 与安全能力是需核实的目标，不能仅由图形暗示已实现。
+
+本阶段不增加 Why Biodeploy vs Foundries 比较表。1/4 成本与 14–21 天文案需有证据或明确规划属性，再作为服务承诺发布。旧设计参考链接仅用于追溯，不构成供应商关系。
+
+## 18. 核心服务矩阵审核版（2026-10-29）
+
+本节覆盖旧套餐卡要求。采用 [PACKAGES_REVIEW.md](PACKAGES_REVIEW.md)：Enzyme Kinetics Profiling / Catalytic Matrix Screening / High-Throughput Expression QC，起价分别为 USD 110 / variant、85 / variant / panel、35 / sequence，标注目标价及 96 变体前提。方法与交付物纵向排列以容纳范围说明；卡片操作打开四语言范围弹窗。新套餐不接旧计价器，弹窗隐藏配置入口；输入、重复和周期按新范围显示。旧报价器前保留明确适用范围提示。
+
+标题不写 sequence synthesis，副标题不用绝对 zero capital expenditure。核心功能矩阵不包含独立纯结合卡或旧结合深度行。价格、范围和排期的具体前提不能只放文档而在页面隐藏。
