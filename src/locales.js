@@ -1,3 +1,4 @@
+import { navigationMessages } from './navigation-copy.js';
 import { kineticsMessages } from './kinetics-copy.js';
 import { quoteMessages } from './quote-copy.js';
 import { packageMessages } from './package-copy.js';
@@ -13,6 +14,7 @@ export const languages = [
 
 // Columns follow languages above. Technical identifiers and units are not translated.
 export const messages = {
+  ...navigationMessages,
   pageTitle: ["Biodeploy | Functional ground-truth for generative biology", "Biodeploy | 生成式生物学的功能性实验真值", "Biodeploy | 生成式生物學的功能性實驗真值", "Biodeploy | 生成生物学のための機能実験データ"],
   pageDescription: ["Asset-light wet-lab orchestration for generative biology, focused on enzyme kinetics and ML-ready functional ground-truth data.", "为生成式生物学编排湿实验，聚焦酶动力学与可供机器学习使用的功能性实验真值数据。", "為生成式生物學編排濕實驗，聚焦酶動力學與可供機器學習使用的功能性實驗真值資料。", "生成生物学のためのウェットラボ実験を統括。酵素速度論と機械学習向けの機能実験データに注力します。"],
   dataDelivery: ["Raw measurements, fitted curves and quality-control results, delivered in JSON and CSV.", "交付原始读数、拟合曲线与质控结果，支持 JSON 和 CSV 格式。", "交付原始讀值、擬合曲線與品管結果，支援 JSON 和 CSV 格式。", "測定値、フィット曲線、品質管理の結果を JSON・CSV 形式で提供します。"],
@@ -27,7 +29,7 @@ export const messages = {
   navPackages: ['Packages', '验证套餐', '驗證套組', '検証パッケージ'],
   navNetwork: ['Global network', '全球网络', '全球網路', 'グローバルネットワーク'],
   chooseLanguage: ['Choose language', '选择语言', '選擇語言', '言語を選択'],
-  navCta: ["Estimate cost","估算费用","估算費用","費用を試算"],
+  navCta: ["Test your enzyme","测试您的酶","測試您的酶","酵素をテスト"],
   menu: ['Menu', '菜单', '選單', 'メニュー'],
   mobileNav: ['Mobile navigation', '移动端导航', '行動版導覽', 'モバイルナビゲーション'],
   heroLine1: ["Test your","验证你的","驗證你的","検証するのは"],
@@ -38,7 +40,7 @@ export const messages = {
   heroStaticLine: ["protein, molecule & enzyme designs.","蛋白质、分子与酶设计。","蛋白質、分子與酶設計。","タンパク質・分子・酵素設計。"],
   heroSummary: ["Test your protein, molecule and enzyme designs.","验证你的蛋白质、分子与酶设计。","驗證你的蛋白質、分子與酶設計。","タンパク質・分子・酵素の設計を検証。"],
   heroDescription: ["The physical bedrock for bio-intelligence: Converting wet-lab reality into fuel for generative biology.", "我们的愿景：成为生物智能的物理基石。\n将湿实验的真实结果转化为生成式生物学的燃料。", "我們的願景：成為生物智慧的物理基石。\n將濕實驗的真實結果轉化為生成式生物學的燃料。", "私たちのビジョン：バイオインテリジェンスの物理的基盤として、ウェットラボの現実を生成生物学の原動力へ。"],
-  heroCta: ["Estimate assay costs","估算实验费用","估算實驗費用","実験費用を試算"],
+  heroCta: ["Test your enzyme","测试您的酶","測試您的酶","酵素をテスト"],
   heroSecondary: ["See example results","查看示例结果","查看範例結果","結果サンプルを見る"],
   heroVisual: ['Example workflow from a protein sequence through a standardized assay to structured results', '从蛋白质序列，经标准化实验，到结构化结果的示例流程', '從蛋白質序列，經標準化實驗，到結構化結果的範例流程', 'タンパク質配列から標準化アッセイを経て構造化データに至るサンプルフロー'],
   sequenceInput: ['SEQUENCE INPUT', '序列输入', '序列輸入', '配列入力'],

@@ -1,3 +1,4 @@
+import { initNavigation } from './navigation.js';
 import { renderKineticsChart, renderConcentrationLegend } from './kinetics-chart.js';
 import { createNetworkGlobe } from './network-globe.js';
 import { languages, locales } from './locales.js';
@@ -17,8 +18,7 @@ const $$ = (selector) => [...document.querySelectorAll(selector)];
 const t = (key) => locales[state.locale][key];
 const localeTrigger = $('#locale-trigger');
 const localeMenu = $('#locale-menu');
-const mobileTrigger = $('.mobile-toggle');
-const mobileNav = $('#mobile-nav');
+const navigation = initNavigation({ beforeOpen: () => closeLocale() });
 const dialog = $('#package-dialog');
 const feedback = createFeedback({ root: $('#ui-feedback'), t });
 const downloads = createDownloadManager({ feedback });
@@ -143,6 +143,7 @@ function closeLocale(restoreFocus = false) {
 }
 
 localeTrigger.addEventListener('click', () => {
+  navigation.close();
   if (!localeMenu.hidden) { closeLocale(); return; }
   localeMenu.hidden = false;
   localeTrigger.setAttribute('aria-expanded', 'true');
@@ -174,22 +175,7 @@ document.addEventListener('focusin', (event) => {
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     if (!localeMenu.hidden) { event.preventDefault(); closeLocale(true); }
-    if (!mobileNav.hidden) { mobileNav.hidden = true; mobileTrigger.setAttribute('aria-expanded', 'false'); mobileTrigger.focus(); }
   }
-});
-
-mobileTrigger.addEventListener('click', () => {
-  mobileNav.hidden = !mobileNav.hidden;
-  mobileTrigger.setAttribute('aria-expanded', String(!mobileNav.hidden));
-});
-$$('#mobile-nav a').forEach((link) => link.addEventListener('click', () => {
-  mobileNav.hidden = true;
-  mobileTrigger.setAttribute('aria-expanded', 'false');
-  const target = $(link.getAttribute('href'))?.querySelector('h2');
-  if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); }
-}));
-matchMedia('(min-width: 1101px)').addEventListener('change', ({ matches }) => {
-  if (matches) { mobileNav.hidden = true; mobileTrigger.setAttribute('aria-expanded', 'false'); }
 });
 
 function selectStage(stage) {
