@@ -2057,8 +2057,6 @@ button:disabled { opacity: .5; transform: none; }
 .faq-list summary .icon { width: 16px; height: 16px; }
 .faq-list details[open] summary .icon { transform: rotate(180deg); }
 .faq-list details > p { color: var(--secondary); font-size: 13px; line-height: 1.9; max-width: 850px; padding: 0 35px 25px 0; }
-.footer-resources { display: flex; gap: 25px; padding-bottom: 20px; font-size: 11px; color: var(--secondary); }
-.footer-resources a:hover { color: var(--blue); }
 @media (max-width:1100px) {
   .desktop-nav { display: none; }
   .mobile-toggle { display: grid; }
@@ -2114,7 +2112,6 @@ button:disabled { opacity: .5; transform: none; }
   .faq-section h2 { font-size: 30px; }
   .faq-list summary { font-size: 13px; padding-block: 20px; }
   .faq-list details > p { font-size: 12px; padding-right: 15px; }
-  .footer-resources { font-size: 10px; gap: 20px; }
 }
 
 #panel-assay .input-bottom, .result-footer { justify-content: flex-end; }
