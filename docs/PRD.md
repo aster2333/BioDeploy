@@ -1,5 +1,7 @@
 # Biodeploy 产品需求文档
 
+> 当前数字交付与两阶段计价范围以 [DIGITAL_WORKFLOW.md](DIGITAL_WORKFLOW.md) 为准；覆盖下文旧版实体样品前提与费用排除项。
+
 版本：0.4 · 更新：2026-10-29 · 定位来源：[New-intro.md](New-intro.md)
 
 ## 1. 愿景与产品定位

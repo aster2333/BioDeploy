@@ -6,42 +6,22 @@ export const packageMessages = {
     "從序列到連續功能動力學。",
     "配列から連続的な機能・速度論データへ。"
   ],
-  "packagesSubtitle": [
-    "Purpose-built assays for generative biology. Pay per variant, without building your own lab.",
-    "为生成式生物学设计的实验。按变体付费，无需自建实验室。",
-    "為生成式生物學設計的實驗。按變體付費，無需自建實驗室。",
-    "生成生物学のためのアッセイ。自社ラボを建設せず、変異体単位で利用。"
-  ],
+  "packagesSubtitle": ["Digital FASTA in. Structured data out. Stage 1 for every sequence; Stage 2 only for qualified protein.", "提交数字 FASTA，交付结构化数据。所有序列先过 Stage 1，仅合格蛋白进入 Stage 2。", "提交數位 FASTA，交付結構化資料。所有配列先過 Stage 1，僅合格蛋白進入 Stage 2。", "FASTA を入力し構造化データを受領。全配列で Stage 1 を実施し、適格タンパク質のみ Stage 2 へ。"],
   "packageIndicative": [
     "TARGET PRICE",
     "目标起价",
     "目標起價",
     "目標価格"
   ],
-  "packagePriceNote": [
-    "Indicative USD targets for standardized batches of 96 variants; subject to feasibility review and project quotation. Synthesis, cloning, purification, assay development and specialty reagents are quoted separately.",
-    "USD 目标起价，适用于 96 个变体的标准化批次；须经可行性评估和项目报价。合成、克隆、纯化、方法开发及特殊试剂另计。",
-    "USD 目標起價，適用於 96 個變體的標準化批次；須經可行性評估與專案報價。合成、選殖、純化、方法開發及特殊試劑另計。",
-    "96 変異体の標準バッチを想定した USD 目標価格。実施可否の確認と案件ごとの見積が必要です。合成・クローニング・精製・測定系開発・特殊試薬は別途。"
-  ],
+  "packagePriceNote": ["Planning targets in USD, not verified supplier prices. Stage 1 includes synthesis, cloning, expression, purification and protein QC. Stage 2 is charged only for gate-passing variants. Thresholds, sequence length, feasibility and schedule require project confirmation.", "USD 规划目标价，未经供应商核价。Stage 1 包含合成、克隆、表达、纯化与蛋白质控。Stage 2 仅对通过者收费。门槛、序列长度、可行性与周期须项目确认。", "USD 規劃目標價，未經供應商核價。Stage 1 包含合成、選殖、表現、純化與蛋白品管。Stage 2 僅對通過者收費。門檻、配列長度、可行性與時程須專案確認。", "USD の計画価格で供給者未確認。Stage 1 は合成・クローニング・発現・精製・QC を含む。Stage 2 は合格分のみ課金。基準・配列長・実施可否・納期は案件ごとに確認。"],
   "packageCalculatorNote": [
     "Kinetics and catalytic matrix panels require a project quote. The calculator below demonstrates separate expression, binding and thermal-unfolding assays; its prices do not apply to these packages.",
     "酶动力学和催化矩阵面板需单独项目报价。下方计算器演示独立的表达、结合及热熔解实验，其价格不适用于以上套餐。",
     "酶動力學與催化矩陣面板需另行專案報價。下方計算器示範獨立的表現、結合及熱熔解實驗，其價格不適用於以上套組。",
     "酵素速度論と触媒マトリクスは案件ごとの見積です。下の計算機は別の発現・結合・熱融解アッセイのデモであり、上記パッケージの価格には適用されません。"
   ],
-  "kineticsTag": [
-    "CORE ENGINE",
-    "核心引擎",
-    "核心引擎",
-    "コアエンジン"
-  ],
-  "kineticsName": [
-    "Enzyme Kinetics Profiling",
-    "酶动力学表征",
-    "酶動力學分析",
-    "酵素速度論プロファイリング"
-  ],
+  "kineticsTag": ["STAGE 2 · AFTER GATE PASS", "STAGE 2 · 通过后触发", "STAGE 2 · 通過後啟動", "STAGE 2・合格後"],
+  "kineticsName": ["Kinetic Profiling", "酶动力学表征", "酶動力學分析", "酵素速度論プロファイリング"],
   "kineticsDescription": [
     "Resolve substrate-dependent reaction rates and catalytic efficiency under defined assay conditions.",
     "在明确实验条件下，解析底物浓度依赖的反应速度与催化效率。",
@@ -66,30 +46,15 @@ export const packageMessages = {
     "每變體 $110 起",
     "1 変異体 $110〜"
   ],
-  "kineticsBasis": [
-    "1 substrate × 8 concentrations × 3 technical replicates; 1 buffer and temperature. Prepared enzyme required.",
-    "1 种底物 × 8 个浓度 × 3 次技术重复；单缓冲液、单温度。需已制备酶样品。",
-    "1 種底物 × 8 個濃度 × 3 次技術重複；單緩衝液、單溫度。需已製備酶樣品。",
-    "1 基質 × 8 濃度 × 技術的反復 3 回。緩衝液・温度各 1 条件。調製済み酵素が必要。"
-  ],
-  "kineticsInputs": [
-    "Prepared enzyme, substrate identity and an established compatible readout. Purification and active-site quantification, if needed, are separate.",
-    "已制备酶、底物信息及已建立的兼容检测方法；所需纯化和活性位点定量另计。",
-    "已製備酶、底物資訊與已建立的相容檢測方法；所需純化及活性位點定量另計。",
-    "調製済み酵素、基質情報、確立した適合検出系。必要な精製と活性部位定量は別途。"
-  ],
+  "kineticsBasis": ["After Stage 1 pass: 1 catalog substrate × 8 concentrations × 3 technical replicates. Stage 1 fees are additional.", "Stage 1 通过后：1 种目录底物 × 8 浓度 × 3 次技术重复。Stage 1 费用另列。", "Stage 1 通過後：1 種目錄底物 × 8 濃度 × 3 次技術重複。Stage 1 費用另列。", "Stage 1 合格後：カタログ基質 1 種 × 8 濃度 × 技術的反復 3 回。Stage 1 費用は別途加算。"],
+  "kineticsInputs": ["Start from digital FASTA: de novo synthesis, cloning, expression, purification and protein QC.", "从数字 FASTA 开始：从头合成、克隆、表达、纯化与蛋白质控。", "從數位 FASTA 開始：從頭合成、選殖、表現、純化與蛋白品管。", "デジタル FASTA から新規合成・クローニング・発現・精製・タンパク質 QC まで。"],
   "kineticsDepth": [
     "8 substrate concentrations plus blanks and reference controls. Non-Michaelis–Menten behavior is flagged for review; no forced fit.",
     "8 个底物浓度，另含空白与参考对照。偏离 Michaelis–Menten 模型时标记复核，不强行拟合。",
     "8 個底物濃度，另含空白與參考對照。偏離 Michaelis–Menten 模型時標記複核，不強行擬合。",
     "8 基質濃度にブランクと参照対照を追加。Michaelis–Menten に適合しない挙動は要確認として記録し、無理に当てはめません。"
   ],
-  "matrixTag": [
-    "SELECTIVITY & ROBUSTNESS",
-    "选择性与稳健性",
-    "選擇性與穩健性",
-    "選択性・頑健性"
-  ],
+  "matrixTag": ["STAGE 2 · OPTIONAL PANEL", "STAGE 2 · 可选面板", "STAGE 2 · 選配面板", "STAGE 2・追加パネル"],
   "matrixName": [
     "Catalytic Matrix Screening",
     "催化矩阵筛选",
@@ -120,78 +85,23 @@ export const packageMessages = {
     "每變體、每面板 $85 起",
     "1 変異体・1 パネル $85〜"
   ],
-  "matrixBasis": [
-    "6 conditions × 3 technical replicates; one factor varied at a time. Prepared enzyme required.",
-    "6 个条件 × 3 次技术重复；每次改变一个因素。需已制备酶样品。",
-    "6 個條件 × 3 次技術重複；每次改變一個因素。需已製備酶樣品。",
-    "6 条件 × 技術的反復 3 回。変える因子は 1 つ。調製済み酵素が必要。"
-  ],
-  "matrixInputs": [
-    "Prepared enzyme and agreed substrate / buffer panel. Specialty substrates and custom detection development are separate.",
-    "已制备酶及约定底物 / 缓冲液面板。特殊底物与定制检测开发另计。",
-    "已製備酶與約定底物 / 緩衝液面板。特殊底物及客製檢測開發另計。",
-    "調製済み酵素と合意した基質・緩衝液パネル。特殊基質と検出系開発は別途。"
-  ],
+  "matrixBasis": ["After Stage 1 pass: 6 conditions × 3 technical replicates; one factor varied at a time. Stage 1 fees are additional.", "Stage 1 通过后：6 条件 × 3 次技术重复，每次改变一个因素。Stage 1 费用另列。", "Stage 1 通過後：6 條件 × 3 次技術重複，每次改變一個因素。Stage 1 費用另列。", "Stage 1 合格後：6 条件 × 技術的反復 3 回。一度に変更する因子は 1 つ。Stage 1 費用は別途加算。"],
+  "matrixInputs": ["Start from digital FASTA: de novo synthesis, cloning, expression, purification and protein QC.", "从数字 FASTA 开始：从头合成、克隆、表达、纯化与蛋白质控。", "從數位 FASTA 開始：從頭合成、選殖、表現、純化與蛋白品管。", "デジタル FASTA から新規合成・クローニング・発現・精製・タンパク質 QC まで。"],
   "matrixDepth": [
     "A six-point substrate, pH or temperature panel, not a full factorial matrix. Full kinetics per substrate, T50, inactivation time courses and solvent / inhibitor panels are separately scoped.",
     "六点底物、pH 或温度面板，不含全因子矩阵。逐底物完整动力学、T50、失活时间序列及溶剂 / 抑制剂面板另定范围。",
     "六點底物、pH 或溫度面板，不含全因子矩陣。逐底物完整動力學、T50、失活時間序列與溶劑 / 抑制劑面板另訂範圍。",
     "基質・pH・温度のいずれかの 6 点パネル。全因子実験ではありません。基質別の速度論、T50、失活時系列、溶媒・阻害剤パネルは別途。"
   ],
-  "expressionQcTag": [
-    "PREREQUISITE VALIDATION",
-    "前置验证",
-    "前置驗證",
-    "事前検証"
-  ],
-  "expressionQcName": [
-    "High-Throughput Expression QC",
-    "高通量表达质控",
-    "高通量表現品管",
-    "ハイスループット発現 QC"
-  ],
-  "expressionQcDescription": [
-    "Screen expression and soluble yield before committing variants to catalytic assays.",
-    "在进入催化实验前，筛查表达情况与可溶产量。",
-    "在進入催化實驗前，篩查表現情況與可溶產量。",
-    "触媒アッセイに進む前に、発現と可溶性収量をスクリーニング。"
-  ],
-  "expressionQcMethod": [
-    "E. coli micro-scale expression and fractionation; SDS-PAGE densitometry. Capillary analysis and Pichia expression by separate quote.",
-    "大肠杆菌微量表达与组分分离；SDS-PAGE 灰度分析。毛细管分析与毕赤酵母表达另行报价。",
-    "大腸桿菌微量表現與組分分離；SDS-PAGE 灰度分析。毛細管分析與畢赤酵母表現另行報價。",
-    "大腸菌の小規模発現・分画と SDS-PAGE 濃度測定。キャピラリー解析と Pichia 発現は別見積。"
-  ],
-  "expressionQcOutput": [
-    "Expression calls, estimated target-band yield (mg/L culture), soluble fraction and gel images with QC. Yield is not a measure of catalytic activity.",
-    "表达判定、目标条带产量估算（mg/L 培养液）、可溶比例与凝胶图及质控。产量不代表催化活性。",
-    "表現判定、目標條帶產量估算（mg/L 培養液）、可溶比例與凝膠圖及品管。產量不代表催化活性。",
-    "発現判定・標的バンド収量の推定（mg/L 培養液）・可溶性割合・ゲル画像と QC。収量は触媒活性を示しません。"
-  ],
-  "expressionQcPrice": [
-    "From $35 / sequence",
-    "每序列 $35 起",
-    "每序列 $35 起",
-    "1 配列 $35〜"
-  ],
-  "expressionQcBasis": [
-    "Ready-to-express plasmid; 1 host × 1 induction condition × 1 culture per sequence.",
-    "现成表达质粒；每序列 1 种宿主 × 1 种诱导条件 × 1 份培养。",
-    "現成表現質體；每序列 1 種宿主 × 1 種誘導條件 × 1 份培養。",
-    "発現用プラスミド支給。1 配列あたり 1 宿主 × 1 誘導条件 × 1 培養。"
-  ],
-  "expressionQcInputs": [
-    "Sequence-verified, ready-to-express plasmids in a compatible vector. Gene synthesis, cloning and construct redesign are excluded.",
-    "序列已确认、载体兼容的现成表达质粒。不含基因合成、克隆与构建设计调整。",
-    "序列已確認、載體相容的現成表現質體。不含基因合成、選殖與構築設計調整。",
-    "配列確認済みの適合発現プラスミド。遺伝子合成・クローニング・コンストラクト再設計は含みません。"
-  ],
-  "expressionQcDepth": [
-    "One culture per sequence with soluble / insoluble fraction analysis. Estimated yield uses a calibrated protein standard; ambiguous bands are flagged, not assigned a precise yield. No purification or activity guarantee.",
-    "每序列一份培养，分析可溶 / 不溶组分。按蛋白标准品校准估算产量；条带不明确时标记异常，不提供精确产量。不含纯化或活性保证。",
-    "每序列一份培養，分析可溶 / 不溶組分。依蛋白標準品校準估算產量；條帶不明確時標記異常，不提供精確產量。不含純化或活性保證。",
-    "1 配列 1 培養で可溶性・不溶性画分を解析。タンパク質標準で校正した収量推定。判別困難なバンドは要確認とし、精密値を出しません。精製と活性保証は含みません。"
-  ],
+  "expressionQcTag": ["STAGE 1 · REQUIRED", "STAGE 1 · 必选底座", "STAGE 1 · 必選基礎", "STAGE 1・必須"],
+  "expressionQcName": ["Digital-to-Protein Gate", "数字序列到蛋白质门槛", "數位配列到蛋白質關卡", "Digital-to-Protein Gate"],
+  "expressionQcDescription": ["Start from digital FASTA: de novo synthesis, cloning, expression, purification and protein QC.", "从数字 FASTA 开始：从头合成、克隆、表达、纯化与蛋白质控。", "從數位 FASTA 開始：從頭合成、選殖、表現、純化與蛋白品管。", "デジタル FASTA から新規合成・クローニング・発現・精製・タンパク質 QC まで。"],
+  "expressionQcMethod": ["De novo gene synthesis & cloning → E. coli expression → 96-well affinity magnetic-bead purification → purity and concentration measurements.", "从头基因合成与克隆 → 大肠杆菌表达 → 96 孔亲和磁珠纯化 → 纯度与浓度测定。", "從頭基因合成與選殖 → 大腸桿菌表現 → 96 孔親和磁珠純化 → 純度與濃度測定。", "新規遺伝子合成・クローニング → 大腸菌発現 → 96 ウェル親和性磁気ビーズ精製 → 純度・濃度測定。"],
+  "expressionQcOutput": ["Purity, concentration and QC evidence; four failure categories: construct QC failure, no detectable expression, insoluble protein, or purification / concentration below agreed thresholds. Failed variants stop here with a negative-result report.", "交付纯度、浓度与质控证据；四类失败：构建质控失败、未检出表达、不溶、纯化或浓度未达约定门槛。失败变体止步并获负样本报告。", "交付純度、濃度與品管證據；四類失敗：構建品管失敗、未檢出表現、不溶、純化或濃度未達約定門檻。失敗變體止步並獲負樣本報告。", "純度・濃度・QC 証拠を提供。構築 QC 不合格、発現未検出、不溶性、精製・濃度の基準未達を分類。不合格は陰性結果報告で終了。"],
+  "expressionQcPrice": ["From $80 / sequence · Stage 1 total", "每序列 $80 起 · Stage 1 合计", "每配列 $80 起 · Stage 1 合計", "1 配列 $80〜・Stage 1 合計"],
+  "expressionQcBasis": ["Digital FASTA only; $45 synthesis & cloning + $35 expression, purification & QC per sequence (planning targets).", "仅需数字 FASTA；每序列 $45 合成与克隆 + $35 表达、纯化与质控（规划目标价）。", "僅需數位 FASTA；每配列 $45 合成與選殖 + $35 表現、純化與品管（規劃目標價）。", "FASTA のみ。配列あたり合成・クローニング $45 ＋ 発現・精製・QC $35（計画価格）。"],
+  "expressionQcInputs": ["Start from digital FASTA: de novo synthesis, cloning, expression, purification and protein QC.", "从数字 FASTA 开始：从头合成、克隆、表达、纯化与蛋白质控。", "從數位 FASTA 開始：從頭合成、選殖、表現、純化與蛋白品管。", "デジタル FASTA から新規合成・クローニング・発現・精製・タンパク質 QC まで。"],
+  "expressionQcDepth": ["Start from digital FASTA: de novo synthesis, cloning, expression, purification and protein QC.", "从数字 FASTA 开始：从头合成、克隆、表达、纯化与蛋白质控。", "從數位 FASTA 開始：從頭合成、選殖、表現、純化與蛋白品管。", "デジタル FASTA から新規合成・クローニング・発現・精製・タンパク質 QC まで。"],
   "packageTechnicalTriplicates": [
     "3 technical replicates per point; not independent expression batches.",
     "每点 3 次技术重复；不是独立表达批次。",

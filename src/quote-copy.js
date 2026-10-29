@@ -84,12 +84,7 @@ export const quoteMessages = {
     "基礎單價 / 序列",
     "基本額 / 配列"
   ],
-  "newBase": [
-    "Assays at included scope",
-    "套餐范围内实验",
-    "套組範圍內實驗",
-    "基本範囲のアッセイ"
-  ],
+  "newBase": ["Stage 2 · qualified variants only", "Stage 2 · 仅通过变体", "Stage 2 · 僅通過變體", "Stage 2・合格分のみ"],
   "newCultures": [
     "Cultures in batch",
     "批次培养份数",
@@ -120,28 +115,56 @@ export const quoteMessages = {
     "請選擇標準或急件方案。",
     "標準または急行を選択してください。"
   ],
-  "priceRules": [
-    "Demo assumptions: $110 per kinetics variant (8 concentrations × 3 technical replicates); $85 per matrix variant per six-condition panel (3 technical replicates); $35 per expression sequence (1 culture). Multiply by batch size and panels. No volume discount. Rush adds 25%. These are planning rules, not verified supplier prices. Reaction-well counts exclude controls and are not time-series data-point counts.",
-    "演示规则：动力学每变体 $110（8 浓度 × 3 次技术重复）；矩阵每变体、每六条件面板 $85（3 次技术重复）；表达每序列 $35（1 份培养）。按数量和面板数相乘，无批量折扣；加急加收 25%。这些是规划规则，非已核实的供应商报价。反应孔数不含对照，也不是时间序列数据点数。",
-    "示範規則：動力學每變體 $110（8 濃度 × 3 次技術重複）；矩陣每變體、每六條件面板 $85（3 次技術重複）；表現每序列 $35（1 份培養）。依數量與面板數相乘，無批量折扣；急件加收 25%。這些是規劃規則，非已核實的供應商報價。反應孔數不含對照，也不是時間序列資料點數。",
-    "デモ規則：速度論は変異体あたり $110（8 濃度 × 技術的反復 3 回）、マトリクスは変異体・6 条件パネルあたり $85（技術的反復 3 回）、発現は配列あたり $35（1 培養）。数量とパネル数を乗算し、数量割引は適用しません。急行は 25% 加算。計画用の規則であり、確認済みの供給価格ではありません。反応ウェル数は対照を含まず、時系列のデータ点数ではありません。"
+  "priceRules": ["Stage 1: $45 DNA synthesis & cloning + $35 protein gate per submitted sequence. Stage 2: $110 kinetics or $85 per six-condition matrix panel per passing variant. Gate-only has no Stage 2 fee. Rush adds 25% to the full estimate. All prices are unverified planning targets. Active-site quantification and custom assay development are separate.", "Stage 1：每提交序列 $45 合成与克隆 + $35 蛋白门槛。Stage 2：每通过变体 $110 动力学或每六条件面板 $85。仅底座不收 Stage 2 费。加急对合计加收 25%。均为未经核价的规划目标。活性位点定量和定制方法开发另计。", "Stage 1：每提交配列 $45 合成與選殖 + $35 蛋白關卡。Stage 2：每通過變體 $110 動力學或每六條件面板 $85。僅基礎不收 Stage 2 費。急件對合計加收 25%。均為未經核價的規劃目標。活性位點定量和客製方法開發另計。", "Stage 1：配列あたり合成・クローニング $45 ＋ タンパク質 QC $35。Stage 2：合格分あたり速度論 $110、または 6 条件パネル $85。Stage 1 のみは追加費なし。急行は合計に 25% 加算。未確認の計画価格。活性部位定量・専用測定系開発は別途。"],
+  "inquiryScopeNote": ["Planning targets in USD, not verified supplier prices. Stage 1 includes synthesis, cloning, expression, purification and protein QC. Stage 2 is charged only for gate-passing variants. Thresholds, sequence length, feasibility and schedule require project confirmation.", "USD 规划目标价，未经供应商核价。Stage 1 包含合成、克隆、表达、纯化与蛋白质控。Stage 2 仅对通过者收费。门槛、序列长度、可行性与周期须项目确认。", "USD 規劃目標價，未經供應商核價。Stage 1 包含合成、選殖、表現、純化與蛋白品管。Stage 2 僅對通過者收費。門檻、配列長度、可行性與時程須專案確認。", "USD の計画価格で供給者未確認。Stage 1 は合成・クローニング・発現・精製・QC を含む。Stage 2 は合格分のみ課金。基準・配列長・実施可否・納期は案件ごとに確認。"],
+  "inquiryTimeline": ["Planning target: Standard 21 days / Rush 14 days after digital design, synthesis feasibility, reagent availability and lab schedule are confirmed. Synthesis delays and reruns may extend delivery.", "规划目标：数字设计、合成可行性、试剂与排期确认后，标准 21 天／加急 14 天。合成延误或复测可能延长交付。", "規劃目標：數位設計、合成可行性、試劑與排程確認後，標準 21 天／急件 14 天。合成延誤或重測可能延長交付。", "デジタル設計・合成可否・試薬・ラボ日程の確認後、標準 21 日／急行 14 日を計画。合成遅延や再測定で延長する場合があります。"],
+  "faq7Copy": ["Planning target: Standard 21 days / Rush 14 days after digital design, synthesis feasibility, reagent availability and lab schedule are confirmed. Synthesis delays and reruns may extend delivery.", "规划目标：数字设计、合成可行性、试剂与排期确认后，标准 21 天／加急 14 天。合成延误或复测可能延长交付。", "規劃目標：數位設計、合成可行性、試劑與排程確認後，標準 21 天／急件 14 天。合成延誤或重測可能延長交付。", "デジタル設計・合成可否・試薬・ラボ日程の確認後、標準 21 日／急行 14 日を計画。合成遅延や再測定で延長する場合があります。"],
+  "catalogTitle": [
+    "V1 substrate catalog · select a supported assay family",
+    "V1 底物目录 · 选择支持的检测类别",
+    "V1 底物目錄 · 選擇支援的檢測類別",
+    "V1 基質カタログ・測定系を選択"
   ],
-  "inquiryScopeNote": [
-    "Prepared enzyme is required for kinetics and matrix assays; expression QC requires ready-to-express plasmids. Synthesis, cloning, purification, active-site quantification, assay development, specialty reagents, Pichia expression, capillary analysis, tax, shipping and physical protein delivery are excluded.",
-    "动力学与矩阵实验需已制备酶；表达质控需现成表达质粒。不含合成、克隆、纯化、活性位点定量、方法开发、特殊试剂、毕赤酵母表达、毛细管分析、税费、运输与蛋白实物交付。",
-    "動力學與矩陣實驗需已製備酶；表現品管需現成表現質體。不含合成、選殖、純化、活性位點定量、方法開發、特殊試劑、畢赤酵母表現、毛細管分析、稅費、運輸與蛋白實物交付。",
-    "速度論・マトリクスには調製済み酵素、発現 QC には発現用プラスミドが必要です。合成・クローニング・精製・活性部位定量・測定系開発・特殊試薬・Pichia 発現・キャピラリー解析・税・配送・タンパク質実物の納品は対象外。"
+  "catalogNote": [
+    "Six plate-reader assay families. Exact reagent, stock, wavelength, coupling controls and enzyme compatibility require lab qualification before acceptance. pNP esters do not establish PET degradation; NAD(P)H coupling is reaction-specific. Custom SMILES and LC-MS are outside V1.",
+    "六类酶标仪检测体系。接单前须确认具体试剂、库存、波长、偶联对照与酶兼容性。pNP 酯活性不代表 PET 降解；NAD(P)H 偶联须按反应验证。V1 不接受自定义 SMILES 或 LC-MS。",
+    "六類酶標儀檢測體系。接單前須確認具體試劑、庫存、波長、偶聯對照與酶相容性。pNP 酯活性不代表 PET 降解；NAD(P)H 偶聯須按反應驗證。V1 不接受自訂 SMILES 或 LC-MS。",
+    "プレートリーダー対応の 6 系統。受注前に試薬・在庫・波長・共役対照・酵素適合性を確認。pNP エステル活性は PET 分解を証明しません。NAD(P)H 共役は反応ごとに検証。独自 SMILES・LC-MS は V1 対象外。"
   ],
-  "inquiryTimeline": [
-    "Planning schedule after project confirmation and sample acceptance. Standard 21 days; Rush 14 days, subject to lab availability. Procurement or reruns may add time.",
-    "项目确认与样品验收后的规划周期：标准 21 天，加急 14 天，须确认实验室排期。采购或复测可能延长时间。",
-    "專案確認與樣品驗收後的規劃時程：標準 21 天，急件 14 天，須確認實驗室排程。採購或重測可能延長時間。",
-    "案件確定・試料受領後の計画日程。標準 21 日、急行 14 日。ラボの空き状況を要確認。調達・再測定により延長する場合があります。"
+  "passedLabel": [
+    "Estimated Stage 1 passes (0 to batch size)",
+    "预计 Stage 1 通过数量（0 至批次总数）",
+    "預計 Stage 1 通過數量（0 至批次總數）",
+    "Stage 1 合格見込数（0〜バッチ総数）"
   ],
-  "faq7Copy": [
-    "This calculator uses planning schedules of 21 calendar days for Standard and 14 for Rush after project confirmation and sample acceptance. Actual assay feasibility and lab availability must be confirmed; procurement and reruns may add time.",
-    "计算器采用项目确认与样品验收后的规划周期：标准 21 个日历日，加急 14 天。实际实验可行性和实验室排期需确认；采购与复测可能延长时间。",
-    "計算器採用專案確認與樣品驗收後的規劃時程：標準 21 個日曆日，急件 14 天。實際實驗可行性與實驗室排程須確認；採購與重測可能延長時間。",
-    "計算機の計画日程は案件確定・試料受領後、標準 21 暦日、急行 14 日です。実施可否とラボの空き状況は要確認。調達や再測定で延長する場合があります。"
+  "passedNote": [
+    "Scenario estimate only; defaults to all passing. In a confirmed project, qualified variants proceed automatically and failed variants incur no Stage 2 fee.",
+    "仅为情景估算，默认全部通过。正式项目中合格变体自动继续，失败变体不收 Stage 2 费用。",
+    "僅為情境估算，預設全部通過。正式專案中合格變體自動繼續，失敗變體不收 Stage 2 費用。",
+    "全数合格を初期値とした試算です。確定案件では合格分のみ自動進行し、不合格分の Stage 2 費用は発生しません。"
+  ],
+  "synthesisFee": [
+    "De Novo DNA Synthesis & Cloning Fee · required",
+    "从头 DNA 合成与克隆费 · 必选",
+    "從頭 DNA 合成與選殖費 · 必選",
+    "新規 DNA 合成・クローニング費・必須"
+  ],
+  "gateFee": [
+    "Expression, purification & protein QC · required",
+    "表达、纯化与蛋白质控 · 必选",
+    "表現、純化與蛋白品管 · 必選",
+    "発現・精製・タンパク質 QC・必須"
+  ],
+  "invalidPassedQuantity": [
+    "Pass count must be a whole number from 0 to batch size.",
+    "通过数须为 0 至批次总数之间的整数。",
+    "通過數須為 0 至批次總數之間的整數。",
+    "合格数は 0〜バッチ総数の整数にしてください。"
+  ],
+  "invalidSubstrate": [
+    "Choose a V1 catalog assay family.",
+    "请选择 V1 目录检测类别。",
+    "請選擇 V1 目錄檢測類別。",
+    "V1 カタログの測定系を選択してください。"
   ]
 };

@@ -1,5 +1,7 @@
 # Biodeploy 设计规范
 
+> 当前数字交付与两阶段计价范围以 [DIGITAL_WORKFLOW.md](DIGITAL_WORKFLOW.md) 为准；覆盖下文旧版实体样品前提与费用排除项。
+
 版本：0.4 · 更新：2026-10-29 · 适用：多语言静态演示与新定位设计目标
 
 产品方向以 [New-intro.md](New-intro.md) 与 [PRD.md](PRD.md) 为准。下文旧工作台、旧套餐与报价章节记录现有实现；新目标见第 17 节。
