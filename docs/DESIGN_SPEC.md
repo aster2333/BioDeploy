@@ -304,11 +304,11 @@ QC 提供方法 / 批次、pH / 温度 / 缓冲液、模拟活性位点浓度、
 | Services / Datasets / Resources | PRD 的实验服务、模型可用数据和实验交付流程；避免将所有首页章节平铺 | 三个语义化 disclosure，桌面紧凑下拉、手机同一套内容折叠 |
 | 保留现有品牌语言 | 第 2 节 Vercel 导航层级与黑白 CTA；Refero 组件细节规范 | Geist、白色面板、细边框、轻阴影、6–12px 圆角；蓝色仅用于示例曲线与现有焦点 |
 | Services | 三类审核后的真实产品范围 | 分别定位酶动力学、催化筛选、表达质控卡片；底部查看全部服务 |
-| Datasets | 用户要求将 Proteinbase 直链升级为多数据入口 | 左侧本站合成动力学示例，右侧按序列、结构、酶功能、蛋白质设计链接公开数据库；底部数据格式与 API 预览 |
+| Datasets | 用户要求将 Proteinbase 直链升级为多数据入口 | 与其他菜单同宽的单列条目；本站合成动力学示例标注 JSON / CSV，公开数据库包含序列、结构、酶功能、蛋白质设计、ADMET 和酶数据；移除底部数据格式与 API 预览入口 |
 | Resources | 实验交付与集成信息 | 实验流程、实验网络、数据与 API、FAQ |
 | 单一主 CTA | 现有功能仅为本地估算 | Estimate cost，不增加登录或真实下单承诺 |
 
-数据源以各自官网为准：[UniProt](https://www.uniprot.org/)、[RCSB PDB](https://www.rcsb.org/)、[BRENDA](https://www.brenda-enzymes.org/)、[Proteinbase](https://proteinbase.com/)。公开数据库使用外链标识并在新标签页打开；不暗示数据属于 Biodeploy 或已集成。本站示例仍明确标注 synthetic，JSON / CSV 和结果工作台复用现有数据。
+数据源以各自官网为准：[UniProt](https://www.uniprot.org/)、[RCSB PDB](https://www.rcsb.org/)、[BRENDA](https://www.brenda-enzymes.org/)、[Proteinbase](https://proteinbase.com/)、[OpenADMET](https://huggingface.co/openadmet)、[OpenEnzymeDB](https://openenzymedb.platform.moleculemaker.org/home)。公开数据库使用外链标识并在新标签页打开；不暗示数据属于 Biodeploy 或已集成。本站示例仍明确标注 synthetic，JSON / CSV 和结果工作台复用现有数据。
 
 本轮在线 Refero 检索返回 NO_SUBSCRIPTION，采用本项目已有参考锁定及 Refero 的 focus、touch、semantic HTML 规范，不新增视觉体系。素材仅用代码原生的示意曲线。
 

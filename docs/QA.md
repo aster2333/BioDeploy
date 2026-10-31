@@ -166,3 +166,11 @@
 - 本站数据入口正确选中结果阶段；服务菜单定位对应服务卡片；所有本地锚点、ARIA 目标、资源和四语言文案通过现有检查。未打开第三方链接进行数据操作；外部链接仅提供数据库入口。
 - 桌面和 360px 手机截图已目视检查，保存为 `.qa/navigation-desktop.png` 和 `.qa/navigation-mobile.png`。菜单较长时手机导航独立滚动，费用估算位于底部。
 - 浏览器交互验证无应用脚本错误。检查、静态构建和 diff 空白检查通过；仍为本地静态演示。
+
+
+## Datasets 导航精简（2026-10-31）
+
+- 删除 Datasets 底部的 Data formats & API preview 导航；本站合成数据入口改用与其他菜单相同的普通条目，保留 synthetic 与 JSON / CSV 标注，移除图表和突出色块。
+- Datasets 使用 340px 单列菜单，公开数据库新增 OpenADMET 和 OpenEnzymeDB，六个公开数据库链接均在新标签页打开并包含 noopener noreferrer。四语言同步。
+- `npm run check`、`npm run build` 和 `git diff --check` 通过。浏览器 1440 / 901 / 768 / 360px × 四语言共 16 组检查通过，无整页横向溢出，菜单均有七个链接；电脑和 360px 手机截图已目视确认。
+- 示例数据入口可正确切换到结果阶段并收起菜单；ArrowDown 聚焦首个条目、Escape 关闭并恢复触发器焦点通过。

@@ -44,27 +44,20 @@
         </div>
         <div class="nav-group">
           <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="nav-datasets"><span data-i18n="navDatasets">Datasets</span><svg class="icon nav-chevron" aria-hidden="true"><use href="#i-chevron"/></svg></button>
-          <div class="nav-panel nav-panel-datasets" id="nav-datasets" hidden>
-            <div class="nav-data-columns">
-              <div class="nav-sample">
-                <span class="nav-section-label" data-i18n="navSampleData">BIODEPLOY SAMPLE</span>
-                <a class="nav-sample-link" href="#platform" data-show-results>
-                  <svg class="nav-data-chart" viewBox="0 0 200 76" fill="none" aria-hidden="true"><path d="M10 8v58h180" stroke="currentColor" opacity=".18"/><path d="M16 61C38 30 61 20 93 16s62-5 91-5" stroke="currentColor" stroke-width="2"/><path d="M16 63C44 45 71 37 104 33s52-4 80-5" stroke="currentColor" opacity=".4" stroke-width="1.5"/></svg>
-                  <strong data-i18n="navKineticsSample">Enzyme kinetics</strong>
-                  <p data-i18n="navSampleCopy">Continuous traces, fitted parameters &amp; QC.</p>
-                  <span class="nav-sample-format mono">JSON / CSV</span>
-                  <span class="nav-sample-action"><span data-i18n="navInspectSample">Inspect sample</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-                </a>
-                <small data-i18n="navSyntheticSample">Synthetic example data</small>
-              </div>
-              <div class="nav-public-data"><span class="nav-section-label" data-i18n="navPublicData">PUBLIC DATABASES ↗</span>
-                <a class="nav-entry" href="https://www.uniprot.org/" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navSequences">Protein sequences</strong><small data-i18n="sourceUniProt">UniProt</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
-<a class="nav-entry" href="https://www.rcsb.org/" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navStructures">3D structures</strong><small data-i18n="sourcePdb">RCSB PDB</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
-<a class="nav-entry" href="https://www.brenda-enzymes.org/" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navEnzymes">Enzyme functions</strong><small data-i18n="sourceBrenda">BRENDA</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
-<a class="nav-entry" href="https://proteinbase.com/" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navDesignData">Protein design</strong><small data-i18n="sourceProteinbase">Proteinbase</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
-              </div>
+          <div class="nav-panel" id="nav-datasets" hidden>
+            <div class="nav-sample">
+              <span class="nav-section-label" data-i18n="navSampleData">BIODEPLOY SAMPLE</span>
+              <a class="nav-entry" href="#platform" data-show-results><span><strong data-i18n="navKineticsSample">Enzyme kinetics</strong><small><span data-i18n="navSyntheticSample">Synthetic example data</span> · JSON / CSV</small></span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
             </div>
-            <a class="nav-panel-footer" href="#developers"><span data-i18n="navDataFormats">Data formats &amp; API preview</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <div class="nav-public-data">
+              <span class="nav-section-label" data-i18n="navPublicData">PUBLIC DATABASES ↗</span>
+              <a class="nav-entry" href="https://www.uniprot.org/" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navSequences">Protein sequences</strong><small data-i18n="sourceUniProt">UniProt</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
+              <a class="nav-entry" href="https://www.rcsb.org/" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navStructures">3D structures</strong><small data-i18n="sourcePdb">RCSB PDB</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
+              <a class="nav-entry" href="https://www.brenda-enzymes.org/" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navEnzymes">Enzyme functions</strong><small data-i18n="sourceBrenda">BRENDA</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
+              <a class="nav-entry" href="https://proteinbase.com/" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navDesignData">Protein design</strong><small data-i18n="sourceProteinbase">Proteinbase</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
+              <a class="nav-entry" href="https://huggingface.co/openadmet" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navAdmet">ADMET data</strong><small data-i18n="sourceOpenAdmet">OpenADMET</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
+              <a class="nav-entry" href="https://openenzymedb.platform.moleculemaker.org/home" target="_blank" rel="noopener noreferrer"><span><strong data-i18n="navEnzymeData">Enzyme data</strong><small data-i18n="sourceOpenEnzymeDb">OpenEnzymeDB</small></span><svg class="icon" aria-hidden="true"><use href="#i-northeast"/></svg></a>
+            </div>
           </div>
         </div>
         <div class="nav-group">
