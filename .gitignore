@@ -134,3 +134,41 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# macOS metadata and filesystem files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100/
+.Trashes/
+.fseventsd/
+.TemporaryItems/
+.VolumeIcon.icns
+
+# Local research and generated review artifacts
+/research/
+/.qa/
+
+# Editor settings, swap files, and backups
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.orig
+*.bak
+
+# Local environment files (keep shareable templates)
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.template
+
+# Local build and deployment caches
+.vite/
+.vercel/
+.netlify/
+/tmp/
+/temp/
